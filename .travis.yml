@@ -1,0 +1,97 @@
+# This triggers builds to run on the new TravisCI infrastructure.
+# See: http://docs.travis-ci.com/user/workers/container-based-infrastructure/
+sudo: false
+
+language: minimal
+
+services:
+  - docker
+
+stages:
+  - Smoke Testing
+  - Test
+
+## Cache composer
+cache:
+  directories:
+    - vendor
+    - $HOME/.composer/cache
+    - $HOME/docker
+
+jobs:
+  include:
+    - &BASE_JOB
+      stage: Test
+      install:
+        - sudo service docker stop
+        - if [ "$(ls -A /home/travis/docker)" ]; then echo "/home/travis/docker already set"; else sudo mv /var/lib/docker /home/travis/docker; fi
+        - sudo bash -c "echo 'DOCKER_OPTS=\"-H tcp://127.0.0.1:2375 -H unix:///var/run/docker.sock -g /home/travis/docker\"' > /etc/default/docker"
+        - sudo service docker start
+        - make setup
+        - make vendor
+      env:
+        - DEPS=HIGHEST
+        - PHP_VERSION=7.3
+        - DOCKER_COMPOSE=docker-compose -f docker-compose.yml -f .travis/docker-compose.ci.yml
+      script:
+        - make tests
+      after_success:
+        - if [[ "$WITH_COVERAGE" == true ]]; then bash <(curl -s https://codecov.io/bash); fi
+        - |
+          if [[ "PHP_VERSION" == '7.2' && "$WITH_COVERAGE" == true ]]; then
+            make scrutinizer
+          fi
+      before_cache:
+        - sudo service docker stop
+        - sudo chown -R travis ~/docker
+
+    - <<: *BASE_JOB
+      env:
+        - DEPS=LOWEST
+        - PHP_VERSION=7.3
+        - DOCKER_COMPOSE=docker-compose -f docker-compose.yml -f .travis/docker-compose.ci.yml
+
+    - <<: *BASE_JOB
+      env:
+        - DEPS=HIGHEST
+        - PHP_VERSION=7.2
+        - WITH_COVERAGE=true
+        - DOCKER_COMPOSE=docker-compose -f docker-compose.yml -f .travis/docker-compose.ci.yml
+
+    - <<: *BASE_JOB
+      env:
+        - DEPS=LOWEST
+        - PHP_VERSION=7.2
+        - DOCKER_COMPOSE=docker-compose -f docker-compose.yml -f .travis/docker-compose.ci.yml
+
+    - <<: *BASE_JOB
+      env:
+        - DEPS=HIGHEST
+        - PHP_VERSION=7.1
+        - DOCKER_COMPOSE=docker-compose -f docker-compose.yml -f .travis/docker-compose.ci.yml
+
+    - <<: *BASE_JOB
+      env:
+        - DEPS=LOWEST
+        - PHP_VERSION=7.1
+        - DOCKER_COMPOSE=docker-compose -f docker-compose.yml -f .travis/docker-compose.ci.yml
+
+    - <<: *BASE_JOB
+      stage: Smoke Testing
+      env:
+        - PHPSTAN
+        - DEPS=HIGHEST
+        - PHP_VERSION=7.3
+        - DOCKER_COMPOSE=docker-compose -f docker-compose.yml -f .travis/docker-compose.ci.yml
+      script:
+        - make phpstan
+
+    - <<: *BASE_JOB
+      stage: Smoke Testing
+      env:
+        - PHPCS
+        - DEPS=HIGHEST
+        - PHP_VERSION=7.3
+        - DOCKER_COMPOSE=docker-compose -f docker-compose.yml -f .travis/docker-compose.ci.yml
+      script:
+        - make phpcs

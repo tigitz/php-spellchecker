@@ -1,0 +1,34 @@
+ПУТЬ ПОИСКА:
+.::/usr/share/hunspell:/usr/share/myspell:/usr/share/myspell/dicts:/Library/Spelling:/home/mekras/.openoffice.org/3/user/wordbook:.openoffice.org2/user/wordbook:.openoffice.org2.0/user/wordbook:Library/Spelling:/opt/openoffice.org/basis3.0/share/dict/ooo:/usr/lib/openoffice.org/basis3.0/share/dict/ooo:/opt/openoffice.org2.4/share/dict/ooo:/usr/lib/openoffice.org2.4/share/dict/ooo:/opt/openoffice.org2.3/share/dict/ooo:/usr/lib/openoffice.org2.3/share/dict/ooo:/opt/openoffice.org2.2/share/dict/ooo:/usr/lib/openoffice.org2.2/share/dict/ooo:/opt/openoffice.org2.1/share/dict/ooo:/usr/lib/openoffice.org2.1/share/dict/ooo:/opt/openoffice.org2.0/share/dict/ooo:/usr/lib/openoffice.org2.0/share/dict/ooo
+ДОСТУПНЫЕ СЛОВАРИ (при использовании -d путь можно опустить):
+/usr/share/hunspell/en_GB
+/usr/share/hunspell/de_DE
+/usr/share/hunspell/de_BE
+/usr/share/hunspell/en_ZA
+/usr/share/hunspell/ru_RU
+/usr/share/hunspell/en_US
+/usr/share/hunspell/de_LU
+/usr/share/hunspell/en_AU
+/usr/share/myspell/dicts/en_GB
+/usr/share/myspell/dicts/hyph_en_GB
+/usr/share/myspell/dicts/hyph_en_CA
+/usr/share/myspell/dicts/hyph_es_ES
+/usr/share/myspell/dicts/hyph_ru_RU
+/usr/share/myspell/dicts/hyph_pt_PT
+/usr/share/myspell/dicts/hyph_en_US
+/usr/share/myspell/dicts/en_ZA
+/usr/share/myspell/dicts/hyph_da_DK
+/usr/share/myspell/dicts/hyph_nl_NL
+/usr/share/myspell/dicts/hyph_sk_SK
+/usr/share/myspell/dicts/hyph_cs_CZ
+/usr/share/myspell/dicts/hyph_el_GR
+/usr/share/myspell/dicts/hyph_is_IS
+/usr/share/myspell/dicts/en-GB
+/usr/share/myspell/dicts/hyph_id_ID
+/usr/share/myspell/dicts/hyph_pt_BR
+/usr/share/myspell/dicts/hyph_ga_IE
+/usr/share/myspell/dicts/hyph_uk_UA
+/usr/share/myspell/dicts/hyph_fi_FI
+ЗАГРУЖЕННЫЙ СЛОВАРЬ:
+/usr/share/hunspell/ru_RU.aff
+/usr/share/hunspell/ru_RU.dic

@@ -1,0 +1,22 @@
+@(#) International Ispell Version 3.1.20 (but really Aspell 0.60.6.1)
+& Tigr 34 0: Ti gr, Ti-gr, Tiger, Tier
+*
+*
+
+*
+& theforests 10 3: the forests, the-forests, reforests, theorists, deforests, forests, theorist's, afforests, Forest's, forest's
+*
+*
+*
+
+*
+& imortal 6 5: immortal, mortal, immortally, immortals, immoral, immortal's
+*
+*
+& eey 13 21: eye, EEO, EEC, EEG, eek, eel, Key, bey, fey, hey, key, e'er, e'en
+
+& CCould 17 0: Could, Cold, Gould, Cloud, Coiled, Cloudy, Coaled, Cooled, Colt, Clod, Cult, Gold, Scold, Mould, Would, Clout, Clued
+*
+*
+*
+*

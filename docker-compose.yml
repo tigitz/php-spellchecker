@@ -1,0 +1,36 @@
+version: '3.2'
+
+services:
+  php7.1:
+    build: docker/php7.1
+    volumes:
+      - .:/usr/src/myapp
+      - ./cache:/root/composer/cache
+    environment:
+      - LANG=en_US.UTF-8
+      - COMPOSER_CACHE_DIR=/root/composer/cache
+    depends_on:
+      - languagetools
+
+  php7.2:
+    build: docker/php7.2
+    volumes:
+      - .:/usr/src/myapp
+    environment:
+      - LANG=en_US.UTF-8
+      - COMPOSER_CACHE_DIR=/root/composer/cache
+    depends_on:
+      - languagetools
+
+  php7.3:
+    build: docker/php7.3
+    volumes:
+      - .:/usr/src/myapp
+    environment:
+      - LANG=en_US.UTF-8
+      - COMPOSER_CACHE_DIR=/root/composer/cache
+    depends_on:
+      - languagetools
+
+  languagetools:
+    image: silviof/docker-languagetool

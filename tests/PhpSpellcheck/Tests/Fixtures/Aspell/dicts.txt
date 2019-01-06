@@ -1,0 +1,14 @@
+en
+en-variant_0
+en-variant_1
+en_GB
+en_GB-ise
+en_GB-ise-w_accents
+en_GB-ise-wo_accents
+en_GB-ize
+en_GB-ize-w_accents
+en_GB-ize-wo_accents
+ru
+ru-ye
+ru-yeyo
+ru-yo
