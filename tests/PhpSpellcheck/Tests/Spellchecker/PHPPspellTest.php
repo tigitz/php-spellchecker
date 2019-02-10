@@ -12,7 +12,6 @@ use PHPUnit\Framework\TestCase;
 
 class PHPPspellTest extends TestCase
 {
-
     public function setUp()
     {
         if (!extension_loaded('pspell')) {
@@ -37,7 +36,7 @@ class PHPPspellTest extends TestCase
     {
         $this->expectException(\InvalidArgumentException::class);
         $pspell = new PHPPspell(PSPELL_FAST);
-        /** @var Misspelling[] $misspellings */
+        /* @var Misspelling[] $misspellings */
         iterator_to_array($pspell->check('mispell', ['en'], ['ctx'], null));
     }
 

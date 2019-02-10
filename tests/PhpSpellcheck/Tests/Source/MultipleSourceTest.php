@@ -12,7 +12,6 @@ use PHPUnit\Framework\TestCase;
 
 class MultipleSourceTest extends TestCase
 {
-
     public function testToTexts()
     {
         $mockText1 = $this->generateMockText('mispelling1', ['ctx' => null]);

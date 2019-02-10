@@ -9,7 +9,6 @@ use PHPUnit\Framework\TestCase;
 
 class SortedNumericArrayNearestValueFinderTest extends TestCase
 {
-
     public function testFindLowerOrHigher()
     {
         $foundNearestLowerIndex = SortedNumericArrayNearestValueFinder::findIndex(

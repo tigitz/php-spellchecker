@@ -12,104 +12,104 @@ class MarkdownRemoverTest extends TestCase
 {
     public function testShouldStripOutRemainingMarkdown()
     {
-        $string = "*Javascript* developers are the _best_.";
-        $expected = "Javascript developers are the best.";
+        $string = '*Javascript* developers are the _best_.';
+        $expected = 'Javascript developers are the best.';
 
         $this->assertSame($expected, (new MarkdownRemover())->process(Text::utf8($string))->getContent());
     }
 
     public function testShouldLeaveNonMatchingMarkdownMarkdown()
     {
-        $string = "*Javascript* developers* are the _best_.";
-        $expected = "Javascript developers* are the best.";
+        $string = '*Javascript* developers* are the _best_.';
+        $expected = 'Javascript developers* are the best.';
 
         $this->assertSame($expected, (new MarkdownRemover())->process(Text::utf8($string))->getContent());
     }
 
     public function testShouldLeaveNonMatchingMarkdownButStripEmptyAnchors()
     {
-        $string = "*Javascript* [developers]()* are the _best_.";
-        $expected = "Javascript developers* are the best.";
+        $string = '*Javascript* [developers]()* are the _best_.';
+        $expected = 'Javascript developers* are the best.';
 
         $this->assertSame($expected, (new MarkdownRemover())->process(Text::utf8($string))->getContent());
     }
 
     public function testShouldStripHtml()
     {
-        $string = "<p>Hello World</p>";
-        $expected = "Hello World";
+        $string = '<p>Hello World</p>';
+        $expected = 'Hello World';
 
         $this->assertSame($expected, (new MarkdownRemover())->process(Text::utf8($string))->getContent());
     }
 
     public function testShouldStripAnchors()
     {
-        $string = "*Javascript* [developers](https://engineering.condenast.io/)* are the _best_.";
-        $expected = "Javascript developers* are the best.";
+        $string = '*Javascript* [developers](https://engineering.condenast.io/)* are the _best_.';
+        $expected = 'Javascript developers* are the best.';
 
         $this->assertSame($expected, (new MarkdownRemover())->process(Text::utf8($string))->getContent());
     }
 
     public function testShouldStripImgTags()
     {
-        $string = "![](https://placebear.com/640/480)*Javascript* developers are the _best_.";
-        $expected = "Javascript developers are the best.";
+        $string = '![](https://placebear.com/640/480)*Javascript* developers are the _best_.';
+        $expected = 'Javascript developers are the best.';
 
         $this->assertSame($expected, (new MarkdownRemover())->process(Text::utf8($string))->getContent());
     }
 
     public function testShouldUseTheAltTextOfAnImageIfItIsProvided()
     {
-        $string = "![This is the alt-text](https://www.example.com/images/logo.png)";
-        $expected = "This is the alt-text";
+        $string = '![This is the alt-text](https://www.example.com/images/logo.png)';
+        $expected = 'This is the alt-text';
 
         $this->assertSame($expected, (new MarkdownRemover())->process(Text::utf8($string))->getContent());
     }
 
     public function testShouldStripCodeTags()
     {
-        $string = "In `Getting Started` we set up `something` foo.";
-        $expected = "In Getting Started we set up something foo.";
+        $string = 'In `Getting Started` we set up `something` foo.';
+        $expected = 'In Getting Started we set up something foo.';
 
         $this->assertSame($expected, (new MarkdownRemover())->process(Text::utf8($string))->getContent());
     }
 
     public function testShouldLeaveHashtagsInHeadings()
     {
-        $string = "## This #heading contains #hashtags";
-        $expected = "This #heading contains #hashtags";
+        $string = '## This #heading contains #hashtags';
+        $expected = 'This #heading contains #hashtags';
 
         $this->assertSame($expected, (new MarkdownRemover())->process(Text::utf8($string))->getContent());
     }
 
     public function testShouldRemoveHeadingsTrailingHashtags()
     {
-        $string = "## This #heading contains #hashtags ##";
-        $expected = "This #heading contains #hashtags";
+        $string = '## This #heading contains #hashtags ##';
+        $expected = 'This #heading contains #hashtags';
 
         $this->assertSame($expected, (new MarkdownRemover())->process(Text::utf8($string))->getContent());
     }
 
     public function testShouldRemoveHeadingsHashtags()
     {
-        $string = "## This #heading contains #hashtags";
-        $expected = "This #heading contains #hashtags";
+        $string = '## This #heading contains #hashtags';
+        $expected = 'This #heading contains #hashtags';
 
         $this->assertSame($expected, (new MarkdownRemover())->process(Text::utf8($string))->getContent());
     }
 
     public function testShouldRemoveEmphasis()
     {
-        $string = "I italicized an *I* and it _made_ me *sad*.";
-        $expected = "I italicized an I and it made me sad.";
+        $string = 'I italicized an *I* and it _made_ me *sad*.';
+        $expected = 'I italicized an I and it made me sad.';
 
         $this->assertSame($expected, (new MarkdownRemover())->process(Text::utf8($string))->getContent());
     }
 
     public function testShouldRemoveDoubleEmphasis()
     {
-        $string = "**this sentence has __double styling__**";
-        $expected = "this sentence has double styling";
+        $string = '**this sentence has __double styling__**';
+        $expected = 'this sentence has double styling';
 
         $this->assertSame($expected, (new MarkdownRemover())->process(Text::utf8($string))->getContent());
     }
@@ -140,28 +140,28 @@ class MarkdownRemoverTest extends TestCase
 
     public function testShouldRemoveBlockquotes()
     {
-        $string = ">I am a blockquote";
-        $expected = "I am a blockquote";
+        $string = '>I am a blockquote';
+        $expected = 'I am a blockquote';
 
         $this->assertSame($expected, (new MarkdownRemover())->process(Text::utf8($string))->getContent());
     }
 
     public function testShouldRemoveBlockquotesWithSpaces()
     {
-        $string = "> I am a blockquote";
-        $expected = "I am a blockquote";
+        $string = '> I am a blockquote';
+        $expected = 'I am a blockquote';
 
         $this->assertSame($expected, (new MarkdownRemover())->process(Text::utf8($string))->getContent());
     }
 
     public function testShouldRemoveIndentedBlockquotes()
     {
-        $string = " > I am a blockquote";
-        $expected = "I am a blockquote";
+        $string = ' > I am a blockquote';
+        $expected = 'I am a blockquote';
 
         $this->assertSame($expected, (new MarkdownRemover())->process(Text::utf8($string))->getContent());
 
-        $string = "  > I am a blockquote";
+        $string = '  > I am a blockquote';
 
         $this->assertSame($expected, (new MarkdownRemover())->process(Text::utf8($string))->getContent());
     }

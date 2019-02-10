@@ -98,6 +98,12 @@ class LanguageToolTest extends TestCase
         return TextTest::CONTENT_STUB;
     }
 
+    public function assertWorkingSupportedLanguages(LanguageToolApiClient $apiClient)
+    {
+        $languageTool = new LanguageTool($apiClient);
+        $this->assertNotFalse(array_search('en', $languageTool->getSupportedLanguages()));
+    }
+
     private function assertWorkingSpellcheck(LanguageToolApiClient $apiClient)
     {
         $languageTool = new LanguageTool($apiClient);
@@ -126,12 +132,6 @@ class LanguageToolTest extends TestCase
         $this->assertSame($misspellings[$lastKey]->getOffset(), 1);
         $this->assertSame($misspellings[$lastKey]->getLineNumber(), 4);
         $this->assertNotEmpty($misspellings[$lastKey]->getSuggestions());
-    }
-
-    public function assertWorkingSupportedLanguages(LanguageToolApiClient $apiClient)
-    {
-        $languageTool = new LanguageTool($apiClient);
-        $this->assertNotFalse(array_search('en', $languageTool->getSupportedLanguages()));
     }
 
     private static function realAPIEndpoint(): string

@@ -27,7 +27,6 @@ class ProcessFailedExceptionTest extends TestCase
 
     public function testSymfonyBootingProcessFailedException()
     {
-
         $process = new Process('echo test', __DIR__ . '/notfound/');
         try {
             $process->mustRun();

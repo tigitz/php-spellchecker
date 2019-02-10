@@ -58,6 +58,21 @@ class AspellTest extends TestCase
         return explode(PHP_EOL, file_get_contents(__DIR__ . '/../Fixtures/Aspell/dicts.txt'));
     }
 
+    public function assertWorkingSupportedLanguages($binaries)
+    {
+        $aspell = new Aspell(new CommandLine($binaries));
+        $this->assertNotFalse(array_search('en_GB', $aspell->getSupportedLanguages()));
+    }
+
+    public static function realBinaryPath(): string
+    {
+        if (getenv('ASPELL_BINARY_PATH') === false) {
+            throw new \RuntimeException('"ASPELL_BINARY_PATH" env must be set to find the executable to run tests on');
+        }
+
+        return getenv('ASPELL_BINARY_PATH');
+    }
+
     private function assertWorkingSpellcheck($binaries)
     {
         $aspell = new Aspell(new CommandLine($binaries));
@@ -82,20 +97,5 @@ class AspellTest extends TestCase
         $this->assertSame(3, $misspellings[1]->getOffset());
         $this->assertSame(2, $misspellings[1]->getLineNumber());
         $this->assertNotEmpty($misspellings[1]->getSuggestions());
-    }
-
-    public function assertWorkingSupportedLanguages($binaries)
-    {
-        $aspell = new Aspell(new CommandLine($binaries));
-        $this->assertNotFalse(array_search('en_GB', $aspell->getSupportedLanguages()));
-    }
-
-    public static function realBinaryPath(): string
-    {
-        if (getenv('ASPELL_BINARY_PATH') === false) {
-            throw new \RuntimeException('"ASPELL_BINARY_PATH" env must be set to find the executable to run tests on');
-        }
-
-        return getenv('ASPELL_BINARY_PATH');
     }
 }

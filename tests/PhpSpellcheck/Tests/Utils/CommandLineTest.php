@@ -10,7 +10,6 @@ use PHPUnit\Framework\TestCase;
 
 class CommandLineTest extends TestCase
 {
-
     public function testCreate()
     {
         $this->assertInstanceOf(CommandLine::class, new CommandLine('ls'));

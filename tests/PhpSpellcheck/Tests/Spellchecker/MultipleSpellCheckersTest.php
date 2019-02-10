@@ -12,7 +12,6 @@ use PHPUnit\Framework\TestCase;
 
 class MultipleSpellcheckersTest extends TestCase
 {
-
     public function testCheckAndMergeSuggestions()
     {
         $spellChecker1 = $this->createMock(SpellcheckerInterface::class);

@@ -67,6 +67,23 @@ class HunspellTest extends TestCase
         return explode(PHP_EOL, file_get_contents(__DIR__ . '/../Fixtures/Hunspell/dicts.txt'));
     }
 
+    /**
+     * @param string|array $binaries
+     */
+    public function assertWorkingSupportedLanguages($binaries)
+    {
+        $hunspell = new Hunspell(new CommandLine($binaries));
+        $this->assertNotFalse(array_search('en_US', $hunspell->getSupportedLanguages()));
+    }
+
+    public static function realBinaryPath(): string
+    {
+        if (getenv('HUNSPELL_BINARY_PATH') === false) {
+            throw new \RuntimeException('"HUNSPELL_BINARY_PATH" env must be set to find the executable to run tests on');
+        }
+
+        return getenv('HUNSPELL_BINARY_PATH');
+    }
 
     /**
      * @param string|array $binaries
@@ -87,23 +104,5 @@ class HunspellTest extends TestCase
         $this->assertSame('страх', $misspellings[1]->getWord());
         $this->assertSame(21, $misspellings[1]->getOffset());
         $this->assertSame(1, $misspellings[1]->getLineNumber());
-    }
-
-    /**
-     * @param string|array $binaries
-     */
-    public function assertWorkingSupportedLanguages($binaries)
-    {
-        $hunspell = new Hunspell(new CommandLine($binaries));
-        $this->assertNotFalse(array_search('en_US', $hunspell->getSupportedLanguages()));
-    }
-
-    public static function realBinaryPath(): string
-    {
-        if (getenv('HUNSPELL_BINARY_PATH') === false) {
-            throw new \RuntimeException('"HUNSPELL_BINARY_PATH" env must be set to find the executable to run tests on');
-        }
-
-        return getenv('HUNSPELL_BINARY_PATH');
     }
 }

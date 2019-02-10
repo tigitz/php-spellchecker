@@ -10,7 +10,6 @@ use PHPUnit\Framework\TestCase;
 
 class MisspellingTest extends TestCase
 {
-
     public function testMergeSuggestions()
     {
         $misspelling = new Misspelling('mispelled', 1, 0, ['misspelled']);
@@ -26,7 +25,6 @@ class MisspellingTest extends TestCase
     {
         $this->assertFalse($misspelling->canDeterminateUniqueIdentity());
     }
-
 
     public function nonDeterminableUniqueIdentityMisspellings()
     {
