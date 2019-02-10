@@ -28,7 +28,7 @@ class Aspell implements SpellcheckerInterface
      */
     public function check(string $text, array $languages = [], array $context = [], ?string $encoding = null): iterable
     {
-        Assert::greaterThan($languages, 1, 'Aspell spellchecker doesn\'t support multiple languages check');
+        Assert::maxCount($languages, 1, 'Aspell spellchecker doesn\'t support multiple languages check');
 
         $cmd = $this->binaryPath->addArg('-a');
 
