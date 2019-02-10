@@ -34,7 +34,7 @@ Using PHP-Spellcheck can eliminate vendor-lock in, reduce technical debt, and im
 
 **PHP-Spellcheck** is a welcoming project for new contributors.
 
-Want to make **your first open source contribution **? Check the [roadmap](#roadmap), pick one task, [open an issue](https://github.com/tigitz/php-spellchecker/issues/new) and we'll help you go through it 🤓🚀
+Want to make **your first open source contribution**? Check the [roadmap](#roadmap), pick one task, [open an issue](https://github.com/tigitz/php-spellchecker/issues/new) and we'll help you go through it 🤓🚀
 
 ## Install
 
