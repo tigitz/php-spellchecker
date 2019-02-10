@@ -27,7 +27,7 @@ class Directory implements SourceInterface
     /**
      * @return Text[]
      */
-    public function getContents(): iterable
+    private function getContents(): iterable
     {
         $filesInDir = new \RecursiveIteratorIterator(
             new \RecursiveDirectoryIterator(
