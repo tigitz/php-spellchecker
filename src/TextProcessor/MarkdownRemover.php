@@ -9,7 +9,7 @@ use PhpSpellcheck\TextInterface;
 
 /**
  * Removes markdown while keeping original lines and columns of
- * characters to make spellchecking relevant
+ * characters to make spellchecking relevant.
  */
 class MarkdownRemover implements TextProcessorInterface
 {

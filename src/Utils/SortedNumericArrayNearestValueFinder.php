@@ -12,7 +12,6 @@ use Webmozart\Assert\Assert;
  */
 class SortedNumericArrayNearestValueFinder
 {
-
     public const FIND_LOWER = -1;
     public const FIND_DEFAULT = 0;
     public const FIND_HIGHER = 1;

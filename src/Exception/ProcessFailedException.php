@@ -16,7 +16,7 @@ class ProcessFailedException extends \RuntimeException implements ExceptionInter
     public function __construct(
         Process $process,
         \Throwable $previous = null,
-        string $failureReason = "",
+        string $failureReason = '',
         int $code = 0
     ) {
         $this->process = $process;

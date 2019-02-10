@@ -15,7 +15,7 @@ class File implements SourceInterface
     private $filePath;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $encoding;
 
@@ -23,11 +23,6 @@ class File implements SourceInterface
     {
         $this->filePath = $filePath;
         $this->encoding = $encoding;
-    }
-
-    private function getFileContent(): string
-    {
-        return \Safe\file_get_contents($this->filePath);
     }
 
     public function toTexts(array $context = []): iterable
@@ -48,7 +43,6 @@ class File implements SourceInterface
             }
         }
 
-
         return [
             new Text(
                 $this->getFileContent(),
@@ -56,5 +50,10 @@ class File implements SourceInterface
                 $context
             ),
         ];
+    }
+
+    private function getFileContent(): string
+    {
+        return \Safe\file_get_contents($this->filePath);
     }
 }

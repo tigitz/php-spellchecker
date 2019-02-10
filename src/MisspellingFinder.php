@@ -20,12 +20,12 @@ class MisspellingFinder
     private $spellChecker;
 
     /**
-     * @var null|MisspellingHandlerInterface
+     * @var MisspellingHandlerInterface|null
      */
     private $misspellingHandler;
 
     /**
-     * @var null|TextProcessorInterface
+     * @var TextProcessorInterface|null
      */
     private $textProcessor;
 
@@ -57,6 +57,16 @@ class MisspellingFinder
         }
 
         return $misspellings;
+    }
+
+    public function setSpellchecker(SpellcheckerInterface $spellChecker): void
+    {
+        $this->spellChecker = $spellChecker;
+    }
+
+    public function setMisspellingHandler(MisspellingHandlerInterface $misspellingHandler): void
+    {
+        $this->misspellingHandler = $misspellingHandler;
     }
 
     /**
@@ -102,15 +112,5 @@ class MisspellingFinder
 
             yield from $misspellingsCheck;
         }
-    }
-
-    public function setSpellchecker(SpellcheckerInterface $spellChecker): void
-    {
-        $this->spellChecker = $spellChecker;
-    }
-
-    public function setMisspellingHandler(MisspellingHandlerInterface $misspellingHandler): void
-    {
-        $this->misspellingHandler = $misspellingHandler;
     }
 }

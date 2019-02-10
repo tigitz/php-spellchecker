@@ -10,7 +10,6 @@ use Symfony\Component\Process\Process;
 
 class ProcessRunnerTest extends TestCase
 {
-
     public function testRun(): void
     {
         $this->expectException(ProcessFailedException::class);

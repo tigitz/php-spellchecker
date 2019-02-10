@@ -24,7 +24,7 @@ class Hunspell implements SpellcheckerInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function check(
         string $text,
@@ -61,7 +61,7 @@ class Hunspell implements SpellcheckerInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getSupportedLanguages(): iterable
     {

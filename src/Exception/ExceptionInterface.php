@@ -6,5 +6,4 @@ namespace PhpSpellcheck\Exception;
 
 interface ExceptionInterface
 {
-
 }

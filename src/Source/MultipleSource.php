@@ -13,7 +13,6 @@ class MultipleSource implements SourceInterface
      */
     private $sources;
 
-
     /**
      * @param iterable<SourceInterface> $sources
      */
@@ -24,7 +23,7 @@ class MultipleSource implements SourceInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function toTexts(array $context = []): iterable
     {

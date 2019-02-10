@@ -19,7 +19,6 @@ class MultiSpellchecker implements SpellcheckerInterface
      */
     private $mergeMisspellingsSuggestions;
 
-
     /**
      * @param SpellcheckerInterface[] $spellCheckers
      */
@@ -65,6 +64,21 @@ class MultiSpellchecker implements SpellcheckerInterface
         return array_values($misspellings);
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function getSupportedLanguages(): iterable
+    {
+        $supportedLanguages = [];
+        foreach ($this->spellCheckers as $spellChecker) {
+            foreach ($spellChecker->getSupportedLanguages() as $language) {
+                $supportedLanguages[] = $language;
+            }
+        }
+
+        return array_values(array_unique($supportedLanguages));
+    }
+
     private function checkForAllSpellcheckers(
         string $text,
         array $languages,
@@ -80,20 +94,5 @@ class MultiSpellchecker implements SpellcheckerInterface
                 yield $misspelling;
             }
         }
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getSupportedLanguages(): iterable
-    {
-        $supportedLanguages = [];
-        foreach ($this->spellCheckers as $spellChecker) {
-            foreach ($spellChecker->getSupportedLanguages() as $language) {
-                $supportedLanguages[] = $language;
-            }
-        }
-
-        return array_values(array_unique($supportedLanguages));
     }
 }

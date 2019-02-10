@@ -14,7 +14,7 @@ class Directory implements SourceInterface
     private $dirPath;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $pattern;
 
@@ -22,6 +22,17 @@ class Directory implements SourceInterface
     {
         $this->dirPath = $dirPath;
         $this->pattern = $pattern;
+    }
+
+    public function toTexts(array $context): iterable
+    {
+        foreach ($this->getContents() as $text) {
+            yield new Text(
+                $text->getContent(),
+                $text->getEncoding(),
+                array_merge($text->getContext(), $context)
+            );
+        }
     }
 
     /**
@@ -55,17 +66,6 @@ class Directory implements SourceInterface
                     yield current((new File($file->getRealPath()))->toTexts());
                 }
             }
-        }
-    }
-
-    public function toTexts(array $context): iterable
-    {
-        foreach ($this->getContents() as $text) {
-            yield new Text(
-                $text->getContent(),
-                $text->getEncoding(),
-                array_merge($text->getContext(), $context)
-            );
         }
     }
 }

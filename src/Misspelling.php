@@ -15,12 +15,12 @@ class Misspelling implements MisspellingInterface
     private $word;
 
     /**
-     * @var null|int
+     * @var int|null
      */
     private $offset;
 
     /**
-     * @var null|int
+     * @var int|null
      */
     private $lineNumber;
 

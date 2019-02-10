@@ -25,7 +25,7 @@ class Ispell implements SpellcheckerInterface
     private $ispellCommandLine;
 
     /**
-     * @var null|CommandLine
+     * @var CommandLine|null
      */
     private $shellEntryPoint;
 
@@ -36,7 +36,7 @@ class Ispell implements SpellcheckerInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function check(string $text, array $languages = [], array $context = [], ?string $encoding = null): iterable
     {
@@ -69,7 +69,7 @@ class Ispell implements SpellcheckerInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getSupportedLanguages(): iterable
     {

@@ -6,5 +6,4 @@ namespace PhpSpellcheck\Exception;
 
 class LogicException extends \LogicException implements ExceptionInterface
 {
-
 }

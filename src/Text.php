@@ -31,6 +31,11 @@ class Text implements TextInterface
         $this->context = $context;
     }
 
+    public function __toString()
+    {
+        return $this->getContent();
+    }
+
     public function getContent(): string
     {
         return $this->content;
@@ -67,10 +72,5 @@ class Text implements TextInterface
     public static function utf8(string $text, array $context = []): self
     {
         return new self($text, TextEncoding::UTF8, $context);
-    }
-
-    public function __toString()
-    {
-        return $this->getContent();
     }
 }

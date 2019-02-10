@@ -18,7 +18,7 @@ class IspellOutputParser
         foreach ($lines as $line) {
             $line = trim($line);
             if ('' === $line) {
-                $lineNumber++;
+                ++$lineNumber;
                 // Go to the next line
                 continue;
             }

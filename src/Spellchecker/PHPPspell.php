@@ -23,10 +23,10 @@ class PHPPspell implements SpellcheckerInterface
     private $numberOfCharactersLowerLimit;
 
     /**
-     * @link http://php.net/manual/en/function.pspell-config-mode.php
-     * @link http://php.net/manual/en/function.pspell-config-ignore.php
+     * @see http://php.net/manual/en/function.pspell-config-mode.php
+     * @see http://php.net/manual/en/function.pspell-config-ignore.php
      *
-     * @param int $mode The mode parameter is the mode in which spellchecker will work.
+     * @param int $mode the mode parameter is the mode in which spellchecker will work
      * @param int $numberOfCharactersLowerLimit Words less than n characters will be skipped
      */
     public function __construct(int $mode, int $numberOfCharactersLowerLimit = 0)
@@ -42,7 +42,7 @@ class PHPPspell implements SpellcheckerInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function check(
         string $text,
@@ -73,7 +73,7 @@ class PHPPspell implements SpellcheckerInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getSupportedLanguages(): iterable
     {

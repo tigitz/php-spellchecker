@@ -24,7 +24,7 @@ class Aspell implements SpellcheckerInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function check(string $text, array $languages = [], array $context = [], ?string $encoding = null): iterable
     {
@@ -60,7 +60,7 @@ class Aspell implements SpellcheckerInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getSupportedLanguages(): iterable
     {
