@@ -108,7 +108,7 @@ $misspellingFinder->find('It\'s_a_mispelling', ['en_US']); // misspellings are e
 ### Global
 
 - [ ] Add a CLI that could do something like `vendor/bin/php-spellcheck "misspell" Languagetools EchoHandler --lang=en_US`
-- [ ] Add aasynchronous mechanism to spellcheckers
+- [ ] Add asynchronous mechanism to spellcheckers
 - [ ] Make some computed misspelling properties optional to improve performance for certain use cases (e.g., lines and offset in `LanguageTools`)
 - [ ] Add a languages mapper to manage their different representations across spellcheckers
 - [ ] Evaluate `strtok` instead of `explode` to parse lines of text, for performance
