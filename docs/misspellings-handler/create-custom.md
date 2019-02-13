@@ -1,11 +1,11 @@
 # Create your custom misspelling handler
 
-Misspelling handler has the responsibility to process your misspellings found
+Misspelling handler has the responsibility to process misspellings found
 through the `MisspellingFinder` class.
 
-It must respects the `MisspellingHandlerInterface`.
+It must implement the `MisspellingHandlerInterface`.
 
-Let's say you want to send an email with all of the misspellings found in
+Let's say you want to send an email with all the misspellings found in
  your blog articles.
 
 Create your `EmailMisspellingHandler`:
@@ -41,7 +41,7 @@ Here's the proof:
 MSG;
         foreach ($misspellings as  $misspelling) {
             $message .= \Safe\sprintf(
-                'You wrote "%s" at line %d in the article "%s" but it\'s a misspelling. Here\'s my suggestions: %s',
+                'You wrote "%s" at line %d in the article "%s" but it\'s a misspelling. Here are my suggestions: %s',
                     $misspelling->getWord(),
                     $misspelling->getLineNumber(),
                     $misspelling->getContext()['article-name'],
@@ -56,8 +56,8 @@ MSG;
 }
 ```
 
-As you can see it iterates over your misspellings building the email body and
-then it's sent to you.
+As you can see it iterates over your misspellings to build the email body and
+then it sends it to you.
 
 You just have to use your custom handler while calling `MisspellingFinder`:
 
