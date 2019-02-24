@@ -11,7 +11,7 @@
     <a href="https://choosealicense.com/licenses/mit/"><img src="https://img.shields.io/github/license/tigitz/php-spellchecker.svg?style=flat-square" alt="License"></a>
 </p>
 
-<p align="center">Check misspellings from any text source with the most popular PHP spellchecker.</p>
+<p align="center">Check misspellings from any text source with the most popular spellcheckers, directly in php.</p>
 
 
 ------

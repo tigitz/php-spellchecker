@@ -46,6 +46,8 @@
     <link href="{{ theme_dir }}/css/lighty.css" rel="stylesheet">
 
     <script src="{{ theme_dir }}/js/prism.js"></script>
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
 </head>
 
 <body>
@@ -89,11 +91,18 @@
                 </form>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
-                        <li class="nav-item active">
+                        <li class="nav-item mr-4" style="padding-top: 0.40rem;">
+                            {#<a href="https://github.com/tigitz/php-spellchecker/star"#}
+                               {#class="btn">{{ feather('star', {'class' : 'icon mr-1'}) }} Say thanks </a>#}
+                            <iframe src="https://ghbtns.com/github-btn.html?user=tigitz&repo=php-spellchecker&type=watch&count=true&size=large" frameborder="0" scrolling="0" width="150px" height="39px"></iframe>
+                            <a class="github-button btn-outline-primary" href="https://github.com/tigitz/php-spellchecker" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star tigitz/php-spellchecker on GitHub">Star</a>
+                        </li>
+                        <li class="nav-item">
                             <a href="{{ github_edit_url }}"
                                class="btn btn-outline-primary">{{ feather('github', {'class' : 'icon mr-1'}) }} edit on
                                 GitHub</a>
                         </li>
+
                     </ul>
                 </div>
             </div>
