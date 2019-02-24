@@ -84,7 +84,7 @@ foreach ($filesTree as $item) {
                 'theme_dir' => $item['theme_dir'],
                 'base_dir' => $item['base_dir'],
                 'menu' => $menu,
-                'github_edit_url' => urlencode('https://github.com/tigitz/php-spellchecker/edit/master/docs/'.$item['md_path']),
+                'github_edit_url' => 'https://github.com/tigitz/php-spellchecker/edit/master/docs/'.urlencode($item['md_path']),
                 'page_title' => $item['page_title'],
             ]
         )
