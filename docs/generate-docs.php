@@ -90,5 +90,3 @@ foreach ($filesTree as $item) {
         )
     );
 }
-
-$fs->copy('docs/getting-started/what-is-php-spellcheck.html', 'index.html');
