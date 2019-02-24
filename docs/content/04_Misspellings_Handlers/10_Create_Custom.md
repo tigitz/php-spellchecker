@@ -1,4 +1,4 @@
-# Create your custom misspelling handler
+# Create your custom Misspelling Handler
 
 Misspelling handler has the responsibility to process misspellings found
 through the `MisspellingFinder` class.

@@ -30,7 +30,7 @@ class PHPString implements SourceInterface
         if ($encoding === false) {
             throw new RuntimeException(
                 \Safe\sprintf(
-                    'Coulnd\'t detect enconding of string:' . PHP_EOL . '%s',
+                    'Coulnd\'t detect encoding of string:' . PHP_EOL . '%s',
                     $this->string
                 )
             );

@@ -58,6 +58,10 @@ phpcbf: vendor
 phpstan: vendor
 	$(EXEC_PHP) vendor/bin/phpstan analyse src -c phpstan.neon -a vendor/autoload.php
 
+infection: vendor
+	$(EXEC_PHP) vendor/bin/phpunit --coverage-xml=build/coverage/coverage-xml --log-junit=build/coverage/phpunit.junit.xml
+	$(EXEC_PHP) php infection.phar --threads=4 --coverage=build/coverage --min-covered-msi=74
+
 .PHONY: vendor php-cs php-cbf php-stan
 
 .DEFAULT_GOAL := help

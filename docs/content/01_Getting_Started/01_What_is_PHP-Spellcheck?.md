@@ -23,8 +23,8 @@ Using PHP-Spellcheck can eliminate vendor-lock in, reduce technical debt, and im
 
 # Features
 
-- 🧐 Supports many popular spellcheckers out of the box: [Aspell][aspell], [Hunspell][hunspell], [Ispell][ispell], [PHP Pspell][pspell], [LanguageTools][languagetools] and [MultiSpellchecker](src/Spellchecker/MultiSpellchecker.php) [(add yours!)](docs/spellchecker/create-custom.md)
-- 📄 Supports different text sources: filesystem [file](src/Source/File.php)/[directory](src/Source/Directory.php), [string](src/Source/PHPString.php), and [multisource](src/Source/MultipleSource.php) [(add yours!)](docs/spellchecker/create-custom.md)
+- 🧐 Supports many popular spellcheckers **out of the box**: [Aspell](../03_Spellcheckers/01_Aspell.md), [Hunspell](../03_Spellcheckers/02_Hunspell.md), [Ispell][ispell], [PHP Pspell][pspell], [LanguageTools][languagetools] and [MultiSpellchecker](src/Spellchecker/MultiSpellchecker.php) [(add yours!)](docs/spellchecker/create-custom.md)
+- 📄 Supports different text sources: filesystem [file](../03_Spellcheckers/01_Aspell.md)/[directory](src/Source/Directory.php), [string](src/Source/PHPString.php), and [multisource](src/Source/MultipleSource.php) [(add yours!)](docs/spellchecker/create-custom.md)
 - 🛠 Supports text processors: [MarkdownRemover](src/TextProcessor/MarkdownRemover.php) [(add yours!)](docs/text-proccesor/create-custom.md)
 - 🔁 Supports misspelling handlers: [EchoHandler](src/MisspellingHandler/EchoHandler.php) [(add yours!)](docs/misspellings-handler/create-custom.md)
 - ➰ Makes use of generators to reduce memory footprint
@@ -34,74 +34,8 @@ Using PHP-Spellcheck can eliminate vendor-lock in, reduce technical debt, and im
 
 **PHP-Spellcheck** is a welcoming project for new contributors.
 
-Want to make **your first open source contribution**? Check the [roadmap](#roadmap), pick one task, [open an issue](https://github.com/tigitz/php-spellchecker/issues/new) and we'll help you go through it 🤓🚀
+Want to make **your first open source contribution**  🤓🚀 ? Check the [roadmap](#roadmap), pick one task, [open an issue](https://github.com/tigitz/php-spellchecker/issues/new) and we'll help you go through it.
 
-# Install
-
-Via Composer
-
-```sh
-$ composer require tigitz/php-spellcheck
-```
-
-# Usage
-
-## Using the spellchecker directly
-
-You can check misspellings directly from a `PhpSpellCheck\SpellChecker` class and process them on your own.
-
-```php
-<?php
-use PhpSpellCheck\SpellChecker\Aspell;
-// if you made the default aspell installation on you local machine
-$aspell = Aspell::create();
-// or if you want to use binaries from Docker
-$aspell = new Aspell(new CommandLine(['docker','run','--rm', '-i', 'starefossen/aspell']);
-
-$misspellings = $aspell->check('mispell', ['en_US'], ['from_example']);
-foreach ($misspellings as $misspelling) {
-    $misspelling->getWord(); // 'mispell'
-    $misspelling->getLineNumber(); // '1'
-    $misspelling->getOffset(); // '0'
-    $misspelling->getSuggestions(); // ['misspell', ...]
-    $misspelling->getContext(); // ['from_example']
-}
-```
-
-## Using the MisspellingFinder helper
-
-You can also use an opinionated `MisspellingFinder` class to orchestrate your
-spellchecking flow:
-
-<p align="center">
-    <img src="https://i.imgur.com/n3JjWgh.png" alt="PHP-Spellcheck-misspellingfinder-flow">
-</p>
-
-```php
-<?php
-use PhpSpellCheck\MisspellingFinder;
-use PhpSpellCheck\MisspellingHandler\EchoHandler;
-use PhpSpellCheck\SpellChecker\Aspell;
-use PhpSpellCheck\TextInterface;
-use PhpSpellCheck\TextProcessor\TextProcessorInterface;
-
-// custom text processor that replaces "_" with " "
-$customTextProcessor = new class implements TextProcessorInterface {
-    public function process(TextInterface $text): TextInterface
-    {
-        $contentProcessed = str_replace('_', ' ', $text->getContent());
-        return $text->replaceContent($contentProcessed);
-    }
-};
-
-$misspellingFinder = new MisspellingFinder(
-    Aspell::create(),
-    new EchoHandler(),
-    $customTextProcessor
-);
-
-$misspellingFinder->find('It\'s_a_mispelling', ['en_US']); // misspellings are echoed
-```
 
 # Roadmap
 
@@ -163,46 +97,13 @@ There still are many design decisions that should be confronted with real-world 
 - How to design an intuitive CLI given the needed flexibility of usage?
 - Is the "context" array passed through all the layers the right design to handle data sharing?
 
-# Testing
-
-Spellcheckers come in many different forms, from HTTP API to command line tools. **PHP-Spellcheck** wants to ensure real-world usage is OK, so it contains integration tests. To run these, spellcheckers need to all be available during tests execution.
-
-The most convenient way to do it is by using Docker and avoid polluting your local machine.
-
-## Docker
-
-Requires `docker` and `docker-compose` to be installed (tested on Linux).
-
-```sh
-$ make build # build container images
-$ make setup # start spellcheckers container
-$ make tests-dox
-```
-
-You can also specify PHP version, dependency version target and if you want coverage. Coverage is only supported by PHP 7.2 for now.
-
-```sh
-$ PHP_VERSION=7.2 DEPS=LOWEST WITH_COVERAGE="true" make tests-dox
-```
-
-Run `make help` to list all available tasks.
-
-## Locally
-
-Todo
-
-## Environment variables
-
-If spellcheckers execution paths are different than their default values
-(e.g., `docker exec -ti myispell` instead of `ispell`) you can override the path used in tests by redefining environment variables in the [PHPUnit config file](phpunit.xml.dist)
-
 # Contributing
 
 Please see [CONTRIBUTING](.github/CONTRIBUTING.md).
 
 # Credits
 
-- Inspired by [php-speller](https://github.com/mekras/php-speller), [monolog](https://github.com/Seldaek/monolog) and [flysystem](https://github.com/thephpleague/flysystem)
+- Inspired by [php-speller](https://github.com/mekras/php-speller) and [monolog](https://github.com/Seldaek/monolog)
 - [Philippe Segatori][link-author]
 - [All Contributors][link-contributors]
 
