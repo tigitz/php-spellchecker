@@ -4,11 +4,11 @@
     <img src="https://i.imgur.com/C8hHwW9.png" alt="PHP-Spellcheck" width="300" height="300">
 </p>
 <p align="center">
-    <a href="https://travis-ci.org/tigitz/php-spellchecker"><img src="https://img.shields.io/travis/com/tigitz/php-spellchecker/master.svg?style=flat-square&logo=travis" alt="Build Status"></a>
-    <a href="https://scrutinizer-ci.com/g/tigitz/php-spellchecker/?branch=master"><img src="https://img.shields.io/scrutinizer/coverage/g/tigitz/php-spellchecker/master.svg?style=flat-square&logo=scrutinizer" alt="Code coverage"></a>
-    <a href="https://scrutinizer-ci.com/g/tigitz/php-spellchecker/?branch=master"><img src="https://img.shields.io/scrutinizer/g/tigitz/php-spellchecker.svg?style=flat-square&logo=scrutinizer" alt="Code coverage"></a>
-    <a href="https://gitter.im/php-spellchecker/community"><img src="https://img.shields.io/gitter/room/tigitz/php-spellchecker.svg?style=flat-square" alt="PHP-Spellcheck chat room"></a>
-    <a href="https://choosealicense.com/licenses/mit/"><img src="https://img.shields.io/github/license/tigitz/php-spellchecker.svg?style=flat-square" alt="License"></a>
+    <a href="https://travis-ci.org/tigitz/php-spellcheck"><img src="https://img.shields.io/travis/com/tigitz/php-spellcheck/master.svg?style=flat-square&logo=travis" alt="Build Status"></a>
+    <a href="https://scrutinizer-ci.com/g/tigitz/php-spellcheck/?branch=master"><img src="https://img.shields.io/scrutinizer/coverage/g/tigitz/php-spellchecke/master.svg?style=flat-square&logo=scrutinizer" alt="Code coverage"></a>
+    <a href="https://scrutinizer-ci.com/g/tigitz/php-spellcheck/?branch=master"><img src="https://img.shields.io/scrutinizer/g/tigitz/php-spellcheck.svg?style=flat-square&logo=scrutinizer" alt="Code coverage"></a>
+    <a href="https://gitter.im/php-spellcheck/community"><img src="https://img.shields.io/gitter/room/tigitz/php-spellcheck.svg?style=flat-square" alt="PHP-Spellcheck chat room"></a>
+    <a href="https://choosealicense.com/licenses/mit/"><img src="https://img.shields.io/github/license/tigitz/php-spellcheck.svg?style=flat-square" alt="License"></a>
 </p>
 
 <p align="center">Check misspellings from any text source with the most popular PHP spellchecker.</p>
@@ -34,7 +34,7 @@ Using PHP-Spellcheck can eliminate vendor-lock in, reduce technical debt, and im
 
 **PHP-Spellcheck** is a welcoming project for new contributors.
 
-Want to make **your first open source contribution**? Check the [roadmap](#roadmap), pick one task, [open an issue](https://github.com/tigitz/php-spellchecker/issues/new) and we'll help you go through it 🤓🚀
+Want to make **your first open source contribution**? Check the [roadmap](#roadmap), pick one task, [open an issue](https://github.com/tigitz/php-spellcheck/issues/new) and we'll help you go through it 🤓🚀
 
 # Install
 
