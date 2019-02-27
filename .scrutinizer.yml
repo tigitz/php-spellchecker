@@ -10,17 +10,10 @@ build:
                     - ~/.composer/cache
             project_setup:
                 override: true
-            tests:
-                override:
-                    - php-scrutinizer-run
     dependencies:
         override:
             - composer install --no-interaction --prefer-dist
-
-tools:
-    external_code_coverage:
-        timeout: 3600
-
+            
 filter:
     excluded_paths:
         - docs
