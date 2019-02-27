@@ -5,7 +5,7 @@
 </p>
 <p align="center">
     <a href="https://travis-ci.org/tigitz/php-spellcheck"><img src="https://img.shields.io/travis/com/tigitz/php-spellcheck/master.svg?style=flat-square&logo=travis" alt="Build Status"></a>
-    <a href="https://scrutinizer-ci.com/g/tigitz/php-spellcheck/?branch=master"><img src="https://img.shields.io/scrutinizer/coverage/g/tigitz/php-spellchecke/master.svg?style=flat-square&logo=scrutinizer" alt="Code coverage"></a>
+    <a href="https://codecov.io/gh/tigitz/php-spellcheck/branch/master"><img src="https://img.shields.io/codecov/c/github/tigitz/php-spellcheck/master.svg?style=flat-square&logo=codecov" alt="Code coverage"></a>
     <a href="https://scrutinizer-ci.com/g/tigitz/php-spellcheck/?branch=master"><img src="https://img.shields.io/scrutinizer/g/tigitz/php-spellcheck.svg?style=flat-square&logo=scrutinizer" alt="Code coverage"></a>
     <a href="https://gitter.im/php-spellcheck/community"><img src="https://img.shields.io/gitter/room/tigitz/php-spellcheck.svg?style=flat-square" alt="PHP-Spellcheck chat room"></a>
     <a href="https://choosealicense.com/licenses/mit/"><img src="https://img.shields.io/github/license/tigitz/php-spellcheck.svg?style=flat-square" alt="License"></a>
