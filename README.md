@@ -7,7 +7,7 @@
     <a href="https://travis-ci.org/tigitz/php-spellcheck"><img src="https://img.shields.io/travis/com/tigitz/php-spellcheck/master.svg?style=flat-square&logo=travis" alt="Build Status"></a>
     <a href="https://codecov.io/gh/tigitz/php-spellcheck/branch/master"><img src="https://img.shields.io/codecov/c/github/tigitz/php-spellcheck/master.svg?style=flat-square&logo=codecov" alt="Code coverage"></a>
     <a href="https://scrutinizer-ci.com/g/tigitz/php-spellcheck/?branch=master"><img src="https://img.shields.io/scrutinizer/g/tigitz/php-spellcheck.svg?style=flat-square&logo=scrutinizer" alt="Code coverage"></a>
-    <a href="https://gitter.im/php-spellcheck/community"><img src="https://img.shields.io/gitter/room/tigitz/php-spellcheck.svg?style=flat-square" alt="PHP-Spellcheck chat room"></a>
+    <a href="https://gitter.im/php-spellcheck/php-spellcheck"><img src="https://img.shields.io/gitter/room/tigitz/php-spellcheck.svg?style=flat-square" alt="PHP-Spellcheck chat room"></a>
     <a href="https://choosealicense.com/licenses/mit/"><img src="https://img.shields.io/github/license/tigitz/php-spellcheck.svg?style=flat-square" alt="License"></a>
 </p>
 
@@ -46,15 +46,17 @@ $ composer require tigitz/php-spellcheck
 
 # Usage
 
+[Check out the documentation](https://tigitz.github.io/php-spellcheck) and [examples](example)
+
 ## Using the spellchecker directly
 
 You can check misspellings directly from a `PhpSpellCheck\SpellChecker` class and process them on your own.
 
 ```php
 <?php
-use PhpSpellCheck\SpellChecker\Aspell;
 // if you made the default aspell installation on you local machine
 $aspell = Aspell::create();
+
 // or if you want to use binaries from Docker
 $aspell = new Aspell(new CommandLine(['docker','run','--rm', '-i', 'starefossen/aspell']);
 
@@ -77,30 +79,45 @@ spellchecking flow:
     <img src="https://i.imgur.com/n3JjWgh.png" alt="PHP-Spellcheck-misspellingfinder-flow">
 </p>
 
+Following the well-known [Unix philosophy](http://en.wikipedia.org/wiki/Unix_philosophy):
+> Write programs that do one thing and do it well. Write programs to work together. Write programs to handle text streams, because that is a universal interface
+
 ```php
 <?php
-use PhpSpellCheck\MisspellingFinder;
-use PhpSpellCheck\MisspellingHandler\EchoHandler;
-use PhpSpellCheck\SpellChecker\Aspell;
-use PhpSpellCheck\TextInterface;
-use PhpSpellCheck\TextProcessor\TextProcessorInterface;
-
-// custom text processor that replaces "_" with " "
-$customTextProcessor = new class implements TextProcessorInterface {
+// My custom text processor that replaces "_" by " "
+$customTextProcessor = new class implements TextProcessorInterface
+{
     public function process(TextInterface $text): TextInterface
     {
         $contentProcessed = str_replace('_', ' ', $text->getContent());
+
         return $text->replaceContent($contentProcessed);
     }
 };
 
 $misspellingFinder = new MisspellingFinder(
-    Aspell::create(),
-    new EchoHandler(),
+    Aspell::create(), // Creates aspell spellchecker pointing to "aspell" as it's binary path
+    new EchoHandler(), // Handles all the misspellings found by echoing their information
     $customTextProcessor
 );
 
-$misspellingFinder->find('It\'s_a_mispelling', ['en_US']); // misspellings are echoed
+// using a string
+$misspellingFinder->find('It\'s_a_mispelling', ['en_US']);
+// word: mispelling | line: 1 | offset: 7 | suggestions: mi spelling,mi-spelling,misspelling | context: []
+
+// using a TextSource
+$inMemoryTextProvider = new class implements SourceInterface
+{
+    public function toTexts(array $context): iterable
+    {
+        yield new Text('my_mispell', TextEncoding::UTF8, ['from_source_interface']);
+        yield Text::utf8('my_other_mispell', ['from_named_constructor']);
+    }
+};
+
+$misspellingFinder->find($inMemoryTextProvider, ['en_US']);
+//word: mispell | line: 1 | offset: 3 | suggestions: mi spell,mi-spell,misspell,... | context: ["from_source_interface"]
+//word: mispell | line: 1 | offset: 9 | suggestions: mi spell,mi-spell,misspell,... | context: ["from_named_constructor"]
 ```
 
 # Roadmap
@@ -215,7 +232,8 @@ Elements taken for the final rendering are [Designed by rawpixel.com / Freepik](
 
 [link-author]: https://github.com/tigitz
 [link-contributors]: ../../contributors
-[aspell]: https://github.com/GNUAspell/aspell
+
+[aspell]: docs/content/03_Spellcheckers/01_Aspell.md
 [hunspell]: https://github.com/hunspell/hunspell
 [ispell]: https://packages.debian.org/stretch/ispell
 [languagetools]: https://github.com/languagetool-org/languagetool

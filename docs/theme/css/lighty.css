@@ -32,6 +32,10 @@ li {
     vertical-align: middle;
 }
 
+.nav-item:hover svg, .nav-item:active svg, .nav-item:focus svg {
+    fill: hsl(259, 52%, 55%);
+}
+
 .btn-outline-primary {
     color: hsl(259, 52%, 55%) !important;
     border-color: rgb(140, 108, 208) !important;
@@ -97,4 +101,11 @@ a.bg-light:focus, a.bg-light:hover, button.bg-light:focus, button.bg-light:hover
     margin-bottom: 1rem;
 }
 
+.gitter-chat-embed {
+    padding-top: 55px;
+}
+
+.gitter-chat-embed-action-bar {
+    padding-top: 55px;
+}
 

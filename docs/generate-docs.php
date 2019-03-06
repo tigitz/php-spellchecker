@@ -1,5 +1,10 @@
 <?php
-
+/**
+ * Generate the HTML documentation files by reading the `content` folder and transforming markdown to html.
+ * It keeps the files and directories order in `content` to generate the menu tree.
+ *
+ * HTML files eventually generated in `docs` are meant to be hosted on Github pages.
+ */
 use Aptoma\Twig\Extension\MarkdownExtension;
 use Aptoma\Twig\Extension\MarkdownEngine;
 use Cocur\Slugify\Slugify;
@@ -20,7 +25,6 @@ $engine = new MarkdownEngine\ParsedownEngine();
 $twig->addFunction($function);
 $twig->addExtension(new MarkdownExtension($engine));
 
-
 $finder = new Finder();
 $finder->in('content');
 $finder->sortByName();
@@ -28,7 +32,8 @@ $finder->sortByName();
 $slugify = new Slugify();
 $filesTree = [];
 $menu = [];
-foreach ($finder as $item) {
+
+foreach ($finder as $idx => $item) {
     $depth = substr_count($item->getPathname(), DIRECTORY_SEPARATOR);
     $normalizedFilename = preg_replace('/\d\d_/' , '', $item->getFilename());
 
@@ -40,6 +45,16 @@ foreach ($finder as $item) {
         ];
 
         $menu[] = $menuItem;
+
+        // if first folder in menu, add index.html doc homepage as first item
+        if (\count($menu) === 1) {
+            $menu[] = [
+                'depth' => 2,
+                'isDir' => false,
+                'label' => 'What is PHP-Spellcheck ?',
+                'href' => 'index.html',
+            ];
+        }
 
         continue;
     }
@@ -80,13 +95,35 @@ foreach ($filesTree as $item) {
         $twig->render(
             'layout.html.twig',
             [
-                'markdown_content' => $item['md_path'],
+                'markdown_path' => $item['md_path'],
                 'theme_dir' => $item['theme_dir'],
                 'base_dir' => $item['base_dir'],
                 'menu' => $menu,
-                'github_edit_url' => 'https://github.com/tigitz/php-spellchecker/edit/master/docs/'.urlencode($item['md_path']),
+                'github_edit_url' => 'https://github.com/tigitz/php-spellcheck/edit/master/docs/'.urlencode($item['md_path']),
                 'page_title' => $item['page_title'],
             ]
         )
     );
 }
+
+// Generate index.html doc file from the readme while stripping some sections
+$readme = \Safe\file_get_contents(__DIR__.'/../README.md');
+
+$readme = \Safe\preg_replace('/(# Install[\s\S]+?)^# /m', '# ', $readme);
+$readme = \Safe\preg_replace('/(# Usage[\s\S]+?)^# /m', '# ', $readme);
+$readme = \Safe\preg_replace('/(# Testing[\s\S]+?)^# /m', '# ', $readme);
+
+$fs->dumpFile(
+    __DIR__.'/index.html',
+    $twig->render(
+        'layout.html.twig',
+        [
+            'markdown_content' => $readme,
+            'theme_dir' => 'theme',
+            'base_dir' => '',
+            'menu' => $menu,
+            'github_edit_url' => 'https://github.com/tigitz/php-spellcheck/edit/master/README.md',
+            'page_title' => 'What is PHP-Spellcheck ?',
+        ]
+    )
+);

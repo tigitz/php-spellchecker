@@ -9,6 +9,8 @@ We accept contributions via Pull Requests on [Github](https://github.com/tigitz/
 
 - **Coding Standard** - Check the code style with ``vendor/bin/phpcs``.
 
+- **Static Analysis** - Check the code quality with ``vendor/bin/phpstan analyse src``.
+
 - **Add tests!** - Your patch won't be accepted if it doesn't have tests.
 
 - **Document any change in behaviour** - Make sure the `README.md` and any other relevant documentation are kept up-to-date.

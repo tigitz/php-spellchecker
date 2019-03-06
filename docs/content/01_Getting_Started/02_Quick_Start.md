@@ -11,13 +11,17 @@ $ composer require tigitz/php-spellcheck
 
 ## Using the Spellchecker directly
 
-You can check misspellings directly from a `PhpSpellCheck\SpellChecker` class and process them on your own.
+You can check misspellings directly from a `PhpSpellcheck\SpellChecker` class and process them on your own.
+
+In this example we use the popular [Aspell](../03_Spellcheckers/01_Aspell.md) spellchecker.
 
 ```php
 <?php
-use PhpSpellCheck\SpellChecker\Aspell;
+use PhpSpellcheck\SpellChecker\Aspell;
+
 // if you made the default aspell installation on you local machine
 $aspell = Aspell::create();
+
 // or if you want to use binaries from Docker
 $aspell = new Aspell(new CommandLine(['docker','run','--rm', '-i', 'starefossen/aspell']);
 
@@ -42,11 +46,11 @@ spellchecking flow:
 
 ```php
 <?php
-use PhpSpellCheck\MisspellingFinder;
-use PhpSpellCheck\MisspellingHandler\EchoHandler;
-use PhpSpellCheck\SpellChecker\Aspell;
-use PhpSpellCheck\TextInterface;
-use PhpSpellCheck\TextProcessor\TextProcessorInterface;
+use PhpSpellcheck\MisspellingFinder;
+use PhpSpellcheck\MisspellingHandler\EchoHandler;
+use PhpSpellcheck\SpellChecker\Aspell;
+use PhpSpellcheck\TextInterface;
+use PhpSpellcheck\TextProcessor\TextProcessorInterface;
 
 // custom text processor that replaces "_" with " "
 $customTextProcessor = new class implements TextProcessorInterface {
@@ -63,5 +67,9 @@ $misspellingFinder = new MisspellingFinder(
     $customTextProcessor
 );
 
+// checking a string
 $misspellingFinder->find('It\'s_a_mispelling', ['en_US']); // misspellings are echoed
+
+// checking a TextSource
+$misspellingFinder->find('It\'s_a_mispelling', ['en_US']);// misspellings are echoed
 ```

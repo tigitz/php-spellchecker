@@ -1,23 +1,15 @@
+<!-- These files are automatically generated do not edit directly, check the related markdown version in docs/content folder -->
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta name="description" content="{{ page_description }}">
     <meta name="author" content="Philippe Segatori & PHP-Spellcheck contributors">
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1, , shrink-to-fit=no, user-scalable=0" name="viewport">
     <meta content="ie=edge" http-equiv="X-UA-Compatible">
-    {#<meta content="#ffffff" name="msapplication-TileColor">#}
-    {#<meta content="/ms-icon-144x144.png" name="msapplication-TileImage">#}
     <meta charset="UTF-8">
-    {#<link href="/doc/assets/images/favicon/apple-touch-icon-e849d94c.png" rel="apple-touch-icon" sizes="180x180">#}
-    {#<link href="/doc/assets/images/favicon/favicon-32x32-bdc092ed.png" rel="icon" sizes="32x32" type="image/png">#}
-    {#<link href="/doc/assets/images/favicon/favicon-16x16-e68455aa.png" rel="icon" sizes="16x16" type="image/png">#}
-    {#<link href="/doc/assets/images/favicon/site.webmanifest" rel="manifest">#}
-    {#<link href="/doc/assets/images/favicon/safari-pinned-tab-c3b488f8.svg" rel="mask-icon">#}
-    {#<link href="/doc/assets/images/favicon/favicon.ico" rel="shortcut icon">#}
     <meta content="#5468ff" name="msapplication-TileColor">
-    {#<meta content="/doc/assets/images/favicon/browserconfig.xml" name="msapplication-config">#}
     <meta content="#ffffff" name="theme-color">
     <link href="https://tigitz.github.io/php-spellchecker/" rel="canonical">
     <meta content="summary_large_image" name="twitter:card">
@@ -46,8 +38,13 @@
     <link href="{{ theme_dir }}/css/lighty.css" rel="stylesheet">
 
     <script src="{{ theme_dir }}/js/prism.js"></script>
-    <!-- Place this tag in your head or just before your close body tag. -->
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <script>
+        ((window.gitter = {}).chat = {}).options = {
+            room: 'php-spellcheck/php-spellcheck',
+            activationElement: '.chat-gitter'
+        };
+    </script>
+    <script src="https://sidecar.gitter.im/dist/sidecar.v1.js" async defer></script>
 </head>
 
 <body>
@@ -85,36 +82,38 @@
                         <div class="input-group-prepend">
                             <div class="input-group-text">{{ feather('search') }}</div>
                         </div>
-                        <input class="form-control mr-sm-2 search-input" type="text" placeholder="Search"
+                        <input disabled class="form-control mr-sm-2 search-input" type="text" placeholder="Search coming soon"
                                aria-label="Search">
                     </div>
                 </form>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <div id="navbarSupportedContent">
                     <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
-                        <li class="nav-item mr-4" style="padding-top: 0.40rem;">
-                            {#<a href="https://github.com/tigitz/php-spellchecker/star"#}
-                               {#class="btn">{{ feather('star', {'class' : 'icon mr-1'}) }} Say thanks </a>#}
-                            <iframe src="https://ghbtns.com/github-btn.html?user=tigitz&repo=php-spellchecker&type=watch&count=true&size=large" frameborder="0" scrolling="0" width="150px" height="39px"></iframe>
-                            <a class="github-button btn-outline-primary" href="https://github.com/tigitz/php-spellchecker" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star tigitz/php-spellchecker on GitHub">Star</a>
+                        <li class="nav-item mr-4">
+                            <a href="https://github.com/tigitz/php-spellchecker">Like it? Star us!{{ feather('star', {'class' : 'icon ml-2 gh-star', 'style': 'fill: true'}) }}</a>
                         </li>
-                        <li class="nav-item">
-                            <a href="{{ github_edit_url }}"
-                               class="btn btn-outline-primary">{{ feather('github', {'class' : 'icon mr-1'}) }} edit on
-                                GitHub</a>
+                        <li class="nav-item mr-4">
+                            <a href="https://gitter.im/php-spellcheck/community" class="chat-gitter">Help{{ feather('message-square', {'class' : 'icon ml-2 gh-star', 'style': 'fill: true'}) }}</a>
                         </li>
-
                     </ul>
                 </div>
             </div>
         </nav>
 
-        <div class="container ml-3 px-5">
-            <div class="float-right mt-2"><a class="btn btn-outline-primary">{{ feather('github', {'class' : 'icon'}) }}
-                    edit on GitHub</a></div>
+        <div class="container ml-3 px-5 pt-5">
+            <div class="float-right mt-4">
+                <a href="{{ github_edit_url }}"
+                   class="btn btn-outline-primary">{{ feather('github', {'class' : 'icon mr-1'}) }} edit on
+                    GitHub</a>
+            </div>
             <br>
-            <div class="markdown-content pt-5">
+            <div class="markdown-content">
                 {% markdown %}
-                    {% include markdown_content %}
+                    {% if markdown_path is defined %}
+                        {% include markdown_path %}
+                    {% endif %}
+                    {% if markdown_content is defined %}
+                        {{ markdown_content|raw }}
+                    {% endif %}
                 {% endmarkdown %}
             </div>
         </div>

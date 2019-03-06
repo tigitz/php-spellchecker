@@ -1,4 +1,4 @@
-# Create your custom Spellchecker
+# Create your custom Text Processor
 TODO
 
 Meanwhile, check the current implementations in `PhpSpellcheck\Spellchecker` to
