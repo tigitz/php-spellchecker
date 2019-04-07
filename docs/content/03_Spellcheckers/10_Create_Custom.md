@@ -17,18 +17,16 @@ $phpSpellcheckLibraryNameSpellchecker = new class implements SpellcheckerInterfa
     ): iterable {
         foreach (['php-spellcheck', 'php-spellchecker', 'php spellchecker'] as $misspelledCandidate) {
             $matches = [];
+            
             if (preg_match('/\b'.$misspelledCandidate.'\b/i', $text, $matches, PREG_OFFSET_CAPTURE) !== false) {
                 foreach ($matches as $match) {
                     [$word, $offset] = $match;
-                    
-                    // compute offset from line number
-                    $lineOffset = ...
-                    $lineNumber = ...
+                    [$line, $offsetFromLine] = LineAndOffset::findFromFirstCharacterOffset($text, $offset, $encoding);
 
                     yield new Misspelling(
                         $word,
-                        $lineOffset,
-                        $lineNumber,
+                        $offsetFromLine,
+                        $line,
                         ['PHP Spellcheck']
                     );
                 }
@@ -42,10 +40,8 @@ $phpSpellcheckLibraryNameSpellchecker = new class implements SpellcheckerInterfa
     }
 };
 
-
 /** @var Misspelling[]|\Generator $misspellings */
 $misspellings = $phpSpellcheckLibraryNameSpellchecker->check('The PHP-SpellChecker library', ['en_US']);
-
 foreach ($misspellings as $misspelling) {
     print_r([
         $misspelling->getWord(), // 'PHP-SpellChecker'
@@ -55,4 +51,5 @@ foreach ($misspellings as $misspelling) {
         $misspelling->getContext(), // []
     ]);
 }
+
 ```
