@@ -28,7 +28,7 @@ $misspellingFinder = new MisspellingFinder(
     $customTextProcessor
 );
 
-// using a TextSource
+// Using a custom SourceInterface that generates Text
 $inMemoryTextProvider = new class implements SourceInterface
 {
     public function toTexts(array $context): iterable

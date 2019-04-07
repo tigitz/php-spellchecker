@@ -42,7 +42,17 @@ class MultiSpellchecker implements SpellcheckerInterface
         $misspellings = [];
         /** @var SpellcheckerInterface $spellChecker */
         foreach ($this->spellCheckers as $spellChecker) {
-            foreach ($spellChecker->check($text, $languages, $context, $encoding) as $misspelling) {
+            $supportedLanguages = is_array($spellChecker->getSupportedLanguages()) ?
+                $spellChecker->getSupportedLanguages() :
+                iterator_to_array($spellChecker->getSupportedLanguages());
+
+            $spellcheckerSupportedLanguages = array_intersect($supportedLanguages, $languages);
+
+            if ($spellcheckerSupportedLanguages === []) {
+                continue;
+            }
+
+            foreach ($spellChecker->check($text, $spellcheckerSupportedLanguages, $context, $encoding) as $misspelling) {
                 if (!empty($context)) {
                     $misspelling = $misspelling->mergeContext($context);
                 }
@@ -86,7 +96,17 @@ class MultiSpellchecker implements SpellcheckerInterface
         ?string $encoding
     ): iterable {
         foreach ($this->spellCheckers as $spellChecker) {
-            foreach ($spellChecker->check($text, $languages, $context, $encoding) as $misspelling) {
+            $supportedLanguages = is_array($spellChecker->getSupportedLanguages()) ?
+                $spellChecker->getSupportedLanguages() :
+                iterator_to_array($spellChecker->getSupportedLanguages());
+
+            $spellcheckerSupportedLanguages = array_intersect($supportedLanguages, $languages);
+
+            if ($spellcheckerSupportedLanguages === []) {
+                continue;
+            }
+
+            foreach ($spellChecker->check($text, $spellcheckerSupportedLanguages, $context, $encoding) as $misspelling) {
                 if (!empty($context)) {
                     $misspelling = $misspelling->mergeContext($context);
                 }

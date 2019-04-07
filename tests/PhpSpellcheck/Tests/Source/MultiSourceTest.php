@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace PhpSpellcheck\Tests\Source;
 
-use PhpSpellcheck\Source\MultipleSource;
+use PhpSpellcheck\Source\MultiSource;
 use PhpSpellcheck\Source\SourceInterface;
 use PhpSpellcheck\TextInterface;
 use PhpSpellcheck\Utils\TextEncoding;
 use PHPUnit\Framework\TestCase;
 
-class MultipleSourceTest extends TestCase
+class MultiSourceTest extends TestCase
 {
     public function testToTexts()
     {
@@ -24,7 +24,7 @@ class MultipleSourceTest extends TestCase
         $mockSource1 = $this->generateMockSource([$mockText1]);
         $mockSource2 = $this->generateMockSource([$mockText2]);
 
-        $source = new MultipleSource(
+        $source = new MultiSource(
             [
                 $mockSource1,
                 $mockSource2,

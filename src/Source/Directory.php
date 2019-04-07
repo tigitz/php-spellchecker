@@ -63,7 +63,7 @@ class Directory implements SourceInterface
 
             if (!$file->isDir()) {
                 if ($file->getRealPath() !== false) {
-                    yield current((new File($file->getRealPath()))->toTexts());
+                    yield from (new File($file->getRealPath()))->toTexts();
                 }
             }
         }

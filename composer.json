@@ -20,11 +20,21 @@
             "role": "Maintainer"
         }
     ],
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../php-spellcheck-thanks",
+            "options": {
+                "symlink": false
+            }
+        }
+    ],
     "require": {
         "php": "^7.1",
         "symfony/process": "^3.3|^4.0",
         "thecodingmachine/safe": "^0.1.13",
-        "webmozart/assert": "1.3.*"
+        "webmozart/assert": "1.3.*",
+        "tigitz/php-spellcheck-thanks": "dev-master"
     },
     "require-dev": {
         "aptoma/twig-markdown": "^3.0",

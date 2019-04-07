@@ -32,7 +32,7 @@ class PHPPspellTest extends TestCase
         $this->assertNotEmpty($misspellings[0]->getSuggestions());
     }
 
-    public function testCheckWithoutEnconding()
+    public function testCheckWithoutEncoding()
     {
         $this->expectException(\InvalidArgumentException::class);
         $pspell = new PHPPspell(PSPELL_FAST);

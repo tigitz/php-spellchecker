@@ -14,9 +14,6 @@ parameters:
 
         # webmozart/assert missanalysis
         -
-            message: "#^Call to static method Webmozart\\\\Assert\\\\Assert\\:\\:allIsInstanceOf\\(\\) with iterable\\<PhpSpellcheck\\\\Source\\\\SourceInterface\\> and 'PhpSpellcheck…' will always evaluate to true\\.$#"
-            path: %currentWorkingDirectory%/src/Source/MultipleSource.php
-        -
             message: "#^Call to static method Webmozart\\\\Assert\\\\Assert\\:\\:stringNotEmpty\\(\\) with string will always evaluate to true\\.$#"
             path: %currentWorkingDirectory%/src/Misspelling.php
         -
@@ -25,13 +22,16 @@ parameters:
         -
             message: "#^Call to static method Webmozart\\\\Assert\\\\Assert\\:\\:allIsInstanceOf\\(\\) with iterable\\<PhpSpellcheck\\\\Spellchecker\\\\SpellcheckerInterface\\> and 'PhpSpellcheck…' will always evaluate to true\\.$#"
             path: %currentWorkingDirectory%/src/Spellchecker/MultiSpellchecker.php
+        -
+            message: "#^Call to static method Webmozart\\\\Assert\\\\Assert\\:\\:allIsInstanceOf\\(\\) with iterable\\<PhpSpellcheck\\\\Source\\\\SourceInterface\\> and 'PhpSpellcheck…' will always evaluate to true\\.$#"
+            path: %currentWorkingDirectory%/src/Source/MultiSource.php
 
         # preg_* functions surely returning string as parameter is string
         -
             message: "#^Possibly invalid array key type array\\|string\\.$#"
             path: %currentWorkingDirectory%/src/Spellchecker/Hunspell.php
         -
-            message: "#^Parameter \\#1 \\$text of static method PhpSpellcheck\\\\Text\\:\\:utf8\\(\\) expects string, array\\|string given\\.$#"
+            message: "#^Parameter \\#1 \\$newContent of method PhpSpellcheck\\\\TextInterface\\:\\:replaceContent\\(\\) expects string, array\\|string given\\.$#"
             path: %currentWorkingDirectory%/src/TextProcessor/MarkdownRemover.php
         -
             message: "#^Parameter \\#2 \\$str of function explode expects string, array\\|string given\\.$#"

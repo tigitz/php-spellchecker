@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace PhpSpellcheck\TextProcessor;
 
-use PhpSpellcheck\Text;
 use PhpSpellcheck\TextInterface;
 
 /**
- * Removes markdown while keeping original lines and columns of
- * characters to make spellchecking relevant.
+ * @experimental
+ *
+ * Removes markdown while trying to keeping original lines and offset position of
+ * characters in order to make spellchecking relevant.
  */
 class MarkdownRemover implements TextProcessorInterface
 {
@@ -58,6 +59,6 @@ class MarkdownRemover implements TextProcessorInterface
         // Remove inline code
         $output = \Safe\preg_replace('/`(.+?)`/', '$1', $output);
 
-        return Text::utf8($output, $text->getContext());
+        return $text->replaceContent($output);
     }
 }

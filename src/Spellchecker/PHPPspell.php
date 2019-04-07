@@ -26,13 +26,17 @@ class PHPPspell implements SpellcheckerInterface
      * @see http://php.net/manual/en/function.pspell-config-mode.php
      * @see http://php.net/manual/en/function.pspell-config-ignore.php
      *
-     * @param int $mode the mode parameter is the mode in which spellchecker will work
+     * @param int $mode the mode parameter is the mode in which the spellchecker will work
      * @param int $numberOfCharactersLowerLimit Words less than n characters will be skipped
      */
-    public function __construct(int $mode, int $numberOfCharactersLowerLimit = 0)
+    public function __construct(?int $mode = null, int $numberOfCharactersLowerLimit = 0)
     {
         if (!extension_loaded('pspell')) {
             throw new RuntimeException('Pspell extension must be loaded to use the PHPPspell spellchecker');
+        }
+
+        if ($mode === null) {
+            $mode = PSPELL_FAST;
         }
 
         Assert::greaterThanEq($numberOfCharactersLowerLimit, 0);

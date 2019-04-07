@@ -98,7 +98,8 @@ class LanguageTool implements SpellcheckerInterface
         }
 
         $start = 0;
-        $lineBreaksOffset = [];
+        // First line has a line offset at 0
+        $lineBreaksOffset = [$start];
         while (($pos = \mb_strpos(($text), PHP_EOL, $start, $encoding)) != false) {
             $lineBreaksOffset[] = $pos;
             $start = $pos + 1; // start searching from next position.

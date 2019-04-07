@@ -11,19 +11,19 @@
     <meta charset="UTF-8">
     <meta content="#5468ff" name="msapplication-TileColor">
     <meta content="#ffffff" name="theme-color">
-    <link href="https://tigitz.github.io/php-spellchecker/" rel="canonical">
+    <link href="https://tigitz.github.io/php-spellcheck/" rel="canonical">
     <meta content="summary_large_image" name="twitter:card">
     <meta content="@php-spellcheck" name="twitter:site">
     <meta name="twitter:title">
     <meta content="" name="twitter:description">
-    <meta content="tigitz.github.io/php-spellchecker/theme/img/logo.png" name="twitter:image:src">
-    <meta content="tigitz.github.io/php-spellchecker" name="twitter:domain">
+    <meta content="tigitz.github.io/php-spellcheck/theme/img/logo.png" name="twitter:image:src">
+    <meta content="tigitz.github.io/php-spellcheck" name="twitter:domain">
 
-    <meta content="https://tigitz.github.io/php-spellchecker/" property="og:url">
+    <meta content="https://tigitz.github.io/php-spellcheck/" property="og:url">
     <meta content="PHP-Spellcheck Documentation" property="og:site_name">
     <meta property="og:title">
     <meta content="" property="og:description">
-    <meta content="tigitz.github.io/php-spellchecker/theme/img/logo.png" property="og:image">
+    <meta content="tigitz.github.io/php-spellcheck/theme/img/logo.png" property="og:image">
     <meta content="300" property="og:image:width">
     <meta content="300" property="og:image:height">
     <title>What is PHP-Spellcheck ? - PHP-Spellcheck Documentation</title>
@@ -61,6 +61,7 @@
                                         <li><a href="index.html">What is PHP-Spellcheck ?</a></li>
                                                                                                                         <li><a href="docs/getting-started/quick-start.html">Quick Start </a></li>
                                                                                                                         <li><a href="docs/getting-started/architecture.html">Architecture </a></li>
+                                                                                                                        <li><a href="docs/getting-started/encoding.html">Encoding </a></li>
                                             </ul>
                                                                                     <h2 class="h6 text-uppercase menu-head-item">Spellcheckers</h2>
                                                                                                                         <ul class="py-1 list-unstyled">
@@ -113,7 +114,7 @@
                 <div id="navbarSupportedContent">
                     <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
                         <li class="nav-item mr-4">
-                            <a href="https://github.com/tigitz/php-spellchecker">Like it? Star us!<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-star icon ml-2 gh-star" style="fill: true" ><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></a>
+                            <a href="https://github.com/tigitz/php-spellcheck">Like it? Star us!<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-star icon ml-2 gh-star" style="fill: true" ><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></a>
                         </li>
                         <li class="nav-item mr-4">
                             <a href="https://gitter.im/php-spellcheck/community" class="chat-gitter">Help<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-square icon ml-2 gh-star" style="fill: true" ><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></a>
@@ -149,10 +150,10 @@
 <p>Using PHP-Spellcheck can eliminate vendor-lock in, reduce technical debt, and improve the testability of your code.</p>
 <h1>Features</h1>
 <ul>
-<li>🧐 Supports many popular spellcheckers out of the box: <a href="docs/content/03_Spellcheckers/01_Aspell.md">Aspell</a>, <a href="https://github.com/hunspell/hunspell">Hunspell</a>, <a href="https://packages.debian.org/stretch/ispell">Ispell</a>, <a href="http://php.net/manual/en/book.pspell.php">PHP Pspell</a>, <a href="https://github.com/languagetool-org/languagetool">LanguageTools</a> and <a href="src/Spellchecker/MultiSpellchecker.php">MultiSpellchecker</a> <a href="docs/spellchecker/create-custom.md">(add yours!)</a></li>
-<li>📄 Supports different text sources: filesystem <a href="src/Source/File.php">file</a>/<a href="src/Source/Directory.php">directory</a>, <a href="src/Source/PHPString.php">string</a>, and <a href="src/Source/MultipleSource.php">multisource</a> <a href="docs/spellchecker/create-custom.md">(add yours!)</a></li>
-<li>🛠 Supports text processors: <a href="src/TextProcessor/MarkdownRemover.php">MarkdownRemover</a> <a href="docs/text-proccesor/create-custom.md">(add yours!)</a></li>
-<li>🔁 Supports misspelling handlers: <a href="src/MisspellingHandler/EchoHandler.php">EchoHandler</a> <a href="docs/misspellings-handler/create-custom.md">(add yours!)</a></li>
+<li>🧐 Supports many popular spellcheckers out of the box: <a href="https://tigitz.github.io/php-spellcheck/docs/spellcheckers/aspell.html">Aspell</a>, <a href="https://tigitz.github.io/php-spellcheck/docs/spellcheckers/hunspell.html">Hunspell</a>, <a href="https://tigitz.github.io/php-spellcheck/docs/spellcheckers/ispell.html">Ispell</a>, <a href="https://tigitz.github.io/php-spellcheck/docs/spellcheckers/php-pspell.html">PHP Pspell</a>, <a href="https://tigitz.github.io/php-spellcheck/docs/spellcheckers/languagetools.html">LanguageTools</a> and <a href="https://tigitz.github.io/php-spellcheck/docs/spellcheckers/multispellchecker.html">MultiSpellchecker</a> <a href="https://tigitz.github.io/php-spellcheck/docs/spellcheckers/create-custom.html">(add yours!)</a></li>
+<li>📄 Supports different text sources: filesystem <a href="https://tigitz.github.io/php-spellcheck/docs/text-sources/file.html">file</a>/<a href="https://tigitz.github.io/php-spellcheck/docs/text-sources/directory.html">directory</a>, <a href="https://tigitz.github.io/php-spellcheck/docs/text-sources/php-string.html">string</a>, and <a href="https://tigitz.github.io/php-spellcheck/docs/text-sources/multisource.html">multisource</a> <a href="https://tigitz.github.io/php-spellcheck/docs/text-sources/create-custom.html">(add yours!)</a></li>
+<li>🛠 Supports text processors: <a href="https://tigitz.github.io/php-spellcheck/docs/text-processors/markdown-remover.html">MarkdownRemover</a> <a href="https://tigitz.github.io/php-spellcheck/docs/text-processors/create-custom.html">(add yours!)</a></li>
+<li>🔁 Supports misspelling handlers: <a href="https://tigitz.github.io/php-spellcheck/docs/misspellings-handlers/echohandler.html">EchoHandler</a> <a href="https://tigitz.github.io/php-spellcheck/docs/misspellings-handlers/create-custom.html">(add yours!)</a></li>
 <li>➰ Makes use of generators to reduce memory footprint</li>
 <li>⚖ Flexible and straightforward design</li>
 <li>💡 Makes it a breeze to implement your own spellcheckers, text processors and misspellings handlers</li>
@@ -161,12 +162,13 @@
 <p><strong>PHP-Spellcheck</strong> is a welcoming project for new contributors.</p>
 <p>Want to make <strong>your first open source contribution</strong>? Check the <a href="#roadmap">roadmap</a>, pick one task, <a href="https://github.com/tigitz/php-spellcheck/issues/new">open an issue</a> and we'll help you go through it 🤓🚀</p>
 <h1>Roadmap</h1>
+<p>Project is still in it's initial phase, requiring more real life usage to stabilize it's final 1.0.0 API.</p>
 <h2>Global</h2>
 <ul>
 <li>[ ] Add a CLI that could do something like <code>vendor/bin/php-spellcheck "misspell" Languagetools EchoHandler --lang=en_US</code></li>
 <li>[ ] Add asynchronous mechanism to spellcheckers</li>
 <li>[ ] Make some computed misspelling properties optional to improve performance for certain use cases (e.g., lines and offset in <code>LanguageTools</code>)</li>
-<li>[ ] Add a languages mapper to manage their different representations across spellcheckers</li>
+<li>[ ] Add a languages mapper to manage different representations across spellcheckers</li>
 <li>[ ] Evaluate <code>strtok</code> instead of <code>explode</code> to parse lines of text, for performance</li>
 <li>[ ] Evaluate <code>MutableMisspelling</code> for performance comparison</li>
 <li>[ ] Wrap <code>Webmozart/Assert</code> library exceptions to throw PHP-Spellcheck custom exceptions instead</li>
@@ -175,8 +177,8 @@
 <h2>Sources</h2>
 <ul>
 <li>[ ] Make a <code>SourceInterface</code> class that's able to have an effect on the used spellchecker configuration</li>
-<li>[ ] League/Flysystem plugin</li>
-<li>[ ] Symfony/Finder plugin</li>
+<li>[ ] League/Flysystem source</li>
+<li>[ ] Symfony/Finder source</li>
 </ul>
 <h2>Text processors</h2>
 <ul>
@@ -217,7 +219,7 @@
 <li>Is the &quot;context&quot; array passed through all the layers the right design to handle data sharing?</li>
 </ul>
 <h1>Contributing</h1>
-<p>Please see <a href=".github/CONTRIBUTING.md">CONTRIBUTING</a>.</p>
+<p>Please see <a href="https://github.com/tigitz/php-spellcheck/tree/master/examples">CONTRIBUTING</a>.</p>
 <h1>Credits</h1>
 <ul>
 <li>Inspired by <a href="https://github.com/mekras/php-speller">php-speller</a>, <a href="https://github.com/Seldaek/monolog">monolog</a> and <a href="https://github.com/thephpleague/flysystem">flysystem</a></li>
@@ -225,7 +227,7 @@
 <li><a href="../../contributors">All Contributors</a></li>
 </ul>
 <h1>License</h1>
-<p>The MIT License (MIT). Please see <a href="LICENSE.md">License File</a> for more information.</p>
+<p>The MIT License (MIT). Please see <a href="https://github.com/tigitz/php-spellcheck/blob/master/LICENSE.md">License File</a> for more information.</p>
 <p><strong>Logo</strong>:
 Elements taken for the final rendering are <a href="http://www.freepik.com">Designed by rawpixel.com / Freepik</a></p>            </div>
         </div>

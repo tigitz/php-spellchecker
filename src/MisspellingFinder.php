@@ -48,9 +48,9 @@ class MisspellingFinder
         $source,
         array $languages = [],
         array $context = [],
-        string $spellCheckEncoding = TextEncoding::UTF8
+        string $spellCheckerEncoding = TextEncoding::UTF8
     ): iterable {
-        $misspellings = $this->doSpellcheck($source, $languages, $context, $spellCheckEncoding);
+        $misspellings = $this->doSpellcheck($source, $languages, $context, $spellCheckerEncoding);
 
         if ($this->misspellingHandler !== null) {
             $this->misspellingHandler->handle($misspellings);

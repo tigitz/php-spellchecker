@@ -92,7 +92,7 @@ class Hunspell implements SpellcheckerInterface
         return $languages;
     }
 
-    public static function create(?string $binaryPathAsString): self
+    public static function create(?string $binaryPathAsString = null): self
     {
         return new self(new CommandLine($binaryPathAsString ?? 'hunspell'));
     }

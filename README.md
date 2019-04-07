@@ -23,10 +23,10 @@ Using PHP-Spellcheck can eliminate vendor-lock in, reduce technical debt, and im
 
 # Features
 
-- 🧐 Supports many popular spellcheckers out of the box: [Aspell][aspell], [Hunspell][hunspell], [Ispell][ispell], [PHP Pspell][pspell], [LanguageTools][languagetools] and [MultiSpellchecker](src/Spellchecker/MultiSpellchecker.php) [(add yours!)](docs/spellchecker/create-custom.md)
-- 📄 Supports different text sources: filesystem [file](src/Source/File.php)/[directory](src/Source/Directory.php), [string](src/Source/PHPString.php), and [multisource](src/Source/MultipleSource.php) [(add yours!)](docs/spellchecker/create-custom.md)
-- 🛠 Supports text processors: [MarkdownRemover](src/TextProcessor/MarkdownRemover.php) [(add yours!)](docs/text-proccesor/create-custom.md)
-- 🔁 Supports misspelling handlers: [EchoHandler](src/MisspellingHandler/EchoHandler.php) [(add yours!)](docs/misspellings-handler/create-custom.md)
+- 🧐 Supports many popular spellcheckers out of the box: [Aspell][aspell], [Hunspell][hunspell], [Ispell][ispell], [PHP Pspell][pspell], [LanguageTools][languagetools] and [MultiSpellchecker][multispellchecker] [(add yours!)][spellchecker_custom]
+- 📄 Supports different text sources: filesystem [file][filesource]/[directory][directory], [string][php-string], and [multisource][multisource] [(add yours!)][source_custom]
+- 🛠 Supports text processors: [MarkdownRemover][markdownremover] [(add yours!)][textprocessor_custom]
+- 🔁 Supports misspelling handlers: [EchoHandler][echohandler] [(add yours!)][custom_handler]
 - ➰ Makes use of generators to reduce memory footprint
 - ⚖ Flexible and straightforward design
 - 💡 Makes it a breeze to implement your own spellcheckers, text processors and misspellings handlers
@@ -46,7 +46,7 @@ $ composer require tigitz/php-spellcheck
 
 # Usage
 
-[Check out the documentation](https://tigitz.github.io/php-spellcheck) and [examples](example)
+[Check out the documentation](https://tigitz.github.io/php-spellcheck) and [examples](https://github.com/tigitz/php-spellcheck/tree/master/examples)
 
 ## Using the spellchecker directly
 
@@ -70,7 +70,7 @@ foreach ($misspellings as $misspelling) {
 }
 ```
 
-## Using the MisspellingFinder helper
+## Using the MisspellingFinder orchestrator
 
 You can also use an opinionated `MisspellingFinder` class to orchestrate your
 spellchecking flow:
@@ -122,12 +122,14 @@ $misspellingFinder->find($inMemoryTextProvider, ['en_US']);
 
 # Roadmap
 
+Project is still in it's initial phase, requiring more real life usage to stabilize it's final 1.0.0 API.
+
 ## Global
 
 - [ ] Add a CLI that could do something like `vendor/bin/php-spellcheck "misspell" Languagetools EchoHandler --lang=en_US`
 - [ ] Add asynchronous mechanism to spellcheckers
 - [ ] Make some computed misspelling properties optional to improve performance for certain use cases (e.g., lines and offset in `LanguageTools`)
-- [ ] Add a languages mapper to manage their different representations across spellcheckers
+- [ ] Add a languages mapper to manage different representations across spellcheckers
 - [ ] Evaluate `strtok` instead of `explode` to parse lines of text, for performance
 - [ ] Evaluate `MutableMisspelling` for performance comparison
 - [ ] Wrap `Webmozart/Assert` library exceptions to throw PHP-Spellcheck custom exceptions instead
@@ -136,8 +138,8 @@ $misspellingFinder->find($inMemoryTextProvider, ['en_US']);
 ## Sources
 
 - [ ] Make a `SourceInterface` class that's able to have an effect on the used spellchecker configuration
-- [ ] League/Flysystem plugin
-- [ ] Symfony/Finder plugin
+- [ ] League/Flysystem source
+- [ ] Symfony/Finder source
 
 ## Text processors
 
@@ -211,11 +213,11 @@ Todo
 ## Environment variables
 
 If spellcheckers execution paths are different than their default values
-(e.g., `docker exec -ti myispell` instead of `ispell`) you can override the path used in tests by redefining environment variables in the [PHPUnit config file](phpunit.xml.dist)
+(e.g., `docker exec -ti myispell` instead of `ispell`) you can override the path used in tests by redefining environment variables in the [PHPUnit config file](https://github.com/tigitz/php-spellcheck/blob/master/phpunit.xml.dist)
 
 # Contributing
 
-Please see [CONTRIBUTING](.github/CONTRIBUTING.md).
+Please see [CONTRIBUTING](https://github.com/tigitz/php-spellcheck/tree/master/examples).
 
 # Credits
 
@@ -225,7 +227,7 @@ Please see [CONTRIBUTING](.github/CONTRIBUTING.md).
 
 # License
 
-The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
+The MIT License (MIT). Please see [License File](https://github.com/tigitz/php-spellcheck/blob/master/LICENSE.md) for more information.
 
 **Logo**:
 Elements taken for the final rendering are [Designed by rawpixel.com / Freepik](http://www.freepik.com)
@@ -233,9 +235,24 @@ Elements taken for the final rendering are [Designed by rawpixel.com / Freepik](
 [link-author]: https://github.com/tigitz
 [link-contributors]: ../../contributors
 
-[aspell]: docs/content/03_Spellcheckers/01_Aspell.md
-[hunspell]: https://github.com/hunspell/hunspell
-[ispell]: https://packages.debian.org/stretch/ispell
-[languagetools]: https://github.com/languagetool-org/languagetool
-[pspell]: http://php.net/manual/en/book.pspell.php
+[aspell]: https://tigitz.github.io/php-spellcheck/docs/spellcheckers/aspell.html
+[hunspell]: https://tigitz.github.io/php-spellcheck/docs/spellcheckers/hunspell.html
+[ispell]: https://tigitz.github.io/php-spellcheck/docs/spellcheckers/ispell.html
+[languagetools]: https://tigitz.github.io/php-spellcheck/docs/spellcheckers/languagetools.html
+[pspell]: https://tigitz.github.io/php-spellcheck/docs/spellcheckers/php-pspell.html
+[multispellchecker]: https://tigitz.github.io/php-spellcheck/docs/spellcheckers/multispellchecker.html
+[spellchecker_custom]: https://tigitz.github.io/php-spellcheck/docs/spellcheckers/create-custom.html
+
+[echohandler]: https://tigitz.github.io/php-spellcheck/docs/misspellings-handlers/echohandler.html
+[custom_handler]: https://tigitz.github.io/php-spellcheck/docs/misspellings-handlers/create-custom.html
+
+[filesource]: https://tigitz.github.io/php-spellcheck/docs/text-sources/file.html
+[directory]: https://tigitz.github.io/php-spellcheck/docs/text-sources/directory.html
+[php-string]: https://tigitz.github.io/php-spellcheck/docs/text-sources/php-string.html
+[multisource]: https://tigitz.github.io/php-spellcheck/docs/text-sources/multisource.html
+[source_custom]: https://tigitz.github.io/php-spellcheck/docs/text-sources/create-custom.html
+
+[markdownremover]: https://tigitz.github.io/php-spellcheck/docs/text-processors/markdown-remover.html
+[textprocessor_custom]: https://tigitz.github.io/php-spellcheck/docs/text-processors/create-custom.html
+
 [httplug]: https://github.com/php-http/httplug

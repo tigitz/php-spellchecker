@@ -13,7 +13,10 @@ build:
     dependencies:
         override:
             - composer install --no-interaction --prefer-dist
-            
+
+tools:
+    external_code_coverage:
+
 filter:
     excluded_paths:
         - docs

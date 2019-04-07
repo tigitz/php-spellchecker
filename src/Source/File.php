@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace PhpSpellcheck\Source;
 
-use PhpSpellcheck\Exception\RuntimeException;
 use PhpSpellcheck\Text;
+use PhpSpellcheck\Utils\TextEncoding;
 
 class File implements SourceInterface
 {
@@ -28,28 +28,13 @@ class File implements SourceInterface
     public function toTexts(array $context = []): iterable
     {
         $context['filePath'] = \Safe\realpath($this->filePath);
-        $encoding = $this->encoding;
+        $encoding = $this->encoding ?? TextEncoding::detect($this->getFileContent());
 
-        if ($encoding === null) {
-            $encoding = mb_detect_encoding($this->getFileContent(), null, true);
-
-            if ($encoding === false) {
-                throw new RuntimeException(
-                    \Safe\sprintf(
-                        'Coulnd\'t detect enconding of string:' . PHP_EOL . '%s',
-                        $this->getFileContent()
-                    )
-                );
-            }
-        }
-
-        return [
-            new Text(
-                $this->getFileContent(),
-                $encoding,
-                $context
-            ),
-        ];
+        yield new Text(
+            $this->getFileContent(),
+            $encoding,
+            $context
+        );
     }
 
     private function getFileContent(): string

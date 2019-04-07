@@ -11,19 +11,19 @@
     <meta charset="UTF-8">
     <meta content="#5468ff" name="msapplication-TileColor">
     <meta content="#ffffff" name="theme-color">
-    <link href="https://tigitz.github.io/php-spellchecker/" rel="canonical">
+    <link href="https://tigitz.github.io/php-spellcheck/" rel="canonical">
     <meta content="summary_large_image" name="twitter:card">
     <meta content="@php-spellcheck" name="twitter:site">
     <meta name="twitter:title">
     <meta content="" name="twitter:description">
-    <meta content="tigitz.github.io/php-spellchecker/theme/img/logo.png" name="twitter:image:src">
-    <meta content="tigitz.github.io/php-spellchecker" name="twitter:domain">
+    <meta content="tigitz.github.io/php-spellcheck/theme/img/logo.png" name="twitter:image:src">
+    <meta content="tigitz.github.io/php-spellcheck" name="twitter:domain">
 
-    <meta content="https://tigitz.github.io/php-spellchecker/" property="og:url">
+    <meta content="https://tigitz.github.io/php-spellcheck/" property="og:url">
     <meta content="PHP-Spellcheck Documentation" property="og:site_name">
     <meta property="og:title">
     <meta content="" property="og:description">
-    <meta content="tigitz.github.io/php-spellchecker/theme/img/logo.png" property="og:image">
+    <meta content="tigitz.github.io/php-spellcheck/theme/img/logo.png" property="og:image">
     <meta content="300" property="og:image:width">
     <meta content="300" property="og:image:height">
     <title>MultiSpellchecker  - PHP-Spellcheck Documentation</title>
@@ -61,6 +61,7 @@
                                         <li><a href="../../index.html">What is PHP-Spellcheck ?</a></li>
                                                                                                                         <li><a href="../../docs/getting-started/quick-start.html">Quick Start </a></li>
                                                                                                                         <li><a href="../../docs/getting-started/architecture.html">Architecture </a></li>
+                                                                                                                        <li><a href="../../docs/getting-started/encoding.html">Encoding </a></li>
                                             </ul>
                                                                                     <h2 class="h6 text-uppercase menu-head-item">Spellcheckers</h2>
                                                                                                                         <ul class="py-1 list-unstyled">
@@ -113,7 +114,7 @@
                 <div id="navbarSupportedContent">
                     <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
                         <li class="nav-item mr-4">
-                            <a href="https://github.com/tigitz/php-spellchecker">Like it? Star us!<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-star icon ml-2 gh-star" style="fill: true" ><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></a>
+                            <a href="https://github.com/tigitz/php-spellcheck">Like it? Star us!<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-star icon ml-2 gh-star" style="fill: true" ><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></a>
                         </li>
                         <li class="nav-item mr-4">
                             <a href="https://gitter.im/php-spellcheck/community" class="chat-gitter">Help<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-square icon ml-2 gh-star" style="fill: true" ><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></a>
@@ -132,11 +133,33 @@
             <br>
             <div class="markdown-content">
                 <h1>MultiSpellchecker</h1>
-<p>TODO</p>
-<p>Meanwhile check the tests for usage examples:</p>
-<blockquote>
-<p><a href="https://github.com/tigitz/php-spellchecker/blob/master/tests/PhpSpellcheck/Tests/Spellchecker/MultiSpellcheckersTest.php">https://github.com/tigitz/php-spellchecker/blob/master/tests/PhpSpellcheck/Tests/Spellchecker/MultiSpellcheckersTest.php</a></p>
-</blockquote>            </div>
+<p>One of the benefit of an unified spellchecking interface is that you can define your spellchecker to act like a chain of different spellcheckers execution.</p>
+<p>And this what the <code>MultiSpellchecker</code> is.</p>
+<p>Say you want the combination of <code>LanguageTools</code> and <code>Hunspell</code> spellchecker for <strong>MAXIMUM SPELLCHECKING!!</strong></p>
+<p>You just need to define a <code>MultiSpellchecker</code> like the following:</p>
+<pre><code class="language-php">&lt;?php
+
+// Create your spellcheckers
+$languagetools = new LanguageTool(new LanguageToolApiClient('http://localhost:8011'));
+$hunspell = Hunspell::create();
+
+// by default, merge the misspells (suggestions and context)
+$multiSpellchecker = new MultiSpellchecker([$languagetools, $hunspell]); 
+
+// or keep duplicates
+$multiSpellcheckerWithDuplicates = new MultiSpellchecker([$languagetools, $hunspell], false); 
+
+/** @var \PhpSpellcheck\Misspelling[]|\Generator $misspellings */
+$misspellings = $multiSpellchecker-&gt;check('mispell', ['en-US','en_US'], ['from' =&gt; 'multispellchecker']);
+foreach ($misspellings as $misspelling) {
+    print_r([
+        $misspelling-&gt;getWord(), // 'mispell'
+        $misspelling-&gt;getLineNumber(), // '1'
+        $misspelling-&gt;getOffset(), // '0'
+        $misspelling-&gt;getSuggestions(), // ['misspell', ...]
+        $misspelling-&gt;getContext(), // ['from' =&gt; 'multispellchecker']
+    ]);
+}</code></pre>            </div>
         </div>
     </div>
 </div>

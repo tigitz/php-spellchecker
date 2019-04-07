@@ -1,19 +1,10 @@
-# PHP String
-
-Having a `PHPString` source type seems silly at first but in the context of some
-spellcheckers requiring the encoding to function properly
-and computation of line numbers and offset characters position,
-you might want to attach a specific encoding to your string.
-
-A PHP string is just a sequence of bytes, with no encoding tagged to it whatsoever. String values can come from various sources: the client (over HTTP), a database, a file, or from string literals in your source code. PHP reads all these as byte sequences, and it never extracts any encoding information.
-
-`PHPString` class is meant to circumvent this issue by keeping the encoding information
-attached to the sequence of bytes representing your string.
-
-In a UTF-8 encoded php file, if you run this script, you'll see the output difference:
-
-```php
 <?php
+
+use PhpSpellcheck\MisspellingFinder;
+use PhpSpellcheck\MisspellingHandler\EchoHandler;
+use PhpSpellcheck\Spellchecker\Aspell;
+
+require_once __DIR__ . '/../vendor/autoload.php';
 
 $misspellingFinder = new MisspellingFinder(
     Aspell::create(), // Creates aspell spellchecker pointing to "aspell" as it's binary path
@@ -40,4 +31,3 @@ $misspellings = $misspellingFinder->find(
 );
 // Output:
 // word: éxagèrre | line: 1 | offset: 3 | suggestions: exagérer,exagère,exagéré
-```

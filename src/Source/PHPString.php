@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace PhpSpellcheck\Source;
 
-use PhpSpellcheck\Exception\RuntimeException;
 use PhpSpellcheck\Text;
 use PhpSpellcheck\TextInterface;
+use PhpSpellcheck\Utils\TextEncoding;
 
 class PHPString implements SourceInterface
 {
@@ -15,9 +15,15 @@ class PHPString implements SourceInterface
      */
     private $string;
 
-    public function __construct(string $string)
+    /**
+     * @var string|null
+     */
+    private $encoding;
+
+    public function __construct(string $string, ?string $encoding = null)
     {
         $this->string = $string;
+        $this->encoding = $encoding;
     }
 
     /**
@@ -25,16 +31,7 @@ class PHPString implements SourceInterface
      */
     public function toTexts(array $context): iterable
     {
-        $encoding = mb_detect_encoding($this->string, null, true);
-
-        if ($encoding === false) {
-            throw new RuntimeException(
-                \Safe\sprintf(
-                    'Coulnd\'t detect encoding of string:' . PHP_EOL . '%s',
-                    $this->string
-                )
-            );
-        }
+        $encoding = $this->encoding ?? TextEncoding::detect($this->string);
 
         yield new Text($this->string, $encoding, $context);
     }

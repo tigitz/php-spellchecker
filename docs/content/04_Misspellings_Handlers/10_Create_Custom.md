@@ -40,7 +40,7 @@ Here's the proof:
 
 MSG;
         foreach ($misspellings as  $misspelling) {
-            $message .= \Safe\sprintf(
+            $message .= sprintf(
                 'You wrote "%s" at line %d in the article "%s" but it\'s a misspelling. Here are my suggestions: %s',
                     $misspelling->getWord(),
                     $misspelling->getLineNumber(),
@@ -59,7 +59,7 @@ MSG;
 As you can see it iterates over your misspellings to build the email body and
 then it sends it to you.
 
-You just have to use your custom handler while calling `MisspellingFinder`:
+You just have to use your custom handler while calling the `MisspellingFinder` class:
 
 ```php
 <?php

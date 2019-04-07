@@ -6,7 +6,7 @@ namespace PhpSpellcheck\Source;
 
 use Webmozart\Assert\Assert;
 
-class MultipleSource implements SourceInterface
+class MultiSource implements SourceInterface
 {
     /**
      * @var iterable<SourceInterface>
