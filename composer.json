@@ -20,15 +20,6 @@
             "role": "Maintainer"
         }
     ],
-    "repositories": [
-        {
-            "type": "path",
-            "url": "../php-spellcheck-thanks",
-            "options": {
-                "symlink": false
-            }
-        }
-    ],
     "require": {
         "php": "^7.1",
         "symfony/process": "^3.3|^4.0",

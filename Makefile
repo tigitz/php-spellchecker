@@ -44,7 +44,7 @@ scrutinizer:
 vendor:
 	if [ $(DEPS) = "LOWEST" ]; then $(COMPOSER) update --prefer-lowest; fi
 	if [ $(DEPS) = "LOCKED" ]; then $(COMPOSER) install; fi
-	if [ $(DEPS) = "HIGHEST" ]; then $(COMPOSER) update; else $(COMPOSER) install; fi
+	if [ $(DEPS) = "HIGHEST" ]; then $(COMPOSER) update; fi
 
 rector:
 	docker run -v $(pwd):/project rector/rector:latest bin/rector process /project/src/ --config vendor/thecodingmachine/safe/rector-migrate.yml --autoload-file /project/vendor/autoload.php
