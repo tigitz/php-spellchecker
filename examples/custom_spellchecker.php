@@ -4,6 +4,7 @@ require __DIR__.'/../vendor/autoload.php';
 
 use PhpSpellcheck\Misspelling;
 use PhpSpellcheck\Spellchecker\SpellcheckerInterface;
+use PhpSpellcheck\Utils\LineAndOffset;
 
 $phpSpellcheckLibraryNameSpellchecker = new class implements SpellcheckerInterface {
     public function check(
@@ -18,15 +19,12 @@ $phpSpellcheckLibraryNameSpellchecker = new class implements SpellcheckerInterfa
                 foreach ($matches as $match) {
                     [$word, $offset] = $match;
 
-                    // here you're supposed to compute the misspelled word offset from the preceding line break offset
-                    // and also retrieve the line number
-                    $lineOffset = null;
-                    $lineNumber = null;
+                    [$line, $offsetFromLine] = LineAndOffset::findFromFirstCharacterOffset($text, $offset, $encoding);
 
                     yield new Misspelling(
                         $word,
-                        $lineOffset,
-                        $lineNumber,
+                        $offsetFromLine,
+                        $line,
                         ['PHP Spellcheck']
                     );
                 }

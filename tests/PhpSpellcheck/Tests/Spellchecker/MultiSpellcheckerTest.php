@@ -10,25 +10,30 @@ use PhpSpellcheck\Spellchecker\SpellcheckerInterface;
 use PhpSpellcheck\Utils\TextEncoding;
 use PHPUnit\Framework\TestCase;
 
-class MultipleSpellcheckersTest extends TestCase
+class MultiSpellcheckerTest extends TestCase
 {
     public function testCheckAndMergeSuggestions()
     {
         $spellChecker1 = $this->createMock(SpellcheckerInterface::class);
+        $spellChecker2 = $this->createMock(SpellcheckerInterface::class);
+
         $misspelling1 = new Misspelling('mispelling1', 1);
         $misspelling2a = new Misspelling('mispelling2', 2, 2, ['suggestionA']);
         $misspelling2b = new Misspelling('mispelling2', 2, 2, ['suggestionB']);
+        $misspelling3 = new Misspelling('mispelling3', 3, 3);
 
         $spellChecker1->method('check')
             ->willReturn([$misspelling1, $misspelling2a]);
-        $spellChecker2 = $this->createMock(SpellcheckerInterface::class);
-        $misspelling3 = new Misspelling('mispelling3', 3, 3);
         $spellChecker2->method('check')
             ->willReturn([$misspelling2b, $misspelling3]);
+        $spellChecker1->method('getSupportedLanguages')
+            ->willReturn(['en_US']);
+        $spellChecker2->method('getSupportedLanguages')
+            ->willReturn(['en_US']);
 
         $multiSpellchecker = new MultiSpellchecker([$spellChecker1, $spellChecker2]);
 
-        $misspellings = $multiSpellchecker->check('test', ['en'], ['ctx'], TextEncoding::UTF8);
+        $misspellings = $multiSpellchecker->check('test', ['en_US'], ['ctx'], TextEncoding::UTF8);
         $this->assertEquals(
             [
                 $misspelling1->setContext(['ctx']),
@@ -42,20 +47,25 @@ class MultipleSpellcheckersTest extends TestCase
     public function testCheckAndNotMergeSuggestions()
     {
         $spellChecker1 = $this->createMock(SpellcheckerInterface::class);
+        $spellChecker2 = $this->createMock(SpellcheckerInterface::class);
+
         $misspelling1 = new Misspelling('mispelling1', 1);
         $misspelling2a = new Misspelling('mispelling2', 2, 2, ['suggestionA']);
         $misspelling2b = new Misspelling('mispelling2', 2, 2, ['suggestionB']);
+        $misspelling3 = new Misspelling('mispelling3', 3, 3);
 
         $spellChecker1->method('check')
             ->willReturn([$misspelling1, $misspelling2a]);
-        $spellChecker2 = $this->createMock(SpellcheckerInterface::class);
-        $misspelling3 = new Misspelling('mispelling3', 3, 3);
         $spellChecker2->method('check')
             ->willReturn([$misspelling2b, $misspelling3]);
+        $spellChecker1->method('getSupportedLanguages')
+            ->willReturn(['en_US']);
+        $spellChecker2->method('getSupportedLanguages')
+            ->willReturn(['en_US']);
 
         $multiSpellchecker = new MultiSpellchecker([$spellChecker1, $spellChecker2], false);
 
-        $misspellings = $multiSpellchecker->check('test', ['en'], ['ctx'], TextEncoding::UTF8);
+        $misspellings = $multiSpellchecker->check('test', ['en_US'], ['ctx'], TextEncoding::UTF8);
         $this->assertEquals(
             [
                 $misspelling1->setContext(['ctx']),

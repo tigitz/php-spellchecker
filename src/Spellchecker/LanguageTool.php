@@ -6,7 +6,7 @@ namespace PhpSpellcheck\Spellchecker;
 
 use PhpSpellcheck\Misspelling;
 use PhpSpellcheck\Spellchecker\LanguageTool\LanguageToolApiClient;
-use PhpSpellcheck\Utils\SortedNumericArrayNearestValueFinder;
+use PhpSpellcheck\Utils\LineAndOffset;
 use PhpSpellcheck\Utils\TextEncoding;
 use Webmozart\Assert\Assert;
 
@@ -29,15 +29,18 @@ class LanguageTool implements SpellcheckerInterface
         string $text,
         array $languages = [],
         array $context = [],
-        ?string $encoding = TextEncoding::UTF8
+        ?string $encoding
     ): iterable {
         Assert::notEmpty($languages, 'LanguageTool requires at least one language to run it\'s spellchecking process');
 
         $check = $this->apiClient->spellCheck($text, $languages, $context[self::class] ?? []);
-        $lineBreaksOffset = $this->getLineBreaksOffset($text, $encoding);
 
         foreach ($check['matches'] as $match) {
-            list($offsetFromLine, $line) = $this->computeRealOffsetAndLine($match, $lineBreaksOffset);
+            list($line, $offsetFromLine) = LineAndOffset::findFromFirstCharacterOffset(
+                $text,
+                $match['offset'],
+                $encoding ?? TextEncoding::detect($text)
+            );
 
             yield new Misspelling(
                 mb_substr($match['context']['text'], $match['context']['offset'], $match['context']['length']),
@@ -62,49 +65,5 @@ class LanguageTool implements SpellcheckerInterface
     public function getSupportedLanguages(): iterable
     {
         return $this->apiClient->getSupportedLanguages();
-    }
-
-    private function computeRealOffsetAndLine(array $match, array $lineBreaksOffset): array
-    {
-        $languageToolsOffset = (int) $match['offset'];
-        $index = SortedNumericArrayNearestValueFinder::findIndex(
-            (int) $match['offset'],
-            $lineBreaksOffset,
-            SortedNumericArrayNearestValueFinder::FIND_HIGHER
-        );
-
-        if ($index === 0) {
-            // word is on the first line
-            $offsetFromLine = $languageToolsOffset;
-            $line = $index + 1;
-        } else {
-            if ($languageToolsOffset > $lineBreaksOffset[$index]) {
-                // word is on the last line
-                $offsetFromLine = $languageToolsOffset - $lineBreaksOffset[$index];
-                $line = $index + 2;
-            } else {
-                $offsetFromLine = $languageToolsOffset - $lineBreaksOffset[$index - 1];
-                $line = $index + 1;
-            }
-        }
-
-        return [$offsetFromLine, $line];
-    }
-
-    private function getLineBreaksOffset(string $text, ?string $encoding): array
-    {
-        if ($encoding === null) {
-            $encoding = \Safe\mb_internal_encoding();
-        }
-
-        $start = 0;
-        // First line has a line offset at 0
-        $lineBreaksOffset = [$start];
-        while (($pos = \mb_strpos(($text), PHP_EOL, $start, $encoding)) != false) {
-            $lineBreaksOffset[] = $pos;
-            $start = $pos + 1; // start searching from next position.
-        }
-
-        return $lineBreaksOffset;
     }
 }

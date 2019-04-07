@@ -28,14 +28,14 @@ class FileTest extends TestCase
                     ]
                 ),
             ],
-            $texts
+            iterator_to_array($texts)
         );
     }
 
     public function testInvalidPath()
     {
         $this->expectException(FilesystemException::class);
-        (new File('invalidPath'))->toTexts();
+        iterator_to_array((new File('invalidPath'))->toTexts());
     }
 
     public function testToTextsWithEncoding()
@@ -52,7 +52,7 @@ class FileTest extends TestCase
                     ]
                 ),
             ],
-            $texts
+            iterator_to_array($texts)
         );
     }
 }

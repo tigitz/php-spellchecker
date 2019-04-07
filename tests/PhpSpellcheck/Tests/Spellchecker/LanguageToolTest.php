@@ -129,7 +129,7 @@ class LanguageToolTest extends TestCase
         // test last line offset computation
         $this->assertArrayHasKey('ctx', $misspellings[$lastKey]->getContext());
         $this->assertSame($misspellings[$lastKey]->getWord(), 'CCould');
-        $this->assertSame($misspellings[$lastKey]->getOffset(), 1);
+        $this->assertSame($misspellings[$lastKey]->getOffset(), 0);
         $this->assertSame($misspellings[$lastKey]->getLineNumber(), 4);
         $this->assertNotEmpty($misspellings[$lastKey]->getSuggestions());
     }
