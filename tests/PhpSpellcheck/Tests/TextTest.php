@@ -17,21 +17,21 @@ What imortal hand or eey
 CCould frame thy fearful symmetry?
 EOT;
 
-    public function testContextOverridingMerge()
+    public function testContextOverridingMerge(): void
     {
         $text = Text::utf8('test', ['idx' => '1'])->mergeContext(['idx' => 'foo', 'idx2' => '2']);
 
         $this->assertEquals(Text::utf8('test', ['idx' => 'foo', 'idx2' => '2']), $text);
     }
 
-    public function testContextNonOverridingMerge()
+    public function testContextNonOverridingMerge(): void
     {
         $text = Text::utf8('test', ['idx' => '1'])->mergeContext(['idx' => 'foo', 'idx2' => '2'], false);
 
         $this->assertEquals(Text::utf8('test', ['idx' => '1', 'idx2' => '2']), $text);
     }
 
-    public function testExceptionWhenMergingEmptyContext()
+    public function testExceptionWhenMergingEmptyContext(): void
     {
         $this->expectException(InvalidArgumentException::class);
         Text::utf8('test', ['idx' => '1'])->mergeContext([]);

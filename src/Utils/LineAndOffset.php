@@ -13,7 +13,7 @@ class LineAndOffset
      * When spellcheckers only gives the offset position of a word from the first character of the whole text
      * and not from the first character of the word's line, this function helps computing it anyway.
      *
-     * @return array(int,int) Line number as the first element and offset from begining of line as second element
+     * @return array(int,int) Line number as the first element and offset from beginning of line as second element
      */
     public static function findFromFirstCharacterOffset(string $text, int $offsetFromFirstCharacter, string $encoding = TextEncoding::UTF8): array
     {

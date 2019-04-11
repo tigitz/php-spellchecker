@@ -9,11 +9,15 @@ use PhpSpellcheck\Spellchecker\LanguageTool;
 use PhpSpellcheck\Spellchecker\LanguageTool\LanguageToolApiClient;
 use PhpSpellcheck\Tests\TextTest;
 use PhpSpellcheck\Utils\TextEncoding;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class LanguageToolTest extends TestCase
 {
-    public function getClientMock()
+    /**
+     * @return MockObject|LanguageToolApiClient
+     */
+    public function getClientMock(): MockObject
     {
         $mock = $this->getMockBuilder(LanguageToolApiClient::class)
             ->disableOriginalConstructor()
@@ -22,7 +26,7 @@ class LanguageToolTest extends TestCase
         return $mock;
     }
 
-    public function testSpellcheck()
+    public function testSpellcheck(): void
     {
         $client = $this->getClientMock();
         $client->expects($this->once())
@@ -67,7 +71,7 @@ class LanguageToolTest extends TestCase
         $this->assertWorkingSpellcheck($client);
     }
 
-    public function testGetSupportedLanguages()
+    public function testGetSupportedLanguages(): void
     {
         $client = $this->getClientMock();
         $client->expects($this->once())
@@ -80,7 +84,7 @@ class LanguageToolTest extends TestCase
     /**
      * @group integration
      */
-    public function testSpellcheckFromRealAPI()
+    public function testSpellcheckFromRealAPI(): void
     {
         $this->assertWorkingSpellcheck(new LanguageToolApiClient(self::realAPIEndpoint()));
     }
@@ -88,23 +92,23 @@ class LanguageToolTest extends TestCase
     /**
      * @group integration
      */
-    public function testGetSupportedLanguagesFromRealBinaries()
+    public function testGetSupportedLanguagesFromRealBinaries(): void
     {
         $this->assertWorkingSupportedLanguages(new LanguageToolApiClient(self::realAPIEndpoint()));
     }
 
-    public function getTextInput()
+    public function getTextInput(): string
     {
         return TextTest::CONTENT_STUB;
     }
 
-    public function assertWorkingSupportedLanguages(LanguageToolApiClient $apiClient)
+    public function assertWorkingSupportedLanguages(LanguageToolApiClient $apiClient): void
     {
         $languageTool = new LanguageTool($apiClient);
-        $this->assertNotFalse(array_search('en', $languageTool->getSupportedLanguages()));
+        $this->assertNotFalse(array_search('en', $languageTool->getSupportedLanguages(), true));
     }
 
-    private function assertWorkingSpellcheck(LanguageToolApiClient $apiClient)
+    private function assertWorkingSpellcheck(LanguageToolApiClient $apiClient): void
     {
         $languageTool = new LanguageTool($apiClient);
         /** @var Misspelling[] $misspellings */

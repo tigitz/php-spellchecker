@@ -13,7 +13,7 @@ class DirectoryTest extends TestCase
 {
     private const TEXT_FIXTURES_PATH = __DIR__ . '/../Fixtures/Text/Directory';
 
-    public function testToTexts()
+    public function testToTexts(): void
     {
         $textsFromDirectory = (new Directory(self::TEXT_FIXTURES_PATH))->toTexts(['ctx' => 'in tests']);
         $expectedValues = [
@@ -39,11 +39,11 @@ class DirectoryTest extends TestCase
         $realValues = iterator_to_array($textsFromDirectory);
 
         foreach ($expectedValues as $value) {
-            $this->assertTrue(in_array($value, $realValues));
+            $this->assertContains($value, $realValues, '', false, false);
         }
     }
 
-    public function testToTextsMatchingRegex()
+    public function testToTextsMatchingRegex(): void
     {
         $textsFromDirectory = (new Directory(self::TEXT_FIXTURES_PATH, '/^((?!mispelling3\.txt).)*$/'))
             ->toTexts(['ctx' => 'in tests']);
@@ -62,7 +62,7 @@ class DirectoryTest extends TestCase
         $realValues = iterator_to_array($textsFromDirectory);
 
         foreach ($expectedValues as $value) {
-            $this->assertTrue(in_array($value, $realValues));
+            $this->assertContains($value, $realValues, '', false, false);
         }
     }
 }

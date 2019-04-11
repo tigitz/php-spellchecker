@@ -60,9 +60,9 @@ class LanguageTool implements SpellcheckerInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @return string[]
      */
-    public function getSupportedLanguages(): iterable
+    public function getSupportedLanguages(): array
     {
         return $this->apiClient->getSupportedLanguages();
     }

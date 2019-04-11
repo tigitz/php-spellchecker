@@ -10,8 +10,12 @@ declare(strict_types=1);
 $options = getopt('aDd::i:');
 
 if (array_key_exists('D', $options)) {
-    fprintf(STDERR, file_get_contents(__DIR__ . '/../dicts.txt'));
-    exit(0);
+    if ($file = file_get_contents(__DIR__ . '/../dicts.txt')) {
+        fprintf(STDERR, $file);
+        exit(0);
+    }
+
+    throw new \Exception('Cannot find dictionary fixtures file');
 }
 
 if (array_key_exists('a', $options)) {

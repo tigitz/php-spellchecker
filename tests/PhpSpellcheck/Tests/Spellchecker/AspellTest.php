@@ -16,18 +16,18 @@ class AspellTest extends TestCase
 {
     private const FAKE_BINARIES_PATH = __DIR__ . '/../Fixtures/Aspell/bin/aspell.sh';
 
-    public function testSpellcheckFromFakeBinaries()
+    public function testSpellcheckFromFakeBinaries(): void
     {
         $this->assertWorkingSpellcheck(self::FAKE_BINARIES_PATH);
     }
 
-    public function testBadCheckRequest()
+    public function testBadCheckRequest(): void
     {
         $this->expectException(ProcessHasErrorOutputException::class);
         Aspell::create(IspellTest::FAKE_BAD_BINARIES_PATH)->check('bla');
     }
 
-    public function testGetSupportedLanguagesFromFakeBinaries()
+    public function testGetSupportedLanguagesFromFakeBinaries(): void
     {
         $this->assertWorkingSupportedLanguages(self::FAKE_BINARIES_PATH);
     }
@@ -35,7 +35,7 @@ class AspellTest extends TestCase
     /**
      * @group integration
      */
-    public function testSpellcheckFromRealBinaries()
+    public function testSpellcheckFromRealBinaries(): void
     {
         $this->assertWorkingSpellcheck(self::realBinaryPath());
     }
@@ -43,25 +43,26 @@ class AspellTest extends TestCase
     /**
      * @group integration
      */
-    public function testGetSupportedLanguagesFromRealBinaries()
+    public function testGetSupportedLanguagesFromRealBinaries(): void
     {
         $this->assertWorkingSupportedLanguages(self::realBinaryPath());
     }
 
-    public function getTextInput()
+    public function getTextInput(): string
     {
         return TextTest::CONTENT_STUB;
     }
 
-    public function getFakeDicts()
+    public function getFakeDicts(): array
     {
-        return explode(PHP_EOL, file_get_contents(__DIR__ . '/../Fixtures/Aspell/dicts.txt'));
+        return explode(PHP_EOL, \Safe\file_get_contents(__DIR__ . '/../Fixtures/Aspell/dicts.txt'));
     }
 
-    public function assertWorkingSupportedLanguages($binaries)
+    public function assertWorkingSupportedLanguages(string $binaries): void
     {
         $aspell = new Aspell(new CommandLine($binaries));
-        $this->assertNotFalse(array_search('en_GB', $aspell->getSupportedLanguages()));
+        $languages = is_array($aspell->getSupportedLanguages()) ? $aspell->getSupportedLanguages(): iterator_to_array($aspell->getSupportedLanguages());
+        $this->assertNotFalse(array_search('en_GB', $languages, true));
     }
 
     public static function realBinaryPath(): string
@@ -73,7 +74,7 @@ class AspellTest extends TestCase
         return getenv('ASPELL_BINARY_PATH');
     }
 
-    private function assertWorkingSpellcheck($binaries)
+    private function assertWorkingSpellcheck(string $binaries): void
     {
         $aspell = new Aspell(new CommandLine($binaries));
         /** @var Misspelling[] $misspellings */

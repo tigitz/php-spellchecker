@@ -11,7 +11,7 @@ use Symfony\Component\Process\Process;
 
 class ProcessFailedExceptionTest extends TestCase
 {
-    public function testSymfonyRunningProcessFailedException()
+    public function testSymfonyRunningProcessFailedException(): void
     {
         $process = new Process('non_existing_binaries');
         try {
@@ -25,7 +25,7 @@ class ProcessFailedExceptionTest extends TestCase
         }
     }
 
-    public function testSymfonyBootingProcessFailedException()
+    public function testSymfonyBootingProcessFailedException(): void
     {
         $process = new Process('echo test', __DIR__ . '/notfound/');
         try {

@@ -56,7 +56,7 @@ phpcbf: vendor
 	$(EXEC_PHP) vendor/bin/phpcbf
 
 phpstan: vendor
-	$(EXEC_PHP) vendor/bin/phpstan analyse src -c phpstan.neon -a vendor/autoload.php
+	$(EXEC_PHP) vendor/bin/phpstan analyse src tests -c phpstan.neon -a vendor/autoload.php
 
 infection: vendor
 	$(EXEC_PHP) vendor/bin/phpunit --coverage-xml=build/coverage/coverage-xml --log-junit=build/coverage/phpunit.junit.xml

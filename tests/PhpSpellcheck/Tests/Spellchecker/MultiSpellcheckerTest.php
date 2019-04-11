@@ -12,7 +12,7 @@ use PHPUnit\Framework\TestCase;
 
 class MultiSpellcheckerTest extends TestCase
 {
-    public function testCheckAndMergeSuggestions()
+    public function testCheckAndMergeSuggestions(): void
     {
         $spellChecker1 = $this->createMock(SpellcheckerInterface::class);
         $spellChecker2 = $this->createMock(SpellcheckerInterface::class);
@@ -44,7 +44,7 @@ class MultiSpellcheckerTest extends TestCase
         );
     }
 
-    public function testCheckAndNotMergeSuggestions()
+    public function testCheckAndNotMergeSuggestions(): void
     {
         $spellChecker1 = $this->createMock(SpellcheckerInterface::class);
         $spellChecker2 = $this->createMock(SpellcheckerInterface::class);
@@ -77,7 +77,7 @@ class MultiSpellcheckerTest extends TestCase
         );
     }
 
-    public function testGetSupportedLanguages()
+    public function testGetSupportedLanguages(): void
     {
         $spellChecker1 = $this->createMock(SpellcheckerInterface::class);
         $spellChecker1->method('getSupportedLanguages')

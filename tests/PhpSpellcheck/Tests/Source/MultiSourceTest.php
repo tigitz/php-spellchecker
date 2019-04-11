@@ -8,11 +8,12 @@ use PhpSpellcheck\Source\MultiSource;
 use PhpSpellcheck\Source\SourceInterface;
 use PhpSpellcheck\TextInterface;
 use PhpSpellcheck\Utils\TextEncoding;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class MultiSourceTest extends TestCase
 {
-    public function testToTexts()
+    public function testToTexts(): void
     {
         $mockText1 = $this->generateMockText('mispelling1', ['ctx' => null]);
         $mockText1AfterContextMerge = $this->generateMockText('mispelling1AfterMerge', ['ctx' => 'merged']);
@@ -36,7 +37,10 @@ class MultiSourceTest extends TestCase
         $this->assertSame($expectedTexts, iterator_to_array($source->toTexts()));
     }
 
-    private function generateMockText(string $content, array $context = [])
+    /**
+     * @return MockObject|TextInterface
+     */
+    private function generateMockText(string $content, array $context = []): MockObject
     {
         $textMock = $this->createMock(TextInterface::class);
         $textMock->method('getContext')
@@ -49,7 +53,10 @@ class MultiSourceTest extends TestCase
         return $textMock;
     }
 
-    private function generateMockSource(array $texts)
+    /**
+     * @return MockObject|SourceInterface
+     */
+    private function generateMockSource(array $texts): MockObject
     {
         $sourceMock = $this->createMock(SourceInterface::class);
         $sourceMock->expects($this->once())

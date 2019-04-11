@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 
 class EchoHandlerTest extends TestCase
 {
-    public function testHandle()
+    public function testHandle(): void
     {
         $this->expectOutputString(
             'word: mispelling | line: 10 | offset: 4 | suggestions: misspelling,misspellings | context: {"sentence":"two mispelling"}' . PHP_EOL

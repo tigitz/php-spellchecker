@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 
 class ProcessHasErrorOutputExceptionTest extends TestCase
 {
-    public function testException()
+    public function testException(): void
     {
         $exception = new ProcessHasErrorOutputException('error output', 'testt', 'ispell --encoding=utf-8 -a');
         $this->assertSame(<<<MESSAGE

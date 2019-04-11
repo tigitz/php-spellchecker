@@ -14,7 +14,7 @@ class FileTest extends TestCase
 {
     private const TEXT_FIXTURE_FILE_PATH = __DIR__ . '/../Fixtures/Text/mispelling1.txt';
 
-    public function testToTexts()
+    public function testToTexts(): void
     {
         $texts = (new File(self::TEXT_FIXTURE_FILE_PATH))->toTexts(['ctx' => 'in tests']);
         $this->assertEquals(
@@ -32,13 +32,13 @@ class FileTest extends TestCase
         );
     }
 
-    public function testInvalidPath()
+    public function testInvalidPath(): void
     {
         $this->expectException(FilesystemException::class);
         iterator_to_array((new File('invalidPath'))->toTexts());
     }
 
-    public function testToTextsWithEncoding()
+    public function testToTextsWithEncoding(): void
     {
         $texts = (new File(self::TEXT_FIXTURE_FILE_PATH, TextEncoding::UTF8))->toTexts(['ctx' => 'in tests']);
         $this->assertEquals(

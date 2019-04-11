@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 
 class LineAndOffsetTest extends TestCase
 {
-    public function testFindFromFirstCharacterOffset()
+    public function testFindFromFirstCharacterOffset(): void
     {
         $text = <<<TEXT
 First line
@@ -60,7 +60,7 @@ TEXT;
         );
     }
 
-    public function testThrowExceptionIfOffsetGivenIsHigherThanStringLength()
+    public function testThrowExceptionIfOffsetGivenIsHigherThanStringLength(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->assertSame(
@@ -69,7 +69,7 @@ TEXT;
         );
     }
 
-    public function testThrowExceptionIfOffsetisNegative()
+    public function testThrowExceptionIfOffsetisNegative(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->assertSame(

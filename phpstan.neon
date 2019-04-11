@@ -2,10 +2,11 @@ includes:
     - vendor/phpstan/phpstan-webmozart-assert/extension.neon
     - vendor/phpstan/phpstan-strict-rules/rules.neon
     - vendor/thecodingmachine/phpstan-safe-rule/phpstan-safe-rule.neon
+    - vendor/phpstan/phpstan-phpunit/extension.neon
 
 parameters:
     level: max
-    reportUnmatchedIgnoredErrors: false
+    reportUnmatchedIgnoredErrors: true
     ignoreErrors:
         # symfony/process version testing
         -
@@ -26,20 +27,6 @@ parameters:
             message: "#^Call to static method Webmozart\\\\Assert\\\\Assert\\:\\:allIsInstanceOf\\(\\) with iterable\\<PhpSpellcheck\\\\Source\\\\SourceInterface\\> and 'PhpSpellcheck…' will always evaluate to true\\.$#"
             path: %currentWorkingDirectory%/src/Source/MultiSource.php
 
-        # preg_* functions surely returning string as parameter is string
-        -
-            message: "#^Possibly invalid array key type array\\|string\\.$#"
-            path: %currentWorkingDirectory%/src/Spellchecker/Hunspell.php
-        -
-            message: "#^Parameter \\#1 \\$newContent of method PhpSpellcheck\\\\TextInterface\\:\\:replaceContent\\(\\) expects string, array\\|string given\\.$#"
-            path: %currentWorkingDirectory%/src/TextProcessor/MarkdownRemover.php
-        -
-            message: "#^Parameter \\#2 \\$str of function explode expects string, array\\|string given\\.$#"
-            path: %currentWorkingDirectory%/src/Spellchecker/PHPPspell.php
-        -
-            message: "#^Binary operation \"\\.\" between '\"' and array\\|string results in an error\\.$#"
-            path: %currentWorkingDirectory%/src/Utils/CommandLine.php
-
         # return type missanalysis
         -
             message: "#^Method PhpSpellcheck\\\\Spellchecker\\\\MultiSpellchecker\\:\\:check\\(\\) should return iterable\\<PhpSpellcheck\\\\Misspelling\\> but returns iterable\\.$#"
@@ -48,16 +35,13 @@ parameters:
             message: "#^Method PhpSpellcheck\\\\Spellchecker\\\\MultiSpellchecker\\:\\:check\\(\\) should return iterable\\<PhpSpellcheck\\\\Misspelling\\> but returns array\\<int, PhpSpellcheck\\\\MisspellingInterface\\>\\.$#"
             path: %currentWorkingDirectory%/src/Spellchecker/MultiSpellchecker.php
 
-        # mixed variable is type as union
+        # mixed variable is typed as intersect
         -
             message: "#^Call to function is_object\\(\\) with \\*NEVER\\* will always evaluate to true\\.$#"
             path: %currentWorkingDirectory%/src/MisspellingFinder.php
         -
             message: "#^Else branch is unreachable because ternary operator condition is always true\\.$#"
             path: %currentWorkingDirectory%/src/MisspellingFinder.php
-        -
-            message: "#^Else branch is unreachable because previous condition is always true\\.$#"
-            path: %currentWorkingDirectory%/src/Utils/CommandLine.php
         -
             message: "#^Call to function (is_object|is_string)\\(\\) with (\\*NEVER\\*|string) will always evaluate to true\\.$#"
             path: %currentWorkingDirectory%/src/Utils/CommandLine.php
@@ -68,3 +52,29 @@ parameters:
         # Missing strict comparison
         - '#^Construct empty\(\) is not allowed. Use more strict comparison.$#'
         - '#^Only booleans are allowed in#'
+
+        # $this->assert calls are OK
+        - '#^Dynamic call to static method PHPUnit\\Framework\\(.*)#'
+
+        # iterator_to_array in tests are safely done on \Generator class
+        -
+            message: '#^(.*)iterator_to_array expects Traversable, iterable(.*)#'
+            path: '%currentWorkingDirectory%/tests'
+
+        # Using Safe library in tests is too strict
+        -
+            message: '#^(.*)thecodingmachine/safe(.*)#'
+            path: '%currentWorkingDirectory%/tests'
+
+        # tests asserting that wrong argument types throw exception
+        -
+            message: '#^Parameter (.*) \$source of method PhpSpellcheck#'
+            path: '%currentWorkingDirectory%/tests/**/MisspellingFinderTest.php'
+        -
+            message: '#^Parameter (.*) \$command of class PhpSpellcheck#'
+            path: '%currentWorkingDirectory%/tests/**/CommandLineTest.php'
+
+        # Symfony Process class constructor doc type (array) stricter than real php type (mixed)
+        -
+            message: '#^Parameter (.*) \$command of class Symfony\\\Component\\\Process\\\Process#'
+            path: '%currentWorkingDirectory%/tests/**/ProcessFailedExceptionTest.php'

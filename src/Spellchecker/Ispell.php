@@ -102,11 +102,7 @@ class Ispell implements SpellcheckerInterface
                     continue;
                 }
 
-                $this->supportedLanguages[] = \Safe\substr($file, 0, -4);
-            }
-
-            if (empty($this->supportedLanguages)) {
-                throw new RuntimeException('Ispell doesn\'t have any directory or none could have been found');
+                yield \Safe\substr($file, 0, -4);
             }
         }
 

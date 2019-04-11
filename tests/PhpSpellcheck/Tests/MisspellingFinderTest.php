@@ -12,22 +12,26 @@ use PhpSpellcheck\Source\SourceInterface;
 use PhpSpellcheck\Spellchecker\SpellcheckerInterface;
 use PhpSpellcheck\TextInterface;
 use PhpSpellcheck\TextProcessor\TextProcessorInterface;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class MisspellingFinderTest extends TestCase
 {
+    /** @var MisspellingHandlerInterface|MockObject */
     private $misspellingHandler;
+    /** @var TextProcessorInterface|MockObject */
     private $textProcessor;
+    /** @var SpellcheckerInterface|MockObject */
     private $spellChecker;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->spellChecker = $this->createMock(SpellcheckerInterface::class);
         $this->misspellingHandler = $this->createMock(MisspellingHandlerInterface::class);
         $this->textProcessor = $this->createMock(TextProcessorInterface::class);
     }
 
-    public function testFindFromString()
+    public function testFindFromString(): void
     {
         $misspellingFinder = new MisspellingFinder(
             $this->spellChecker
@@ -42,7 +46,7 @@ class MisspellingFinderTest extends TestCase
         $this->assertSame([$misspelling1], iterator_to_array($misspellingFinder->find('mispell')));
     }
 
-    public function testFindFromInvalidArgument()
+    public function testFindFromInvalidArgument(): void
     {
         $this->expectException(InvalidArgumentException::class);
 
@@ -55,7 +59,7 @@ class MisspellingFinderTest extends TestCase
         $misspellingFinder->find(3);
     }
 
-    public function testFindWithMisspelingHandler()
+    public function testFindWithMisspelingHandler(): void
     {
         $this->misspellingHandler->expects($this->once())
             ->method('handle');
@@ -74,7 +78,7 @@ class MisspellingFinderTest extends TestCase
         $this->assertSame([$misspelling1], iterator_to_array($misspellingFinder->find('mispell')));
     }
 
-    public function testFindWithTextProcessor()
+    public function testFindWithTextProcessor(): void
     {
         $this->textProcessor->expects($this->once())
             ->method('process');
@@ -94,7 +98,7 @@ class MisspellingFinderTest extends TestCase
         $this->assertSame([$misspelling1], iterator_to_array($misspellingFinder->find('mispell')));
     }
 
-    public function testFindFromSource()
+    public function testFindFromSource(): void
     {
         $misspelling1 = $this->generateMisspellingMock();
         $this->spellChecker
@@ -115,7 +119,7 @@ class MisspellingFinderTest extends TestCase
         $this->assertSame([$misspelling1], iterator_to_array($misspellingFinder->find('mispell')));
     }
 
-    private function generateMisspellingMock()
+    private function generateMisspellingMock(): MockObject
     {
         $mispelling = $this->createMock(MisspellingInterface::class);
         $mispelling->method('getWord')
@@ -132,7 +136,7 @@ class MisspellingFinderTest extends TestCase
         return $mispelling;
     }
 
-    private function generateTextMock()
+    private function generateTextMock(): MockObject
     {
         $text = $this->createMock(TextInterface::class);
         $text->method('getContent')

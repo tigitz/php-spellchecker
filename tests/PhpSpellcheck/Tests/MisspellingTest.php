@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 
 class MisspellingTest extends TestCase
 {
-    public function testMergeSuggestions()
+    public function testMergeSuggestions(): void
     {
         $misspelling = new Misspelling('mispelled', 1, 0, ['misspelled']);
         $misspelling->mergeSuggestions(['misspelling', 'misspelled']);
@@ -21,12 +21,12 @@ class MisspellingTest extends TestCase
     /**
      * @dataProvider nonDeterminableUniqueIdentityMisspellings
      */
-    public function testCanDeterminateUniqueIdentity(Misspelling $misspelling)
+    public function testCanDeterminateUniqueIdentity(Misspelling $misspelling): void
     {
         $this->assertFalse($misspelling->canDeterminateUniqueIdentity());
     }
 
-    public function nonDeterminableUniqueIdentityMisspellings()
+    public function nonDeterminableUniqueIdentityMisspellings(): array
     {
         return [
             [new Misspelling('mispelled')],
@@ -35,7 +35,7 @@ class MisspellingTest extends TestCase
         ];
     }
 
-    public function testContextOverridingMerge()
+    public function testContextOverridingMerge(): void
     {
         $misspelling = (new Misspelling('mispelled', 1, 0, [], ['idx' => '1']))->mergeContext([
             'idx' => 'foo',
@@ -45,7 +45,7 @@ class MisspellingTest extends TestCase
         $this->assertEquals(new Misspelling('mispelled', 1, 0, [], ['idx' => 'foo', 'idx2' => '2']), $misspelling);
     }
 
-    public function testContextNonOverridingMerge()
+    public function testContextNonOverridingMerge(): void
     {
         $misspelling = (new Misspelling('mispelled', 1, 0, [], ['idx' => '1']))->mergeContext([
             'idx' => 'foo',
@@ -55,13 +55,13 @@ class MisspellingTest extends TestCase
         $this->assertEquals(new Misspelling('mispelled', 1, 0, [], ['idx' => '1', 'idx2' => '2']), $misspelling);
     }
 
-    public function testExceptionWhenMergingEmptyContext()
+    public function testExceptionWhenMergingEmptyContext(): void
     {
         $this->expectException(InvalidArgumentException::class);
         (new Misspelling('mispelled', 1, 0, [], []))->mergeContext([]);
     }
 
-    public function testImmutableSetContext()
+    public function testImmutableSetContext(): void
     {
         $misspelling = new Misspelling('mispelled', 1, 0, [], []);
         $misspellingAfterSettingContext = $misspelling->setContext(['test']);

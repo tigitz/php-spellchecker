@@ -10,6 +10,9 @@ build:
                     - ~/.composer/cache
             project_setup:
                 override: true
+            tests:
+                override:
+                    - php-scrutinizer-run
     dependencies:
         override:
             - composer install --no-interaction --prefer-dist

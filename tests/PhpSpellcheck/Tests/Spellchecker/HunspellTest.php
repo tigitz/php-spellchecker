@@ -15,17 +15,17 @@ class HunspellTest extends TestCase
 {
     private const FAKE_BINARIES_PATH = [PHP_BINARY, __DIR__ . '/../Fixtures/Hunspell/bin/hunspell.php'];
 
-    public function testSpellcheckFromFakeBinaries()
+    public function testSpellcheckFromFakeBinaries(): void
     {
         $this->assertWorkingSpellcheck(self::FAKE_BINARIES_PATH);
     }
 
-    public function testGetSupportedLanguagesFromFakeBinaries()
+    public function testGetSupportedLanguagesFromFakeBinaries(): void
     {
         $this->assertWorkingSupportedLanguages(self::FAKE_BINARIES_PATH);
     }
 
-    public function testBadCheckRequest()
+    public function testBadCheckRequest(): void
     {
         $this->expectException(ProcessHasErrorOutputException::class);
         (new Hunspell(new CommandLine(IspellTest::FAKE_BAD_BINARIES_PATH)))->check('bla');
@@ -34,7 +34,7 @@ class HunspellTest extends TestCase
     /**
      * @group integration
      */
-    public function testSpellcheckFromRealBinariesLanguage()
+    public function testSpellcheckFromRealBinariesLanguage(): void
     {
         $hunspell = new Hunspell(new CommandLine(self::realBinaryPath()));
         $misspellings = iterator_to_array($hunspell->check('mispell', ['en_US']));
@@ -44,7 +44,7 @@ class HunspellTest extends TestCase
     /**
      * @group integration
      */
-    public function testSpellcheckFromRealBinaries()
+    public function testSpellcheckFromRealBinaries(): void
     {
         $this->assertWorkingSpellcheck(self::realBinaryPath());
     }
@@ -52,28 +52,29 @@ class HunspellTest extends TestCase
     /**
      * @group integration
      */
-    public function testGetSupportedLanguagesFromRealBinaries()
+    public function testGetSupportedLanguagesFromRealBinaries(): void
     {
         $this->assertWorkingSupportedLanguages(self::realBinaryPath());
     }
 
-    public function getTextInput()
+    public function getTextInput(): string
     {
         return TextTest::CONTENT_STUB;
     }
 
-    public function getFakeDicts()
+    public function getFakeDicts(): array
     {
-        return explode(PHP_EOL, file_get_contents(__DIR__ . '/../Fixtures/Hunspell/dicts.txt'));
+        return explode(PHP_EOL, \Safe\file_get_contents(__DIR__ . '/../Fixtures/Hunspell/dicts.txt'));
     }
 
     /**
      * @param string|array $binaries
      */
-    public function assertWorkingSupportedLanguages($binaries)
+    public function assertWorkingSupportedLanguages($binaries): void
     {
         $hunspell = new Hunspell(new CommandLine($binaries));
-        $this->assertNotFalse(array_search('en_US', $hunspell->getSupportedLanguages()));
+        $languages = is_array($hunspell->getSupportedLanguages()) ? $hunspell->getSupportedLanguages() : iterator_to_array($hunspell->getSupportedLanguages());
+        $this->assertNotFalse(array_search('en_US', $languages, true));
     }
 
     public static function realBinaryPath(): string
@@ -88,7 +89,7 @@ class HunspellTest extends TestCase
     /**
      * @param string|array $binaries
      */
-    private function assertWorkingSpellcheck($binaries)
+    private function assertWorkingSpellcheck($binaries): void
     {
         $hunspell = new Hunspell(new CommandLine($binaries));
         /** @var Misspelling[] $misspellings */

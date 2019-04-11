@@ -12,14 +12,14 @@ use PHPUnit\Framework\TestCase;
 
 class PHPPspellTest extends TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         if (!extension_loaded('pspell')) {
             Assert::markTestSkipped('Pspell extension is not loaded');
         }
     }
 
-    public function testCheck()
+    public function testCheck(): void
     {
         $pspell = new PHPPspell(PSPELL_FAST);
         /** @var Misspelling[] $misspellings */
@@ -32,7 +32,7 @@ class PHPPspellTest extends TestCase
         $this->assertNotEmpty($misspellings[0]->getSuggestions());
     }
 
-    public function testCheckWithoutEncoding()
+    public function testCheckWithoutEncoding(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $pspell = new PHPPspell(PSPELL_FAST);
@@ -40,7 +40,7 @@ class PHPPspellTest extends TestCase
         iterator_to_array($pspell->check('mispell', ['en'], ['ctx'], null));
     }
 
-    public function testGetSupportedLanguages()
+    public function testGetSupportedLanguages(): void
     {
         $this->expectException(LogicException::class);
         $pspell = new PHPPspell(PSPELL_FAST);
