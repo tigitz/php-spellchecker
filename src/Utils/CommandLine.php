@@ -20,7 +20,7 @@ class CommandLine
     {
         if (is_array($command)) {
             $this->commandArgs = $command;
-        } else if (is_string($command)) {
+        } elseif (is_string($command)) {
             $this->commandArgs = [$command];
         } else {
             throw new InvalidArgumentException(

@@ -29,7 +29,7 @@ class LanguageTool implements SpellcheckerInterface
         string $text,
         array $languages = [],
         array $context = [],
-        ?string $encoding
+        ?string $encoding = null
     ): iterable {
         Assert::notEmpty($languages, 'LanguageTool requires at least one language to run it\'s spellchecking process');
 
