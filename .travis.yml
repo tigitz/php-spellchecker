@@ -37,10 +37,6 @@ jobs:
         - make tests
       after_success:
         - if [[ "$WITH_COVERAGE" == true ]]; then bash <(curl -s https://codecov.io/bash); fi
-        - |
-          if [[ "PHP_VERSION" == '7.2' && "$WITH_COVERAGE" == true ]]; then
-            make scrutinizer
-          fi
       before_cache:
         - sudo service docker stop
         - sudo chown -R travis ~/docker

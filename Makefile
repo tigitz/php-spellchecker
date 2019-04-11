@@ -35,10 +35,6 @@ ti: ## Run functional tests
 ti: vendor
 	$(EXEC_PHP) vendor/bin/phpunit --group integration
 
-scrutinizer:
-	$(EXEC_PHP) curl -L https://scrutinizer-ci.com/ocular.phar -o ocular.phar -s
-	$(EXEC_PHP) php ocular.phar code-coverage:upload --format=php-clover clover.xml
-
 .PHONY: tests tests-dox tu ti
 
 vendor:
