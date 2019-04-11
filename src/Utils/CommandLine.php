@@ -20,17 +20,15 @@ class CommandLine
     {
         if (is_array($command)) {
             $this->commandArgs = $command;
+        } else if (is_string($command)) {
+            $this->commandArgs = [$command];
         } else {
-            if (is_string($command)) {
-                $this->commandArgs = [$command];
-            } else {
-                throw new InvalidArgumentException(
-                    \Safe\sprintf(
-                        'Command should be an "array" or a "string", "%s" given',
-                        is_object($command) ? get_class($command) : gettype($command)
-                    )
-                );
-            }
+            throw new InvalidArgumentException(
+                \Safe\sprintf(
+                    'Command should be an "array" or a "string", "%s" given',
+                    is_object($command) ? get_class($command) : gettype($command)
+                )
+            );
         }
     }
 

@@ -48,6 +48,23 @@ parameters:
             message: "#^Method PhpSpellcheck\\\\Spellchecker\\\\MultiSpellchecker\\:\\:check\\(\\) should return iterable\\<PhpSpellcheck\\\\Misspelling\\> but returns array\\<int, PhpSpellcheck\\\\MisspellingInterface\\>\\.$#"
             path: %currentWorkingDirectory%/src/Spellchecker/MultiSpellchecker.php
 
+        # mixed variable is type as union
+        -
+            message: "#^Call to function is_object\\(\\) with \\*NEVER\\* will always evaluate to true\\.$#"
+            path: %currentWorkingDirectory%/src/MisspellingFinder.php
+        -
+            message: "#^Else branch is unreachable because ternary operator condition is always true\\.$#"
+            path: %currentWorkingDirectory%/src/MisspellingFinder.php
+        -
+            message: "#^Else branch is unreachable because previous condition is always true\\.$#"
+            path: %currentWorkingDirectory%/src/Utils/CommandLine.php
+        -
+            message: "#^Call to function (is_object|is_string)\\(\\) with (\\*NEVER\\*|string) will always evaluate to true\\.$#"
+            path: %currentWorkingDirectory%/src/Utils/CommandLine.php
+        -
+            message: "#^Else branch is unreachable because ternary operator condition is always true\\.$#"
+            path: %currentWorkingDirectory%/src/Utils/CommandLine.php
+
         # Missing strict comparison
         - '#^Construct empty\(\) is not allowed. Use more strict comparison.$#'
         - '#^Only booleans are allowed in#'
