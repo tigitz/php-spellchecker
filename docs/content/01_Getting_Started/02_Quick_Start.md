@@ -4,7 +4,7 @@
 Via Composer
 
 ```sh
-$ composer require tigitz/php-spellcheck
+$ composer require tigitz/php-spellchecker
 ```
 
 # Usage
@@ -41,7 +41,7 @@ You can also use an opinionated `MisspellingFinder` class to orchestrate your
 spellchecking flow:
 
 <p align="center">
-    <img src="https://i.imgur.com/n3JjWgh.png" alt="PHP-Spellcheck-misspellingfinder-flow">
+    <img src="https://i.imgur.com/n3JjWgh.png" alt="PHP-Spellchecker-misspellingfinder-flow">
 </p>
 
 ```php

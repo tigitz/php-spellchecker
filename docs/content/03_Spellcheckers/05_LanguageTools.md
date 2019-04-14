@@ -12,7 +12,7 @@ and [CHANGES](https://github.com/languagetool-org/languagetool/blob/master/langu
 
 ## Install
 
-PHP-Spellcheck uses the [HTTP API from LanguageTool](http://wiki.languagetool.org/public-http-api).
+PHP-Spellchecker uses the [HTTP API from LanguageTool](http://wiki.languagetool.org/public-http-api).
 As such, you'll require to have a proper LanguageTools server installed in order to use this spellchecker. Follow instructions on the [LanguageTools GitHub's repo](https://github.com/languagetool-org/languagetool).
 
 Or you can use docker and start a container of the server exposing the endpoint on port `8011`:

@@ -13,7 +13,7 @@ $phpSpellcheckLibraryNameSpellchecker = new class implements SpellcheckerInterfa
         array $context = [],
         ?string $encoding = \PhpSpellcheck\Utils\TextEncoding::UTF8
     ): iterable {
-        foreach (['php-spellcheck', 'php-spellchecker', 'php spellchecker'] as $misspelledCandidate) {
+        foreach (['php-spellchecker', 'php-spellcheckerer', 'php spellchecker'] as $misspelledCandidate) {
             $matches = [];
 
             if (preg_match('/\b'.$misspelledCandidate.'\b/i', $text, $matches, PREG_OFFSET_CAPTURE) !== false) {
@@ -39,10 +39,10 @@ $phpSpellcheckLibraryNameSpellchecker = new class implements SpellcheckerInterfa
 };
 
 /** @var Misspelling[]|\Generator $misspellings */
-$misspellings = $phpSpellcheckLibraryNameSpellchecker->check('The PHP-SpellChecker library', ['en_US']);
+$misspellings = $phpSpellcheckLibraryNameSpellchecker->check('The PHP-Spellcheckerer library', ['en_US']);
 foreach ($misspellings as $misspelling) {
     print_r([
-        $misspelling->getWord(), // 'PHP-SpellChecker'
+        $misspelling->getWord(), // 'PHP-Spellcheckerer'
         $misspelling->getLineNumber(), // '...'
         $misspelling->getOffset(), // '...'
         $misspelling->getSuggestions(), // ['PHP Spellcheck']

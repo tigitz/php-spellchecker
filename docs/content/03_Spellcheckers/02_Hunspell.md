@@ -68,7 +68,7 @@ $ hunspell -D
 ...
 ```
 ## Usage
-Now that you have the english dictionary installed in your system, let's see how to spellcheck a word using **PHP-Spellcheck** and **Hunspell**.
+Now that you have the english dictionary installed in your system, let's see how to spellcheck a word using **PHP-Spellchecker** and **Hunspell**.
 
 ### Spellcheck
 ```php

@@ -1,5 +1,5 @@
 {
-    "name": "tigitz/php-spellcheck",
+    "name": "tigitz/php-spellchecker",
     "type": "library",
     "description": "Provides an easy way to spellcheck multiple text source by many spellcheckers, directly from PHP",
     "keywords": [
@@ -8,9 +8,9 @@
         "spellchecker",
         "spell-checker",
         "spell-check",
-        "php-spellcheck"
+        "php-spellchecker"
     ],
-    "homepage": "https://github.com/tigitz/php-spellcheck",
+    "homepage": "https://github.com/tigitz/php-spellchecker",
     "license": "MIT",
     "authors": [
         {

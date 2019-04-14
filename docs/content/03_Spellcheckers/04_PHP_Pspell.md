@@ -9,7 +9,7 @@ PHP PSpell extension installation is lacking documentation so your best bet is p
 
 
 ## Usage
-Now that PHP PSpell extension is installed on your system, let's see how to spellcheck a word using **PHP-Spellcheck** and **PHP PSpell extension**.
+Now that PHP PSpell extension is installed on your system, let's see how to spellcheck a word using **PHP-Spellchecker** and **PHP PSpell extension**.
 
 ### Spellcheck
 ```php

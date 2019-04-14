@@ -1,7 +1,7 @@
 # Create your custom Text Source
 
 You can create your own source of `Text` object by instantiating a class
-that simply implements the [SourceInterface](https://github.com/tigitz/php-spellcheck/blob/master/src/Source/SourceInterface.php).
+that simply implements the [SourceInterface](https://github.com/tigitz/php-spellchecker/blob/master/src/Source/SourceInterface.php).
 
 Let's create an in memory source that will return two `Text` objects.
 

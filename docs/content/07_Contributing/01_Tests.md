@@ -1,6 +1,6 @@
 # Testing
 
-Spellcheckers come in many different forms, from HTTP API to command line tools. **PHP-Spellcheck** wants to ensure real-world usage is OK, so it contains integration tests. To run these, spellcheckers need to all be available during tests execution.
+Spellcheckers come in many different forms, from HTTP API to command line tools. **PHP-Spellchecker** wants to ensure real-world usage is OK, so it contains integration tests. To run these, spellcheckers need to all be available during tests execution.
 
 The most convenient way to do it is by using Docker and avoid polluting your local machine.
 

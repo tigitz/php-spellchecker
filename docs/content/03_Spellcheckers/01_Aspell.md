@@ -58,7 +58,7 @@ en-variant_1
 ...
 ```
 ## Usage
-Now that you have the english dictionary installed in your system, let's see how to spellcheck a word using **PHP-Spellcheck** and **Aspell**.
+Now that you have the english dictionary installed in your system, let's see how to spellcheck a word using **PHP-Spellchecker** and **Aspell**.
 
 ### Spellcheck
 ```php

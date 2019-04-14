@@ -31,13 +31,7 @@ RUN cp /usr/share/hunspell/en_US.aff  /usr/share/hunspell/en_US.aff.orig \
     && sed -i '/SET ISO8859-1/c\SET UTF-8' /usr/share/hunspell/en_US.aff
 
 # install composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 ENV COMPOSER_ALLOW_SUPERUSER 1
-ENV COMPOSER_HOME /tmp
-
-RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
-    && php -r "if (hash_file('sha384', 'composer-setup.php') === trim(file_get_contents('https://composer.github.io/installer.sig'))) { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;" \
-    && php composer-setup.php  --no-ansi --install-dir=/usr/bin --filename=composer \
-    && php -r "unlink('composer-setup.php');" \
-    && composer --ansi --version --no-interaction
 
 WORKDIR /usr/src/myapp

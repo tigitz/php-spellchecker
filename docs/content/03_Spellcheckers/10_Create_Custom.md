@@ -1,7 +1,7 @@
 # Create your custom Spellchecker
 
-A Spellchecker in a PHP-Spellcheck sense, is nothing more than a class that implements
-the [Spellchecker interface](https://github.com/tigitz/php-spellcheck/blob/master/src/Spellchecker/SpellcheckerInterface.php).
+A Spellchecker in a PHP-Spellchecker sense, is nothing more than a class that implements
+the [Spellchecker interface](https://github.com/tigitz/php-spellchecker/blob/master/src/Spellchecker/SpellcheckerInterface.php).
 
 Let's create a custom spellchecker that checks some possibly misspelled version of the library name.
 
@@ -15,7 +15,7 @@ $phpSpellcheckLibraryNameSpellchecker = new class implements SpellcheckerInterfa
         array $context = [],
         ?string $encoding = \PhpSpellcheck\Utils\TextEncoding::UTF8
     ): iterable {
-        foreach (['php-spellcheck', 'php-spellchecker', 'php spellchecker'] as $misspelledCandidate) {
+        foreach (['php-spellchecker', 'php-spellcheckerer', 'php spellchecker'] as $misspelledCandidate) {
             $matches = [];
             
             if (preg_match('/\b'.$misspelledCandidate.'\b/i', $text, $matches, PREG_OFFSET_CAPTURE) !== false) {
@@ -41,10 +41,10 @@ $phpSpellcheckLibraryNameSpellchecker = new class implements SpellcheckerInterfa
 };
 
 /** @var Misspelling[]|\Generator $misspellings */
-$misspellings = $phpSpellcheckLibraryNameSpellchecker->check('The PHP-SpellChecker library', ['en_US']);
+$misspellings = $phpSpellcheckLibraryNameSpellchecker->check('The PHP-Spellcheckerer library', ['en_US']);
 foreach ($misspellings as $misspelling) {
     print_r([
-        $misspelling->getWord(), // 'PHP-SpellChecker'
+        $misspelling->getWord(), // 'PHP-Spellcheckerer'
         $misspelling->getLineNumber(), // '...'
         $misspelling->getOffset(), // '...'
         $misspelling->getSuggestions(), // ['PHP Spellcheck']

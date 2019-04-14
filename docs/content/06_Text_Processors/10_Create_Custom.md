@@ -2,7 +2,7 @@
 
 When you want to add a step in your spellchecking flow that will transform
 the texts coming out of a source to a desired output, you'll need a class implementing the
-[TextProcessorInterface](https://github.com/tigitz/php-spellcheck/blob/master/src/TextProcessor/TextProcessorInterface.php) interface.
+[TextProcessorInterface](https://github.com/tigitz/php-spellchecker/blob/master/src/TextProcessor/TextProcessorInterface.php) interface.
 
 Let's say you want to spellcheck filenames that contains `_` as word separators.
 
