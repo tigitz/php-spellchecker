@@ -99,12 +99,8 @@
             </div>
         </nav>
 
-        <div class="container ml-3 px-5 pt-5">
-            <div class="float-right mt-4">
-                <a href="{{ github_edit_url }}"
-                   class="btn btn-outline-primary">{{ feather('github', {'class' : 'icon mr-1'}) }} edit on
-                    GitHub</a>
-            </div>
+        <div class="container ml-3 px-5 pt-5" style="position: relative">
+            <a href="{{ github_edit_url }}" class="btn btn-outline-primary mr-2 mt-4" style="position: absolute; right: 0">{{ feather('github', {'class' : 'icon mr-1'}) }} edit on GitHub</a>
             <br>
             <div class="markdown-content pt-4">
                 {% markdown %}
