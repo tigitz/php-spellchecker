@@ -37,7 +37,7 @@ class DirectoryTest extends TestCase
         $realValues = iterator_to_array($textsFromDirectory);
 
         foreach ($expectedValues as $value) {
-            $this->assertContains($value, $realValues, '', false, false);
+            $this->assertContainsEquals($value, $realValues);
         }
     }
 
@@ -60,7 +60,7 @@ class DirectoryTest extends TestCase
         $realValues = iterator_to_array($textsFromDirectory);
 
         foreach ($expectedValues as $value) {
-            $this->assertContains($value, $realValues, '', false, false);
+            $this->assertContainsEquals($value, $realValues);
         }
     }
 }
