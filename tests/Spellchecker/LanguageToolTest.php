@@ -15,7 +15,7 @@ use PHPUnit\Framework\TestCase;
 class LanguageToolTest extends TestCase
 {
     /**
-     * @return MockObject|LanguageToolApiClient
+     * @return LanguageToolApiClient|MockObject
      */
     public function getClientMock(): MockObject
     {

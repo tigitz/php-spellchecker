@@ -14,6 +14,7 @@ class ProcessFailedExceptionTest extends TestCase
     public function testSymfonyRunningProcessFailedException(): void
     {
         $process = new Process('non_existing_binaries');
+
         try {
             $process->mustRun();
         } catch (ExceptionInterface $exception) {
@@ -28,6 +29,7 @@ class ProcessFailedExceptionTest extends TestCase
     public function testSymfonyBootingProcessFailedException(): void
     {
         $process = new Process('echo test', __DIR__ . '/notfound/');
+
         try {
             $process->mustRun();
         } catch (ExceptionInterface $exception) {

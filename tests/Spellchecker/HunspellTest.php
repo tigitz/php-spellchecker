@@ -68,7 +68,7 @@ class HunspellTest extends TestCase
     }
 
     /**
-     * @param string|array $binaries
+     * @param array|string $binaries
      */
     public function assertWorkingSupportedLanguages($binaries): void
     {
@@ -87,7 +87,7 @@ class HunspellTest extends TestCase
     }
 
     /**
-     * @param string|array $binaries
+     * @param array|string $binaries
      */
     private function assertWorkingSpellcheck($binaries): void
     {

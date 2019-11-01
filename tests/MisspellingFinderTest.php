@@ -19,9 +19,11 @@ class MisspellingFinderTest extends TestCase
 {
     /** @var MisspellingHandlerInterface|MockObject */
     private $misspellingHandler;
-    /** @var TextProcessorInterface|MockObject */
+
+    /** @var MockObject|TextProcessorInterface */
     private $textProcessor;
-    /** @var SpellcheckerInterface|MockObject */
+
+    /** @var MockObject|SpellcheckerInterface */
     private $spellChecker;
 
     public function setUp(): void
