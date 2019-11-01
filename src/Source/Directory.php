@@ -52,7 +52,7 @@ class Directory implements SourceInterface
             $filesInDir = new \RegexIterator($filesInDir, $this->pattern, \RegexIterator::GET_MATCH);
         }
 
-        /** @var \SplFileInfo|string|array $file */
+        /** @var array|\SplFileInfo|string $file */
         foreach ($filesInDir as $file) {
             if (is_string($file)) {
                 $file = new \SplFileInfo($file);

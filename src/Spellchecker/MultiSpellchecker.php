@@ -59,11 +59,13 @@ class MultiSpellchecker implements SpellcheckerInterface
 
                 if (!$misspelling->canDeterminateUniqueIdentity()) {
                     $misspellings[] = $misspelling;
+
                     continue;
                 }
 
                 if (isset($misspellings[$misspelling->getUniqueIdentity()])) {
                     $misspellings[$misspelling->getUniqueIdentity()]->mergeSuggestions($misspelling->getSuggestions());
+
                     continue;
                 }
 

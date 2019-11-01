@@ -7,9 +7,10 @@ namespace PhpSpellcheck\Utils;
 use PhpSpellcheck\Exception\RuntimeException;
 
 /**
- * Manage different text encoding behavior
+ * Manage different text encoding behavior.
  *
  * @TODO This class is meant to be an enum implementing the list of the most common character encodings
+ *
  * @see https://stackoverflow.com/a/8528866
  */
 class TextEncoding

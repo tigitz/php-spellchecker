@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace PhpSpellcheck\Spellchecker;
 
 use PhpSpellcheck\Exception\ProcessHasErrorOutputException;
-use PhpSpellcheck\Exception\RuntimeException;
 use PhpSpellcheck\Utils\CommandLine;
 use PhpSpellcheck\Utils\IspellOutputParser;
 use PhpSpellcheck\Utils\ProcessRunner;

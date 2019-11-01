@@ -33,6 +33,7 @@ class IspellOutputParser
                         [],
                         $context
                     );
+
                     break;
                 case '&':
                     $parts = explode(':', $line);
@@ -44,6 +45,7 @@ class IspellOutputParser
                         explode(', ', trim($parts[1])),
                         $context
                     );
+
                     break;
             }
         }

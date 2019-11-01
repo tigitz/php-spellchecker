@@ -14,7 +14,7 @@ class CommandLine
     private $commandArgs;
 
     /**
-     * @param string|array $command
+     * @param array|string $command
      */
     public function __construct($command)
     {
@@ -86,5 +86,6 @@ class CommandLine
 
         return '"' . str_replace(['"', '^', '%', '!', "\n"], ['""', '"^^"', '"^%"', '"^!"', '!LF!'], $argument) . '"';
     }
+
     //@codingStandardsIgnoreEnd
 }

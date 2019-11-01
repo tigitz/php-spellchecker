@@ -11,7 +11,7 @@ use Symfony\Component\Process\Process;
 class ProcessRunner
 {
     /**
-     * @param int|float|null $timeout The timeout in seconds
+     * @param float|int|null $timeout The timeout in seconds
      */
     public static function run(Process $process, $timeout = null, callable $callback = null, array $env = []): Process
     {

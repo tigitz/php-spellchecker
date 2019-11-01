@@ -40,7 +40,7 @@ class MisspellingFinder
     }
 
     /**
-     * @param string|SourceInterface $source
+     * @param SourceInterface|string $source
      *
      * @return MisspellingInterface[]
      */
@@ -70,7 +70,7 @@ class MisspellingFinder
     }
 
     /**
-     * @param string|SourceInterface $source
+     * @param SourceInterface|string $source
      *
      * @return MisspellingInterface[]
      */
