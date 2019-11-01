@@ -31,7 +31,7 @@ jobs:
         - make vendor
       env:
         - DEPS=HIGHEST
-        - PHP_VERSION=7.3
+        - PHP_VERSION=7.4
         - DOCKER_COMPOSE=docker-compose -f docker-compose.yml -f .travis/docker-compose.ci.yml
       script:
         - make tests
