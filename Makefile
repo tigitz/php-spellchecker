@@ -1,6 +1,6 @@
 DOCKER_COMPOSE 	?= docker-compose
 EXEC_PHP      	= $(DOCKER_COMPOSE) run --rm -T php$(PHP_VERSION)
-PHP_VERSION     ?= 7.3
+PHP_VERSION     ?= 7.4
 DEPS     		?= "LOCKED"
 COMPOSER      	= $(EXEC_PHP) composer
 WITH_COVERAGE   ?= "FALSE"
@@ -42,9 +42,6 @@ vendor:
 	if [ $(DEPS) = "LOCKED" ]; then $(COMPOSER) install; fi
 	if [ $(DEPS) = "HIGHEST" ]; then $(COMPOSER) update; fi
 
-rector:
-	docker run -v $(pwd):/project rector/rector:latest bin/rector process /project/src/ --config vendor/thecodingmachine/safe/rector-migrate.yml --autoload-file /project/vendor/autoload.php
-
 phpcs: vendor
 	$(EXEC_PHP) vendor/bin/phpcs
 
@@ -58,7 +55,7 @@ infection: vendor
 	$(EXEC_PHP) vendor/bin/phpunit --coverage-xml=build/coverage/coverage-xml --log-junit=build/coverage/phpunit.junit.xml
 	$(EXEC_PHP) php infection.phar --threads=4 --coverage=build/coverage --min-covered-msi=74
 
-.PHONY: vendor php-cs php-cbf php-stan
+.PHONY: vendor php-cs phpcbf phpstan
 
 .DEFAULT_GOAL := help
 help:

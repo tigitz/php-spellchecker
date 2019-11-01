@@ -49,7 +49,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "PhpSpellcheck\\Tests\\": "tests/PhpSpellcheck/Tests"
+            "PhpSpellcheck\\Tests\\": "tests"
         }
     },
     "extra": {

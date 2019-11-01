@@ -22,8 +22,8 @@ services:
     depends_on:
       - languagetools
 
-  php7.3:
-    build: docker/php7.3
+  php7.4:
+    build: docker/php7.4
     volumes:
       - .:/usr/src/myapp
     environment:
