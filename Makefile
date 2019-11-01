@@ -45,7 +45,7 @@ vendor:
 QA = docker run --rm -t -v `pwd`:/project registry.gitlab.com/platinium-group/docker-registry/phaudit:latest
 
 phpcs: vendor
-	-$(EXEC_PHP) vendor/bin/phpcs
+	-$(EXEC_PHP) vendor/bin/phpcs -s
 	$(QA) php-cs-fixer fix -vv --dry-run --allow-risky=yes
 
 phpcbf: vendor
@@ -53,7 +53,7 @@ phpcbf: vendor
 	$(QA) php-cs-fixer fix -vv --allow-risky=yes
 
 phpstan: vendor
-	$(EXEC_PHP) vendor/bin/phpstan analyse src tests -c phpstan.neon -a vendor/autoload.php
+	$(EXEC_PHP) vendor/bin/phpstan analyse src -c phpstan.neon -a vendor/autoload.php
 
 infection: vendor
 	$(EXEC_PHP) vendor/bin/phpunit --coverage-xml=build/coverage/coverage-xml --log-junit=build/coverage/phpunit.junit.xml

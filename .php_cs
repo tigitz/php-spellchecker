@@ -28,7 +28,7 @@ return PhpCsFixer\Config::create()
         'phpdoc_types' => true,
         'phpdoc_types_order' => ['null_adjustment' => 'always_last'],
         'phpdoc_var_annotation_correct_order' => true,
-        'no_superfluous_phpdoc_tags' => true,
+        'no_superfluous_phpdoc_tags' => ['allow_mixed' => true],
         'binary_operator_spaces' => true,
         'single_quote' => true,
         'class_attributes_separation' => ['elements' => ['method', 'property']],

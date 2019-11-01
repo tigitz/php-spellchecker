@@ -11,8 +11,13 @@
     <arg name="parallel" value="80"/>
     <arg name="cache" value=".phpcs-cache"/>
 
+    <rule ref="PSR1.Classes.ClassDeclaration.MissingNamespace">
+        <exclude-pattern>tests</exclude-pattern>
+    </rule>
+
     <file>src</file>
     <file>tests</file>
+
 
     <rule ref="./vendor/tigitz/phpcs/src/Geolid/ruleset.xml">
         <exclude name="Generic.Files.LineLength.TooLong"/>
