@@ -42,11 +42,15 @@ vendor:
 	if [ $(DEPS) = "LOCKED" ]; then $(COMPOSER) install; fi
 	if [ $(DEPS) = "HIGHEST" ]; then $(COMPOSER) update; fi
 
+QA = docker run --rm -t -v `pwd`:/project registry.gitlab.com/platinium-group/docker-registry/phaudit:latest
+
 phpcs: vendor
-	$(EXEC_PHP) vendor/bin/phpcs
+	-$(EXEC_PHP) vendor/bin/phpcs
+	$(QA) php-cs-fixer fix -vv --dry-run --allow-risky=yes
 
 phpcbf: vendor
 	$(EXEC_PHP) vendor/bin/phpcbf
+	$(QA) php-cs-fixer fix -vv --allow-risky=yes
 
 phpstan: vendor
 	$(EXEC_PHP) vendor/bin/phpstan analyse src tests -c phpstan.neon -a vendor/autoload.php
