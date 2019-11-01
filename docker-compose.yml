@@ -1,8 +1,7 @@
-version: '3.2'
+version: '3.4'
 
-services:
-  php7.1:
-    build: docker/php7.1
+x-php-common-conf:
+  - &php-common-conf
     volumes:
       - .:/usr/src/myapp
       - ./cache:/root/composer/cache
@@ -12,25 +11,18 @@ services:
     depends_on:
       - languagetools
 
+services:
   php7.2:
     build: docker/php7.2
-    volumes:
-      - .:/usr/src/myapp
-    environment:
-      - LANG=en_US.UTF-8
-      - COMPOSER_CACHE_DIR=/root/composer/cache
-    depends_on:
-      - languagetools
+    <<: *php-common-conf
+
+  php7.3:
+    build: docker/php7.3
+    <<: *php-common-conf
 
   php7.4:
     build: docker/php7.4
-    volumes:
-      - .:/usr/src/myapp
-    environment:
-      - LANG=en_US.UTF-8
-      - COMPOSER_CACHE_DIR=/root/composer/cache
-    depends_on:
-      - languagetools
+    <<: *php-common-conf
 
   languagetools:
     image: silviof/docker-languagetool
