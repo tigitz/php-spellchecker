@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-namespace PhpSpellcheck\Tests\Source;
-
 use PhpSpellcheck\Source\MultiSource;
 use PhpSpellcheck\Source\SourceInterface;
 use PhpSpellcheck\TextInterface;

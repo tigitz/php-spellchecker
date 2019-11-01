@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-namespace PhpSpellcheck\Tests\Exception;
-
 use PhpSpellcheck\Exception\ProcessHasErrorOutputException;
 use PHPUnit\Framework\TestCase;
 

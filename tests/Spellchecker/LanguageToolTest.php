@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-namespace PhpSpellcheck\Tests\Spellchecker;
-
 use PhpSpellcheck\Misspelling;
 use PhpSpellcheck\Spellchecker\LanguageTool;
 use PhpSpellcheck\Spellchecker\LanguageTool\LanguageToolApiClient;

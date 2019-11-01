@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-namespace PhpSpellcheck\Tests\Utils;
-
 use PhpSpellcheck\Exception\ProcessFailedException;
 use PhpSpellcheck\Utils\ProcessRunner;
 use PHPUnit\Framework\TestCase;

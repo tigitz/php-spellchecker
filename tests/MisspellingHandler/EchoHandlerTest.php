@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-namespace PhpSpellcheck\Tests\MisspellingHandler;
-
 use PhpSpellcheck\Misspelling;
 use PhpSpellcheck\MisspellingHandler\EchoHandler;
 use PHPUnit\Framework\TestCase;

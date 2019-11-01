@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-namespace PhpSpellcheck\Tests\TextProcessor;
-
 use PhpSpellcheck\Text;
 use PhpSpellcheck\TextProcessor\MarkdownRemover;
 use PHPUnit\Framework\TestCase;

@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-namespace PhpSpellcheck\Tests;
-
 use PhpSpellcheck\Exception\InvalidArgumentException;
 use PhpSpellcheck\MisspellingFinder;
 use PhpSpellcheck\MisspellingHandler\MisspellingHandlerInterface;

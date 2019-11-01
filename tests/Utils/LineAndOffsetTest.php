@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-namespace PhpSpellcheck\Tests\Utils;
-
 use PhpSpellcheck\Exception\InvalidArgumentException;
 use PhpSpellcheck\Utils\LineAndOffset;
 use PHPUnit\Framework\TestCase;
