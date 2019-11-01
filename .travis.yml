@@ -62,8 +62,14 @@ jobs:
 
     - <<: *BASE_JOB
       env:
+        - DEPS=HIGHEST
+        - PHP_VERSION=7.3
+        - DOCKER_COMPOSE=docker-compose -f docker-compose.yml -f .travis/docker-compose.ci.yml
+
+    - <<: *BASE_JOB
+      env:
         - DEPS=LOWEST
-        - PHP_VERSION=7.1
+        - PHP_VERSION=7.3
         - DOCKER_COMPOSE=docker-compose -f docker-compose.yml -f .travis/docker-compose.ci.yml
 
     - <<: *BASE_JOB
@@ -71,7 +77,7 @@ jobs:
       env:
         - PHPSTAN
         - DEPS=HIGHEST
-        - PHP_VERSION=7.4
+        - PHP_VERSION=7.3
         - DOCKER_COMPOSE=docker-compose -f docker-compose.yml -f .travis/docker-compose.ci.yml
       script:
         - make phpstan
@@ -81,7 +87,7 @@ jobs:
       env:
         - PHPCS
         - DEPS=HIGHEST
-        - PHP_VERSION=7.4
+        - PHP_VERSION=7.3
         - DOCKER_COMPOSE=docker-compose -f docker-compose.yml -f .travis/docker-compose.ci.yml
       script:
         - make phpcs

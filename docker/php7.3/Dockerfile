@@ -1,4 +1,4 @@
-FROM php:7.1-cli-stretch
+FROM php:7.3-cli-stretch
 
 RUN echo "memory_limit=-1" > "$PHP_INI_DIR/conf.d/memory-limit.ini" \
  && echo "date.timezone=${PHP_TIMEZONE:-UTC}" > "$PHP_INI_DIR/conf.d/date_timezone.ini"
@@ -30,6 +30,7 @@ RUN cp /usr/share/hunspell/en_US.aff  /usr/share/hunspell/en_US.aff.orig \
     && head /usr/share/hunspell/en_US.aff \
     && sed -i '/SET ISO8859-1/c\SET UTF-8' /usr/share/hunspell/en_US.aff
 
+# install composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 ENV COMPOSER_ALLOW_SUPERUSER 1
 
