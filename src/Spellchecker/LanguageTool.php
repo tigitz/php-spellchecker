@@ -31,7 +31,7 @@ class LanguageTool implements SpellcheckerInterface
         array $context = [],
         ?string $encoding = null
     ): iterable {
-        Assert::notEmpty($languages, 'LanguageTool requires at least one language to run it\'s spellchecking process');
+        Assert::notEmpty($languages, 'LanguageTool requires at least one language to be set to run it\'s spellchecking process');
 
         $check = $this->apiClient->spellCheck($text, $languages, $context[self::class] ?? []);
 
