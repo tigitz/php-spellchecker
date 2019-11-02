@@ -23,6 +23,7 @@
     "require": {
         "php": "^7.2",
         "symfony/process": "^3.3|^4.0",
+        "symfony/string": "5.0.x-dev@dev",
         "thecodingmachine/safe": "^0.1.16",
         "webmozart/assert": "1.3.*"
     },

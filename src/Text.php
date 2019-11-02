@@ -58,10 +58,6 @@ class Text implements TextInterface
 
     public function mergeContext(array $context, bool $override = true): TextInterface
     {
-        if (empty($context)) {
-            throw new InvalidArgumentException('Context trying to be merged is empty');
-        }
-
         return new self(
             $this->getContent(),
             $this->getEncoding(),
