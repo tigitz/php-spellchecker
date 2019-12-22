@@ -29,7 +29,7 @@
     },
     "require-dev": {
         "aptoma/twig-markdown": "^3.0",
-        "cocur/slugify": "^3.2",
+        "cocur/slugify": "^3.2 || ^4.0",
         "erusev/parsedown": "^1.7",
         "erusev/parsedown-extra": "^0.7.1",
         "phpstan/phpstan": "^0.12",
