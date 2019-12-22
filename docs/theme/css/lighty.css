@@ -7,10 +7,23 @@ a, a:hover {
     color: hsl(259, 52%, 55%);
 }
 
-.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6, .navbar .brand {
     font-family: 'Lato', sans-serif;
     font-weight: 700;
     color: hsl(259, 52%, 62%);
+}
+
+.navbar .brand {
+    font-size: 22px;
+}
+
+.navbar-light .navbar-nav .nav-link {
+    color: rgba(0,0,0,0.6);
+}
+
+.navbar-light .navbar-toggler {
+    color: hsl(259, 52%, 62%);
+    border-color: hsl(259, 52%, 79%);
 }
 
 p {
@@ -25,7 +38,7 @@ pre {
 li {
     line-height: 1.7rem;
 }
-.navbar {
+.lg-navbar-margin-left {
     margin-left: calc(16rem + 1px);
 }
 .icon {
@@ -78,7 +91,7 @@ a.bg-light:focus, a.bg-light:hover, button.bg-light:focus, button.bg-light:hover
 }
 
 .menu-head-item {
-    color: hsl(259, 52%, 79%);
+    color: hsl(259, 52%, 79%) !important;
     margin-bottom: 0.15rem;
 }
 
@@ -109,3 +122,12 @@ a.bg-light:focus, a.bg-light:hover, button.bg-light:focus, button.bg-light:hover
     padding-top: 55px;
 }
 
+pre code {
+    background-color: #ededed;
+    padding: 1rem .75rem;
+    display: block;
+}
+
+code[class*="language-"] {
+    padding: 0;
+}

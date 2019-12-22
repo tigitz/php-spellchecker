@@ -37,6 +37,9 @@
     <link href="{{ theme_dir }}/css/simple-sidebar.css" rel="stylesheet">
     <link href="{{ theme_dir }}/css/lighty.css" rel="stylesheet">
 
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     <script src="{{ theme_dir }}/js/prism.js"></script>
     <script>
         ((window.gitter = {}).chat = {}).options = {
@@ -50,7 +53,7 @@
 <body>
 
 <div class="d-flex" id="wrapper">
-    <div class="bg-light border-right" id="sidebar-wrapper">
+    <div class="bg-light d-none d-md-block border-right" id="sidebar-wrapper">
         <div class="sidebar-heading text-center">
             <img class="sidebar-logo" src="{{ theme_dir }}/img/logo.png" alt="PHP-Spellchecker">
             <h1 class="h4 mt-3 package-name">PHP-Spellchecker<br><span></span>Docs</h1>
@@ -75,7 +78,57 @@
 
     <!-- Page Content -->
     <div id="page-content-wrapper">
-        <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-light border-bottom">
+        <nav class="navbar d-sm-block d-md-none navbar-expand-lg navbar-light bg-light">
+            <div class="d-flex w-100 justify-content-between align-items-center">
+            <a class="navbar-brand" href="{{ base_dir }}{{ menu[1].href }}">
+                <img src="{{ theme_dir }}/img/logo.png" width="40" height="40" class="d-inline-block align-top" alt="">
+            </a>
+            <div class="d-flex" style="color: hsl(259, 52%, 62%); ">
+                <a href="{{ base_dir }}{{ menu[1].href }}" class="brand">PHP-Spellchecker</a>
+            </div>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+                {{ feather('menu', {'class' : 'icon', 'style': 'fill: true'}) }}
+            </button>
+            </div>
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+
+                <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                {% for item in menu %}
+                    {% if item.depth == 1 %}
+                        <li class="nav-item">
+                            <h2 class="menu-head-item h5 nav-link text-uppercase">{{ item.label }}</h2>
+                        </li>
+                    {% endif %}
+                    {% if item.depth == 2 %}
+{#                        {% if menu[loop.index0 - 1].depth == 1 %}#}
+{#                            <ul class="py-1 list-unstyled">#}
+{#                        {% endif %}#}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ base_dir }}{{ item.href }}">{{ item.label }}</a>
+                        </li>
+{#                        <li><a href="{{ base_dir }}{{ item.href }}">{{ item.label }}</a></li>#}
+                    {% endif %}
+                {% endfor %}
+                </ul>
+
+                {#                <ul class="navbar-nav mr-auto mt-2 mt-lg-0">#}
+{#                    <li class="nav-item active">#}
+{#                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>#}
+{#                    </li>#}
+{#                    <li class="nav-item">#}
+{#                        <a class="nav-link" href="#">Link</a>#}
+{#                    </li>#}
+{#                    <li class="nav-item">#}
+{#                        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>#}
+{#                    </li>#}
+{#                </ul>#}
+                <form class="form-inline d-flex justify-content-around my-2 my-lg-0">
+                    <a class="btn btn-outline-primary mr-3" href="https://github.com/tigitz/php-spellchecker">Like it? Star us!{{ feather('star', {'class' : 'icon ml-2 gh-star', 'style': 'fill: true'}) }}</a></button>
+                    <a class="btn btn-outline-primary" href="https://gitter.im/php-spellchecker/community" class="chat-gitter">Help{{ feather('message-square', {'class' : 'icon ml-2 gh-star', 'style': 'fill: true'}) }}</a>
+                </form>
+            </div>
+        </nav>
+        <nav class="navbar lg-navbar-margin-left d-none d-md-block navbar-expand-lg navbar-light fixed-top bg-light border-bottom">
             <div class="container m-0 px-5">
                 <form class="form-inline mt-2 mt-md-0">
                     <div class="input-group">
@@ -99,14 +152,14 @@
             </div>
         </nav>
 
-        <div class="container ml-3 px-5 pt-5">
-            <div class="float-right mt-4">
+        <div class="container ml-md-3 px-md-5 pt-md-5">
+            <div class="d-none d-sm-block float-right mt-4">
                 <a href="{{ github_edit_url }}"
                    class="btn btn-outline-primary">{{ feather('github', {'class' : 'icon mr-1'}) }} edit on
                     GitHub</a>
             </div>
             <br>
-            <div class="markdown-content pt-4">
+            <div class="markdown-content pt-md-4">
                 {% markdown %}
                     {% if markdown_path is defined %}
                         {% include markdown_path %}

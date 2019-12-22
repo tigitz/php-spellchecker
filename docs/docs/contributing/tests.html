@@ -33,11 +33,14 @@
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto|Source+Code+Pro:500,600" rel="stylesheet">
     <!-- Custom styles for this template -->
-    <link href="../../../../../../../../theme/css/prism.css" rel="stylesheet">
-    <link href="../../../../../../../../theme/css/simple-sidebar.css" rel="stylesheet">
-    <link href="../../../../../../../../theme/css/lighty.css" rel="stylesheet">
+    <link href="../../theme/css/prism.css" rel="stylesheet">
+    <link href="../../theme/css/simple-sidebar.css" rel="stylesheet">
+    <link href="../../theme/css/lighty.css" rel="stylesheet">
 
-    <script src="../../../../../../../../theme/js/prism.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script src="../../theme/js/prism.js"></script>
     <script>
         ((window.gitter = {}).chat = {}).options = {
             room: 'php-spellchecker/php-spellchecker',
@@ -50,20 +53,161 @@
 <body>
 
 <div class="d-flex" id="wrapper">
-    <div class="bg-light border-right" id="sidebar-wrapper">
+    <div class="bg-light d-none d-md-block border-right" id="sidebar-wrapper">
         <div class="sidebar-heading text-center">
-            <img class="sidebar-logo" src="../../../../../../../../theme/img/logo.png" alt="PHP-Spellchecker">
+            <img class="sidebar-logo" src="../../theme/img/logo.png" alt="PHP-Spellchecker">
             <h1 class="h4 mt-3 package-name">PHP-Spellchecker<br><span></span>Docs</h1>
         </div>
         <div class="list-group list-group-flush">
-                                                                                                                                <li><a href="../../../../../../../../index.html">What is PHP-Spellchecker ?</a></li>
+                                                <h2 class="h6 text-uppercase menu-head-item">Getting Started</h2>
+                                                                                                                        <ul class="py-1 list-unstyled">
+                                        <li><a href="../../index.html">What is PHP-Spellchecker ?</a></li>
+                                                                                                                        <li><a href="../../docs/getting-started/quick-start.html">Quick Start </a></li>
+                                                                                                                        <li><a href="../../docs/getting-started/architecture.html">Architecture </a></li>
+                                                                                                                        <li><a href="../../docs/getting-started/characters-and-encoding.html">Characters and Encoding </a></li>
+                                                                                                                        <li><a href="../../docs/getting-started/using-context.html">Using Context </a></li>
                                             </ul>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </div>
+                                                                                    <h2 class="h6 text-uppercase menu-head-item">Spellcheckers</h2>
+                                                                                                                        <ul class="py-1 list-unstyled">
+                                        <li><a href="../../docs/spellcheckers/aspell.html">Aspell </a></li>
+                                                                                                                        <li><a href="../../docs/spellcheckers/hunspell.html">Hunspell </a></li>
+                                                                                                                        <li><a href="../../docs/spellcheckers/ispell.html">Ispell </a></li>
+                                                                                                                        <li><a href="../../docs/spellcheckers/php-pspell.html">PHP Pspell </a></li>
+                                                                                                                        <li><a href="../../docs/spellcheckers/languagetools.html">LanguageTools </a></li>
+                                                                                                                        <li><a href="../../docs/spellcheckers/multispellchecker.html">MultiSpellchecker </a></li>
+                                                                                                                        <li><a href="../../docs/spellcheckers/create-custom.html">Create Custom </a></li>
+                                            </ul>
+                                                                                    <h2 class="h6 text-uppercase menu-head-item">Misspellings Handlers</h2>
+                                                                                                                        <ul class="py-1 list-unstyled">
+                                        <li><a href="../../docs/misspellings-handlers/echohandler.html">EchoHandler </a></li>
+                                                                                                                        <li><a href="../../docs/misspellings-handlers/create-custom.html">Create Custom </a></li>
+                                            </ul>
+                                                                                    <h2 class="h6 text-uppercase menu-head-item">Text Sources</h2>
+                                                                                                                        <ul class="py-1 list-unstyled">
+                                        <li><a href="../../docs/text-sources/file.html">File </a></li>
+                                                                                                                        <li><a href="../../docs/text-sources/directory.html">Directory </a></li>
+                                                                                                                        <li><a href="../../docs/text-sources/multisource.html">MultiSource </a></li>
+                                                                                                                        <li><a href="../../docs/text-sources/create-custom.html">Create Custom </a></li>
+                                            </ul>
+                                                                                    <h2 class="h6 text-uppercase menu-head-item">Text Processors</h2>
+                                                                                                                        <ul class="py-1 list-unstyled">
+                                        <li><a href="../../docs/text-processors/markdown-remover.html">Markdown Remover </a></li>
+                                                                                                                        <li><a href="../../docs/text-processors/create-custom.html">Create Custom </a></li>
+                                            </ul>
+                                                                                    <h2 class="h6 text-uppercase menu-head-item">Contributing</h2>
+                                                                                                                        <ul class="py-1 list-unstyled">
+                                        <li><a href="../../docs/contributing/tests.html">Tests </a></li>
+                                            </ul>
+                                                        </div>
     </div>
 
     <!-- Page Content -->
     <div id="page-content-wrapper">
-        <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-light border-bottom">
+        <nav class="navbar d-sm-block d-md-none navbar-expand-lg navbar-light bg-light">
+            <div class="d-flex w-100 justify-content-between align-items-center">
+            <a class="navbar-brand" href="../../index.html">
+                <img src="../../theme/img/logo.png" width="40" height="40" class="d-inline-block align-top" alt="">
+            </a>
+            <div class="d-flex" style="color: hsl(259, 52%, 62%); ">
+                <a href="../../index.html" class="brand">PHP-Spellchecker</a>
+            </div>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu icon" style="fill: true" ><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+            </button>
+            </div>
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+
+                <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                                                            <li class="nav-item">
+                            <h2 class="menu-head-item h5 nav-link text-uppercase">Getting Started</h2>
+                        </li>
+                                                                                                                        <li class="nav-item">
+                            <a class="nav-link" href="../../index.html">What is PHP-Spellchecker ?</a>
+                        </li>
+                                                                                                    <li class="nav-item">
+                            <a class="nav-link" href="../../docs/getting-started/quick-start.html">Quick Start </a>
+                        </li>
+                                                                                                    <li class="nav-item">
+                            <a class="nav-link" href="../../docs/getting-started/architecture.html">Architecture </a>
+                        </li>
+                                                                                                    <li class="nav-item">
+                            <a class="nav-link" href="../../docs/getting-started/characters-and-encoding.html">Characters and Encoding </a>
+                        </li>
+                                                                                                    <li class="nav-item">
+                            <a class="nav-link" href="../../docs/getting-started/using-context.html">Using Context </a>
+                        </li>
+                                                                                <li class="nav-item">
+                            <h2 class="menu-head-item h5 nav-link text-uppercase">Spellcheckers</h2>
+                        </li>
+                                                                                                                        <li class="nav-item">
+                            <a class="nav-link" href="../../docs/spellcheckers/aspell.html">Aspell </a>
+                        </li>
+                                                                                                    <li class="nav-item">
+                            <a class="nav-link" href="../../docs/spellcheckers/hunspell.html">Hunspell </a>
+                        </li>
+                                                                                                    <li class="nav-item">
+                            <a class="nav-link" href="../../docs/spellcheckers/ispell.html">Ispell </a>
+                        </li>
+                                                                                                    <li class="nav-item">
+                            <a class="nav-link" href="../../docs/spellcheckers/php-pspell.html">PHP Pspell </a>
+                        </li>
+                                                                                                    <li class="nav-item">
+                            <a class="nav-link" href="../../docs/spellcheckers/languagetools.html">LanguageTools </a>
+                        </li>
+                                                                                                    <li class="nav-item">
+                            <a class="nav-link" href="../../docs/spellcheckers/multispellchecker.html">MultiSpellchecker </a>
+                        </li>
+                                                                                                    <li class="nav-item">
+                            <a class="nav-link" href="../../docs/spellcheckers/create-custom.html">Create Custom </a>
+                        </li>
+                                                                                <li class="nav-item">
+                            <h2 class="menu-head-item h5 nav-link text-uppercase">Misspellings Handlers</h2>
+                        </li>
+                                                                                                                        <li class="nav-item">
+                            <a class="nav-link" href="../../docs/misspellings-handlers/echohandler.html">EchoHandler </a>
+                        </li>
+                                                                                                    <li class="nav-item">
+                            <a class="nav-link" href="../../docs/misspellings-handlers/create-custom.html">Create Custom </a>
+                        </li>
+                                                                                <li class="nav-item">
+                            <h2 class="menu-head-item h5 nav-link text-uppercase">Text Sources</h2>
+                        </li>
+                                                                                                                        <li class="nav-item">
+                            <a class="nav-link" href="../../docs/text-sources/file.html">File </a>
+                        </li>
+                                                                                                    <li class="nav-item">
+                            <a class="nav-link" href="../../docs/text-sources/directory.html">Directory </a>
+                        </li>
+                                                                                                    <li class="nav-item">
+                            <a class="nav-link" href="../../docs/text-sources/multisource.html">MultiSource </a>
+                        </li>
+                                                                                                    <li class="nav-item">
+                            <a class="nav-link" href="../../docs/text-sources/create-custom.html">Create Custom </a>
+                        </li>
+                                                                                <li class="nav-item">
+                            <h2 class="menu-head-item h5 nav-link text-uppercase">Text Processors</h2>
+                        </li>
+                                                                                                                        <li class="nav-item">
+                            <a class="nav-link" href="../../docs/text-processors/markdown-remover.html">Markdown Remover </a>
+                        </li>
+                                                                                                    <li class="nav-item">
+                            <a class="nav-link" href="../../docs/text-processors/create-custom.html">Create Custom </a>
+                        </li>
+                                                                                <li class="nav-item">
+                            <h2 class="menu-head-item h5 nav-link text-uppercase">Contributing</h2>
+                        </li>
+                                                                                                                        <li class="nav-item">
+                            <a class="nav-link" href="../../docs/contributing/tests.html">Tests </a>
+                        </li>
+                                                    </ul>
+
+                                <form class="form-inline d-flex justify-content-around my-2 my-lg-0">
+                    <a class="btn btn-outline-primary mr-3" href="https://github.com/tigitz/php-spellchecker">Like it? Star us!<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-star icon ml-2 gh-star" style="fill: true" ><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></a></button>
+                    <a class="btn btn-outline-primary" href="https://gitter.im/php-spellchecker/community" class="chat-gitter">Help<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-square icon ml-2 gh-star" style="fill: true" ><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></a>
+                </form>
+            </div>
+        </nav>
+        <nav class="navbar lg-navbar-margin-left d-none d-md-block navbar-expand-lg navbar-light fixed-top bg-light border-bottom">
             <div class="container m-0 px-5">
                 <form class="form-inline mt-2 mt-md-0">
                     <div class="input-group">
@@ -87,14 +231,14 @@
             </div>
         </nav>
 
-        <div class="container ml-3 px-5 pt-5">
-            <div class="float-right mt-4">
+        <div class="container ml-md-3 px-md-5 pt-md-5">
+            <div class="d-none d-sm-block float-right mt-4">
                 <a href="https://github.com/tigitz/php-spellchecker/edit/master/docs/content%2F07_Contributing%2F01_Tests.md"
                    class="btn btn-outline-primary"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github icon mr-1" ><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg> edit on
                     GitHub</a>
             </div>
             <br>
-            <div class="markdown-content pt-4">
+            <div class="markdown-content pt-md-4">
                 <h1>Testing</h1>
 <p>Spellcheckers come in many different forms, from HTTP API to command line tools. <strong>PHP-Spellchecker</strong> wants to ensure real-world usage is OK, so it contains integration tests. To run these, spellcheckers need to all be available during tests execution.</p>
 <p>The most convenient way to do it is by using Docker and avoid polluting your local machine.</p>

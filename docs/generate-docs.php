@@ -14,7 +14,7 @@ use Symfony\Component\Finder\Finder;
 require_once __DIR__.'/../vendor/autoload.php';
 
 $loader = new \Twig\Loader\FilesystemLoader(__DIR__);
-$twig = new \Twig\Environment($loader, ['cache' => false]);
+$twig = new \Twig\Environment($loader);
 
 $icons = new Feather\Icons();
 $function = new \Twig\TwigFunction('feather', function (string $featherIconName, array $options = []) use ($icons) {
@@ -26,7 +26,7 @@ $twig->addFunction($function);
 $twig->addExtension(new MarkdownExtension($engine));
 
 $finder = new Finder();
-$finder->in(__DIR__.'/content');
+$finder->in('content');
 $finder->sortByName();
 
 $slugify = new Slugify();
@@ -83,7 +83,7 @@ foreach ($finder as $idx => $item) {
         'base_dir' => $baseDir,
         'isDir' => $item->isDir(),
         'page_title' => $menuItem['label'],
-        'md_path' => 'content'.DIRECTORY_SEPARATOR.$item->getRelativePathname(),
+        'md_path' => $item->getPathname(),
         'html_path' => $htmlPath
     ];
 

@@ -41,7 +41,7 @@ You can also use an opinionated `MisspellingFinder` class to orchestrate your
 spellchecking flow:
 
 <p align="center">
-    <img src="https://i.imgur.com/n3JjWgh.png" alt="PHP-Spellchecker-misspellingfinder-flow">
+    <img class="img-fluid" src="https://i.imgur.com/n3JjWgh.png" alt="PHP-Spellchecker-misspellingfinder-flow">
 </p>
 
 ```php
