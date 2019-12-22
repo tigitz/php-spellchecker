@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace PhpSpellcheck\Source;
 
+use PhpSpellcheck\TextInterface;
+
 class Directory implements SourceInterface
 {
     /**
@@ -30,7 +32,7 @@ class Directory implements SourceInterface
     }
 
     /**
-     * @return \Generator<TextInterface>
+     * @return \Generator<TextInterface>|TextInterface[]
      */
     private function getContents(): iterable
     {
