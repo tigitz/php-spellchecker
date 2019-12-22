@@ -7,7 +7,6 @@ namespace PhpSpellcheck\Spellchecker;
 use PhpSpellcheck\Exception\LogicException;
 use PhpSpellcheck\Exception\RuntimeException;
 use PhpSpellcheck\Misspelling;
-use PhpSpellcheck\Utils\TextEncoding;
 use Webmozart\Assert\Assert;
 
 class PHPPspell implements SpellcheckerInterface
@@ -50,14 +49,12 @@ class PHPPspell implements SpellcheckerInterface
      */
     public function check(
         string $text,
-        array $languages = [],
-        array $context = [],
-        ?string $encoding = TextEncoding::UTF8
+        array $languages,
+        array $context
     ): iterable {
         Assert::count($languages, 1, 'PHPPspell spellchecker doesn\'t support multiple languages check');
-        Assert::notNull($encoding, 'PHPPspell requires the encoding to be defined');
 
-        $pspellConfig = \Safe\pspell_config_create(current($languages), '', '', $encoding);
+        $pspellConfig = \Safe\pspell_config_create(current($languages));
         \Safe\pspell_config_mode($pspellConfig, $this->mode);
         \Safe\pspell_config_ignore($pspellConfig, $this->numberOfCharactersLowerLimit);
         $dictionary = \Safe\pspell_new_config($pspellConfig);

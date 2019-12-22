@@ -7,7 +7,6 @@ namespace PhpSpellcheck\Spellchecker;
 use PhpSpellcheck\Misspelling;
 use PhpSpellcheck\Spellchecker\LanguageTool\LanguageToolApiClient;
 use PhpSpellcheck\Utils\LineAndOffset;
-use PhpSpellcheck\Utils\TextEncoding;
 use Webmozart\Assert\Assert;
 
 class LanguageTool implements SpellcheckerInterface
@@ -27,19 +26,17 @@ class LanguageTool implements SpellcheckerInterface
      */
     public function check(
         string $text,
-        array $languages = [],
-        array $context = [],
-        ?string $encoding = null
+        array $languages,
+        array $context
     ): iterable {
         Assert::notEmpty($languages, 'LanguageTool requires at least one language to be set to run it\'s spellchecking process');
 
         $check = $this->apiClient->spellCheck($text, $languages, $context[self::class] ?? []);
 
         foreach ($check['matches'] as $match) {
-            list($line, $offsetFromLine) = LineAndOffset::findFromFirstCharacterOffset(
+            [$line, $offsetFromLine] = LineAndOffset::findFromFirstCharacterOffset(
                 $text,
-                $match['offset'],
-                $encoding ?? TextEncoding::detect($text)
+                $match['offset']
             );
 
             yield new Misspelling(

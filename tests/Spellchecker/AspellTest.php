@@ -7,7 +7,6 @@ use PhpSpellcheck\Misspelling;
 use PhpSpellcheck\Spellchecker\Aspell;
 use PhpSpellcheck\Tests\TextTest;
 use PhpSpellcheck\Utils\CommandLine;
-use PhpSpellcheck\Utils\TextEncoding;
 use PHPUnit\Framework\TestCase;
 
 class AspellTest extends TestCase
@@ -80,8 +79,7 @@ class AspellTest extends TestCase
             $aspell->check(
                 $this->getTextInput(),
                 ['en_US'],
-                ['ctx'],
-                TextEncoding::UTF8
+                ['ctx']
             )
         );
 

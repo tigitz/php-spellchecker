@@ -37,7 +37,7 @@ class Ispell implements SpellcheckerInterface
     /**
      * {@inheritdoc}
      */
-    public function check(string $text, array $languages = [], array $context = [], ?string $encoding = null): iterable
+    public function check(string $text, array $languages = [], array $context = []): iterable
     {
         Assert::greaterThan($languages, 1, 'Ispell spellchecker doesn\'t support multiple languages check');
 

@@ -13,9 +13,7 @@ $aspell = Aspell::create(); // Creates aspell spellchecker pointing to "aspell" 
 
 /** @var \PhpSpellcheck\Misspelling[]|\Generator $misspellings */
 $misspellings = $aspell->check(
-    new \PhpSpellcheck\Source\File('/my/path/to/text.txt'),
-    ['en_US'],
-    ['from' => 'aspell spellchecker']
+    new \PhpSpellcheck\Source\File('/my/path/to/text.txt'), ['en_US'], ['from' => 'aspell spellchecker']
 );
 
 foreach ($misspellings as $misspelling) {

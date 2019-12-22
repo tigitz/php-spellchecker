@@ -30,14 +30,6 @@ class PHPPspellTest extends TestCase
         $this->assertNotEmpty($misspellings[0]->getSuggestions());
     }
 
-    public function testCheckWithoutEncoding(): void
-    {
-        $this->expectException(\InvalidArgumentException::class);
-        $pspell = new PHPPspell(PSPELL_FAST);
-        /* @var Misspelling[] $misspellings */
-        iterator_to_array($pspell->check('mispell', ['en'], ['ctx'], null));
-    }
-
     public function testGetSupportedLanguages(): void
     {
         $this->expectException(LogicException::class);

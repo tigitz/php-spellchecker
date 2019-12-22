@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace PhpSpellcheck\Tests;
 
 use PhpSpellcheck\Exception\InvalidArgumentException;
-use PhpSpellcheck\Text;
 use PHPUnit\Framework\TestCase;
 
 class TextTest extends TestCase
@@ -19,21 +18,21 @@ EOT;
 
     public function testContextOverridingMerge(): void
     {
-        $text = Text::utf8('test', ['idx' => '1'])->mergeContext(['idx' => 'foo', 'idx2' => '2']);
+        $text = t('test', ['idx' => '1'])->mergeContext(['idx' => 'foo', 'idx2' => '2']);
 
-        $this->assertEquals(Text::utf8('test', ['idx' => 'foo', 'idx2' => '2']), $text);
+        $this->assertEquals(t('test', ['idx' => 'foo', 'idx2' => '2']), $text);
     }
 
     public function testContextNonOverridingMerge(): void
     {
-        $text = Text::utf8('test', ['idx' => '1'])->mergeContext(['idx' => 'foo', 'idx2' => '2'], false);
+        $text = t('test', ['idx' => '1'])->mergeContext(['idx' => 'foo', 'idx2' => '2'], false);
 
-        $this->assertEquals(Text::utf8('test', ['idx' => '1', 'idx2' => '2']), $text);
+        $this->assertEquals(t('test', ['idx' => '1', 'idx2' => '2']), $text);
     }
 
     public function testExceptionWhenMergingEmptyContext(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        Text::utf8('test', ['idx' => '1'])->mergeContext([]);
+        t('test', ['idx' => '1'])->mergeContext([]);
     }
 }

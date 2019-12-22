@@ -26,7 +26,7 @@ class Aspell implements SpellcheckerInterface
     /**
      * {@inheritdoc}
      */
-    public function check(string $text, array $languages = [], array $context = [], ?string $encoding = null): iterable
+    public function check(string $text, array $languages = [], array $context = []): iterable
     {
         Assert::maxCount($languages, 1, 'Aspell spellchecker doesn\'t support multiple languages check');
 
@@ -34,10 +34,6 @@ class Aspell implements SpellcheckerInterface
 
         if (!empty($languages)) {
             $cmd = $cmd->addArg('--lang=' . implode(',', $languages));
-        }
-
-        if ($encoding !== null) {
-            $cmd = $cmd->addArg('--encoding=' . $encoding);
         }
 
         $process = new Process($cmd->getArgs());

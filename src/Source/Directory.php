@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace PhpSpellcheck\Source;
 
-use PhpSpellcheck\Text;
-
 class Directory implements SourceInterface
 {
     /**
@@ -27,16 +25,12 @@ class Directory implements SourceInterface
     public function toTexts(array $context): iterable
     {
         foreach ($this->getContents() as $text) {
-            yield new Text(
-                $text->getContent(),
-                $text->getEncoding(),
-                array_merge($text->getContext(), $context)
-            );
+            yield t($text->getContent(), array_merge($text->getContext(), $context));
         }
     }
 
     /**
-     * @return Text[]
+     * @return \Generator<TextInterface>
      */
     private function getContents(): iterable
     {
@@ -61,10 +55,8 @@ class Directory implements SourceInterface
                 $file = new \SplFileInfo(current($file));
             }
 
-            if (!$file->isDir()) {
-                if ($file->getRealPath() !== false) {
-                    yield from (new File($file->getRealPath()))->toTexts();
-                }
+            if (!$file->isDir() && $file->getRealPath() !== false) {
+                yield from (new File($file->getRealPath()))->toTexts();
             }
         }
     }

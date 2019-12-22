@@ -6,11 +6,9 @@ namespace PhpSpellcheck;
 
 use PhpSpellcheck\Exception\InvalidArgumentException;
 use PhpSpellcheck\MisspellingHandler\MisspellingHandlerInterface;
-use PhpSpellcheck\Source\PHPString;
 use PhpSpellcheck\Source\SourceInterface;
 use PhpSpellcheck\Spellchecker\SpellcheckerInterface;
 use PhpSpellcheck\TextProcessor\TextProcessorInterface;
-use PhpSpellcheck\Utils\TextEncoding;
 
 class MisspellingFinder
 {
@@ -40,17 +38,31 @@ class MisspellingFinder
     }
 
     /**
-     * @param SourceInterface|string $source
+     * @param SourceInterface|string|TextInterface|TextInterface[] $source
      *
      * @return MisspellingInterface[]
      */
     public function find(
         $source,
         array $languages = [],
-        array $context = [],
-        string $spellCheckerEncoding = TextEncoding::UTF8
+        array $context = []
     ): iterable {
-        $misspellings = $this->doSpellcheck($source, $languages, $context, $spellCheckerEncoding);
+        if (is_string($source)) {
+            $texts = [t($source, $context)];
+        } elseif ($source instanceof TextInterface) {
+            $texts = [$source];
+        } elseif (is_array($source)) {
+            $texts = $source;
+        } elseif ($source instanceof SourceInterface) {
+            $texts = $source->toTexts($context);
+        } else {
+            $sourceVarType = is_object($source) ? get_class($source) : gettype($source);
+            $allowedTypes = implode(' or ', ['"string"', '"' . SourceInterface::class . '"', '"' . TextInterface::class . '[]"', '"' . TextInterface::class . '"']);
+
+            throw new InvalidArgumentException('Source should be of type ' . $allowedTypes . ', "' . $sourceVarType . '" given');
+        }
+
+        $misspellings = $this->doSpellCheckTexts($texts, $languages);
 
         if ($this->misspellingHandler !== null) {
             $this->misspellingHandler->handle($misspellings);
@@ -70,47 +82,25 @@ class MisspellingFinder
     }
 
     /**
-     * @param SourceInterface|string $source
+     * @param TextInterface[] $texts
+     * @param string[] $languages
      *
-     * @return MisspellingInterface[]
+     * @return iterable<MisspellingInterface>
      */
-    private function doSpellcheck($source, array $languages, array $context, string $spellCheckEncoding): iterable
-    {
-        if (is_string($source)) {
-            $source = new PHPString($source);
-        }
-
-        if ($source instanceof SourceInterface) {
-            return $this->doSpellcheckFromSource($source, $languages, $context, $spellCheckEncoding);
-        }
-
-        $sourceVarType = is_object($source) ? get_class($source) : gettype($source);
-
-        throw new InvalidArgumentException('Source should be of type string or ' . SourceInterface::class . '. "' . $sourceVarType . '" given');
-    }
-
-    /**
-     * @return MisspellingInterface[]
-     */
-    private function doSpellcheckFromSource(
-        SourceInterface $source,
-        array $languages,
-        array $context,
-        string $spellCheckEncoding
+    private function doSpellCheckTexts(
+        iterable $texts,
+        array $languages
     ): iterable {
-        foreach ($source->toTexts($context) as $text) {
+        foreach ($texts as $text) {
             if ($this->textProcessor !== null) {
                 $text = $this->textProcessor->process($text);
             }
 
-            $misspellingsCheck = $this->spellChecker->check(
+            yield from $this->spellChecker->check(
                 $text->getContent(),
                 $languages,
-                $text->getContext(),
-                $spellCheckEncoding
+                $text->getContext()
             );
-
-            yield from $misspellingsCheck;
         }
     }
 }

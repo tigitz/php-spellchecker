@@ -5,7 +5,6 @@ declare(strict_types=1);
 use PhpSpellcheck\Source\MultiSource;
 use PhpSpellcheck\Source\SourceInterface;
 use PhpSpellcheck\TextInterface;
-use PhpSpellcheck\Utils\TextEncoding;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
@@ -43,8 +42,6 @@ class MultiSourceTest extends TestCase
         $textMock = $this->createMock(TextInterface::class);
         $textMock->method('getContext')
             ->willReturn($context);
-        $textMock->method('getEncoding')
-            ->willReturn(TextEncoding::UTF8);
         $textMock->method('getContent')
             ->willReturn($content);
 

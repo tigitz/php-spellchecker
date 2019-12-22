@@ -5,45 +5,30 @@ declare(strict_types=1);
 namespace PhpSpellcheck;
 
 use PhpSpellcheck\Exception\InvalidArgumentException;
-use PhpSpellcheck\Utils\TextEncoding;
+use Symfony\Component\String\UnicodeString;
 
-class Text implements TextInterface
+class Text extends UnicodeString implements TextInterface
 {
-    /**
-     * @var string
-     */
-    private $content;
-
-    /**
-     * @var string
-     */
-    private $encoding;
-
     /**
      * @var array
      */
     private $context;
 
-    public function __construct(string $content, string $encoding, array $context = [])
+    public static function create(string $content, array $context = []): Text
     {
-        $this->content = $content;
-        $this->encoding = $encoding;
-        $this->context = $context;
+        return (new self($content))->setContext($context);
     }
 
-    public function __toString()
+    public function setContext(array $context): self
     {
-        return $this->getContent();
+        $this->context = $context;
+
+        return $this;
     }
 
     public function getContent(): string
     {
-        return $this->content;
-    }
-
-    public function getEncoding(): string
-    {
-        return $this->encoding;
+        return (string) $this->string;
     }
 
     public function getContext(): array
@@ -53,7 +38,7 @@ class Text implements TextInterface
 
     public function replaceContent(string $newContent): TextInterface
     {
-        return new self($newContent, $this->encoding, $this->context);
+        return self::create($newContent, $this->context);
     }
 
     public function mergeContext(array $context, bool $override = true): TextInterface
@@ -62,15 +47,9 @@ class Text implements TextInterface
             throw new InvalidArgumentException('Context trying to be merged is empty');
         }
 
-        return new self(
+        return self::create(
             $this->getContent(),
-            $this->getEncoding(),
             $override ? array_merge($this->getContext(), $context) : array_merge($context, $this->getContext())
         );
-    }
-
-    public static function utf8(string $text, array $context = []): self
-    {
-        return new self($text, TextEncoding::UTF8, $context);
     }
 }

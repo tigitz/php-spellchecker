@@ -8,7 +8,6 @@ use PhpSpellcheck\Exception\ProcessHasErrorOutputException;
 use PhpSpellcheck\Utils\CommandLine;
 use PhpSpellcheck\Utils\IspellOutputParser;
 use PhpSpellcheck\Utils\ProcessRunner;
-use PhpSpellcheck\Utils\TextEncoding;
 use Symfony\Component\Process\Process;
 
 class Hunspell implements SpellcheckerInterface
@@ -29,17 +28,12 @@ class Hunspell implements SpellcheckerInterface
     public function check(
         string $text,
         array $languages = [],
-        array $context = [],
-        ?string $encoding = TextEncoding::UTF8
+        array $context = []
     ): iterable {
         $cmd = $this->binaryPath->addArg('-a');
 
         if (!empty($languages)) {
             $cmd = $cmd->addArgs(['-d', implode(',', $languages)]);
-        }
-
-        if ($encoding) {
-            $cmd = $cmd->addArgs(['-i', $encoding]);
         }
 
         $process = new Process($cmd->getArgs());

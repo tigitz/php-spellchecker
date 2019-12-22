@@ -107,7 +107,9 @@ class MisspellingFinderTest extends TestCase
             ->willReturn([$misspelling1]);
 
         $source = $this->createMock(SourceInterface::class);
-        $source->method('toTexts')
+        $source
+            ->expects($this->once())
+            ->method('toTexts')
             ->willReturn([$text = $this->generateTextMock()]);
 
         $misspellingFinder = new MisspellingFinder(
@@ -116,7 +118,45 @@ class MisspellingFinderTest extends TestCase
             $this->textProcessor
         );
 
-        $this->assertSame([$misspelling1], iterator_to_array($misspellingFinder->find('mispell')));
+        $this->assertSame([$misspelling1], iterator_to_array($misspellingFinder->find($source)));
+    }
+
+    public function testFindFromText(): void
+    {
+        $misspelling1 = $this->generateMisspellingMock();
+        $this->spellChecker
+            ->expects($this->once())
+            ->method('check')
+            ->willReturn([$misspelling1]);
+
+        $source = $this->generateTextMock();
+
+        $misspellingFinder = new MisspellingFinder(
+            $this->spellChecker,
+            null,
+            $this->textProcessor
+        );
+
+        $this->assertSame([$misspelling1], iterator_to_array($misspellingFinder->find($source)));
+    }
+
+    public function testFindFromTexts(): void
+    {
+        $misspelling1 = $this->generateMisspellingMock();
+        $this->spellChecker
+            ->expects($this->exactly(2))
+            ->method('check')
+            ->willReturn([$misspelling1]);
+
+        $source = [$this->generateTextMock(), $this->generateTextMock()];
+
+        $misspellingFinder = new MisspellingFinder(
+            $this->spellChecker,
+            null,
+            $this->textProcessor
+        );
+
+        $this->assertSame([$misspelling1], iterator_to_array($misspellingFinder->find($source)));
     }
 
     private function generateMisspellingMock(): MockObject
@@ -143,8 +183,6 @@ class MisspellingFinderTest extends TestCase
             ->willReturn('mispell');
         $text->method('getContext')
             ->willReturn([]);
-        $text->method('getEncoding')
-            ->willReturn('utf-8');
 
         return $text;
     }

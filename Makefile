@@ -49,7 +49,7 @@ phpcs: vendor
 	$(QA) php-cs-fixer fix -vv --dry-run --allow-risky=yes
 
 phpcbf: vendor
-	$(EXEC_PHP) vendor/bin/phpcbf
+	-$(EXEC_PHP) vendor/bin/phpcbf
 	$(QA) php-cs-fixer fix -vv --allow-risky=yes
 
 phpstan: vendor

@@ -8,10 +8,7 @@ use PhpSpellcheck\Utils\LineAndOffset;
 
 $phpSpellcheckLibraryNameSpellchecker = new class implements SpellcheckerInterface {
     public function check(
-        string $text,
-        array $languages = [],
-        array $context = [],
-        ?string $encoding = \PhpSpellcheck\Utils\TextEncoding::UTF8
+        string $text, array $languages, array $context
     ): iterable {
         foreach (['php-spellchecker', 'php-spellcheckerer', 'php spellchecker'] as $misspelledCandidate) {
             $matches = [];
@@ -39,7 +36,7 @@ $phpSpellcheckLibraryNameSpellchecker = new class implements SpellcheckerInterfa
 };
 
 /** @var Misspelling[]|\Generator $misspellings */
-$misspellings = $phpSpellcheckLibraryNameSpellchecker->check('The PHP-Spellcheckerer library', ['en_US']);
+$misspellings = $phpSpellcheckLibraryNameSpellchecker->check('The PHP-Spellcheckerer library', ['en_US'],);
 foreach ($misspellings as $misspelling) {
     print_r([
         $misspelling->getWord(), // 'PHP-Spellcheckerer'

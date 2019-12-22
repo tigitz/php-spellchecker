@@ -14,10 +14,8 @@ $misspellingFinder = new MisspellingFinder(
 $misspellings = $misspellingFinder->find(
     new \PhpSpellcheck\Source\MultiSource(
         [
-            new \PhpSpellcheck\Source\File(__DIR__.'/../tests/PhpSpellcheck/Tests/Fixtures/Text/mispelling1.txt'),
-            new \PhpSpellcheck\Source\File(__DIR__.'/../tests/PhpSpellcheck/Tests/Fixtures/Text/Directory/mispelling3.txt')
+            new \PhpSpellcheck\Source\File(__DIR__ . '/../tests/PhpSpellcheck/Tests/Fixtures/Text/mispelling1.txt'),
+            new \PhpSpellcheck\Source\File(__DIR__ . '/../tests/PhpSpellcheck/Tests/Fixtures/Text/Directory/mispelling3.txt')
         ]
-    ),
-    ['en_US'],
-    ['from' => 'aspell spellchecker']
+    ), ['en_US'], ['from' => 'aspell spellchecker']
 );

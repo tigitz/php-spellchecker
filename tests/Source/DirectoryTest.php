@@ -3,8 +3,6 @@
 declare(strict_types=1);
 
 use PhpSpellcheck\Source\Directory;
-use PhpSpellcheck\Text;
-use PhpSpellcheck\Utils\TextEncoding;
 use PHPUnit\Framework\TestCase;
 
 class DirectoryTest extends TestCase
@@ -15,21 +13,15 @@ class DirectoryTest extends TestCase
     {
         $textsFromDirectory = (new Directory(self::TEXT_FIXTURES_PATH))->toTexts(['ctx' => 'in tests']);
         $expectedValues = [
-            new Text(
-                "mispélling3\n",
-                TextEncoding::UTF8,
-                ['ctx' => 'in tests', 'filePath' => realpath(self::TEXT_FIXTURES_PATH . '/mispelling3.txt')]
-            ),
-            new Text(
+            t("mispélling3\n", ['ctx' => 'in tests', 'filePath' => realpath(self::TEXT_FIXTURES_PATH . '/mispelling3.txt')]),
+            t(
                 "mispelling2\n",
-                TextEncoding::ASCII,
                 ['ctx' => 'in tests', 'filePath' => realpath(self::TEXT_FIXTURES_PATH . '/mispelling2.txt')]
             ),
-            new Text(
+            t(
                 "mispelling4\n",
-                TextEncoding::ASCII,
                 [
-                'ctx' => 'in tests',
+                    'ctx' => 'in tests',
                     'filePath' => realpath(self::TEXT_FIXTURES_PATH . '/SubDirectory/mispelling4.txt'),
                 ]
             ),
@@ -47,12 +39,11 @@ class DirectoryTest extends TestCase
             ->toTexts(['ctx' => 'in tests']);
 
         $expectedValues = [
-            new Text(
+            t(
                 "mispelling2\n",
-                TextEncoding::ASCII,
                 ['ctx' => 'in tests', 'filePath' => realpath(self::TEXT_FIXTURES_PATH . '/mispelling2.txt')]
             ),
-            new Text("mispelling4\n", TextEncoding::ASCII, [
+            t("mispelling4\n", [
                 'ctx' => 'in tests',
                 'filePath' => realpath(self::TEXT_FIXTURES_PATH . '/SubDirectory/mispelling4.txt'),
             ]),

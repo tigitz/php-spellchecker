@@ -26,7 +26,7 @@
     <meta content="tigitz.github.io/php-spellchecker/theme/img/logo.png" property="og:image">
     <meta content="300" property="og:image:width">
     <meta content="300" property="og:image:height">
-    <title>Create Custom  - PHP-Spellchecker Documentation</title>
+    <title>Characters and Encoding  - PHP-Spellchecker Documentation</title>
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
@@ -89,61 +89,17 @@
 
         <div class="container ml-3 px-5 pt-5">
             <div class="float-right mt-4">
-                <a href="https://github.com/tigitz/php-spellchecker/edit/master/docs/content%2F03_Spellcheckers%2F10_Create_Custom.md"
+                <a href="https://github.com/tigitz/php-spellchecker/edit/master/docs/content%2F01_Getting_Started%2F05_Characters_and_Encoding.md"
                    class="btn btn-outline-primary"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github icon mr-1" ><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg> edit on
                     GitHub</a>
             </div>
             <br>
             <div class="markdown-content pt-4">
-                <h1>Create your custom Spellchecker</h1>
-<p>A Spellchecker in a PHP-Spellchecker sense, is nothing more than a class that implements
-the <a href="https://github.com/tigitz/php-spellchecker/blob/master/src/Spellchecker/SpellcheckerInterface.php">Spellchecker interface</a>.</p>
-<p>Let's create a custom spellchecker that checks some possibly misspelled version of the library name.</p>
-<pre><code class="language-php">&lt;?php
-
-$phpSpellcheckLibraryNameSpellchecker = new class implements SpellcheckerInterface {
-    public function check(
-        string $text,
-        array $languages = [],
-        array $context = []
-    ): iterable {
-        foreach (['php-spellchecker', 'php-spellcheckerer', 'php spellchecker'] as $misspelledCandidate) {
-            $matches = [];
-
-            if (preg_match('/\b'.$misspelledCandidate.'\b/i', $text, $matches, PREG_OFFSET_CAPTURE) !== false) {
-                foreach ($matches as $match) {
-                    [$word, $offset] = $match;
-                    [$line, $offsetFromLine] = LineAndOffset::findFromFirstCharacterOffset($text, $offset);
-
-                    yield new Misspelling(
-                        $word,
-                        $offsetFromLine,
-                        $line,
-                        ['PHP Spellcheck']
-                    );
-                }
-            }
-        }
-    }
-
-    public function getSupportedLanguages(): iterable
-    {
-        yield 'en_US';
-    }
-};
-
-/** @var Misspelling[]|\Generator $misspellings */
-$misspellings = $phpSpellcheckLibraryNameSpellchecker-&gt;check('The PHP-Spellcheckerer library', ['en_US']);
-foreach ($misspellings as $misspelling) {
-    print_r([
-        $misspelling-&gt;getWord(), // 'PHP-Spellcheckerer'
-        $misspelling-&gt;getLineNumber(), // '...'
-        $misspelling-&gt;getOffset(), // '...'
-        $misspelling-&gt;getSuggestions(), // ['PHP Spellcheck']
-        $misspelling-&gt;getContext(), // []
-    ]);
-}
-</code></pre>            </div>
+                <h1>Characters and Encoding</h1>
+<p>A PHP string is just a sequence of bytes, with no encoding tagged to it whatsoever.</p>
+<p>String values can come from various sources: the client (over HTTP), a database, a file, or from string literals in your source code. PHP reads all these as byte sequences, and it never extracts any encoding information.</p>
+<p><code>Text</code> default class is relying on the <code>symfony/string</code> project to perform string manipulation while spellchecking and <strong>assumes an Unicode string</strong>.</p>
+<p>Read the library documentation to understand the problem it solves: <a href="https://symfony.com/doc/current/components/string.html">https://symfony.com/doc/current/components/string.html</a></p>            </div>
         </div>
     </div>
 </div>

@@ -32,10 +32,10 @@ class MultiSpellchecker implements SpellcheckerInterface
     /**
      * {@inheritdoc}
      */
-    public function check(string $text, array $languages = [], array $context = [], ?string $encoding = null): iterable
+    public function check(string $text, array $languages, array $context): iterable
     {
         if (!$this->mergeMisspellingsSuggestions) {
-            return $this->checkForAllSpellcheckers($text, $languages, $context, $encoding);
+            return $this->checkForAllSpellcheckers($text, $languages, $context);
         }
 
         /** @var MisspellingInterface[] $misspellings */
@@ -52,7 +52,7 @@ class MultiSpellchecker implements SpellcheckerInterface
                 continue;
             }
 
-            foreach ($spellChecker->check($text, $spellcheckerSupportedLanguages, $context, $encoding) as $misspelling) {
+            foreach ($spellChecker->check($text, $spellcheckerSupportedLanguages, $context) as $misspelling) {
                 if (!empty($context)) {
                     $misspelling = $misspelling->mergeContext($context);
                 }
@@ -94,8 +94,7 @@ class MultiSpellchecker implements SpellcheckerInterface
     private function checkForAllSpellcheckers(
         string $text,
         array $languages,
-        array $context,
-        ?string $encoding
+        array $context
     ): iterable {
         foreach ($this->spellCheckers as $spellChecker) {
             $supportedLanguages = is_array($spellChecker->getSupportedLanguages()) ?
@@ -108,7 +107,7 @@ class MultiSpellchecker implements SpellcheckerInterface
                 continue;
             }
 
-            foreach ($spellChecker->check($text, $spellcheckerSupportedLanguages, $context, $encoding) as $misspelling) {
+            foreach ($spellChecker->check($text, $spellcheckerSupportedLanguages, $context) as $misspelling) {
                 if (!empty($context)) {
                     $misspelling = $misspelling->mergeContext($context);
                 }

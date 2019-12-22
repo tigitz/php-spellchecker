@@ -5,7 +5,6 @@ declare(strict_types=1);
 use PhpSpellcheck\Misspelling;
 use PhpSpellcheck\Spellchecker\MultiSpellchecker;
 use PhpSpellcheck\Spellchecker\SpellcheckerInterface;
-use PhpSpellcheck\Utils\TextEncoding;
 use PHPUnit\Framework\TestCase;
 
 class MultiSpellcheckerTest extends TestCase
@@ -31,7 +30,7 @@ class MultiSpellcheckerTest extends TestCase
 
         $multiSpellchecker = new MultiSpellchecker([$spellChecker1, $spellChecker2]);
 
-        $misspellings = $multiSpellchecker->check('test', ['en_US'], ['ctx'], TextEncoding::UTF8);
+        $misspellings = $multiSpellchecker->check('test', ['en_US'], ['ctx']);
         $this->assertEquals(
             [
                 $misspelling1->setContext(['ctx']),
@@ -63,7 +62,7 @@ class MultiSpellcheckerTest extends TestCase
 
         $multiSpellchecker = new MultiSpellchecker([$spellChecker1, $spellChecker2], false);
 
-        $misspellings = $multiSpellchecker->check('test', ['en_US'], ['ctx'], TextEncoding::UTF8);
+        $misspellings = $multiSpellchecker->check('test', ['en_US'], ['ctx']);
         $this->assertEquals(
             [
                 $misspelling1->setContext(['ctx']),

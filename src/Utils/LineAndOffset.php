@@ -15,7 +15,7 @@ class LineAndOffset
      *
      * @return array(int,int) Line number as the first element and offset from beginning of line as second element
      */
-    public static function findFromFirstCharacterOffset(string $text, int $offsetFromFirstCharacter, string $encoding = TextEncoding::UTF8): array
+    public static function findFromFirstCharacterOffset(string $text, int $offsetFromFirstCharacter): array
     {
         // positive offset
         Assert::greaterThanEq($offsetFromFirstCharacter, 0, 'Offset must be positive');
@@ -27,9 +27,9 @@ class LineAndOffset
             );
         }
 
-        $textBeforeOffset = mb_substr($text, 0, $offsetFromFirstCharacter, $encoding);
+        $textBeforeOffset = mb_substr($text, 0, $offsetFromFirstCharacter);
         $line = mb_substr_count($textBeforeOffset, PHP_EOL) + 1;
-        $offsetOfPreviousLinebreak = mb_strrpos($textBeforeOffset, PHP_EOL, 0, $encoding);
+        $offsetOfPreviousLinebreak = mb_strrpos($textBeforeOffset, PHP_EOL, 0);
 
         $offset = $offsetFromFirstCharacter - ($offsetOfPreviousLinebreak !== false ? $offsetOfPreviousLinebreak + 1 : 0);
 

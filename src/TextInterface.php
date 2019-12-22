@@ -8,8 +8,6 @@ interface TextInterface
 {
     public function getContent(): string;
 
-    public function getEncoding(): string;
-
     public function getContext(): array;
 
     public function replaceContent(string $newContent): TextInterface;

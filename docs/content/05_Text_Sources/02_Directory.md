@@ -14,8 +14,7 @@ $aspell = Aspell::create(); // Creates aspell spellchecker pointing to "aspell" 
 
 /** @var \PhpSpellcheck\Misspelling[]|\Generator $misspellings */
 $misspellings = $aspell->check(
-    new \PhpSpellcheck\Source\Directory('/my/path/to/directory', '/regexpattern/'),
-    ['en_US']
+    new \PhpSpellcheck\Source\Directory('/my/path/to/directory', '/regexpattern/'), ['en_US'],
 );
 
 foreach ($misspellings as $misspelling) {

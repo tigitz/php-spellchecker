@@ -6,7 +6,6 @@ use PhpSpellcheck\Misspelling;
 use PhpSpellcheck\Spellchecker\LanguageTool;
 use PhpSpellcheck\Spellchecker\LanguageTool\LanguageToolApiClient;
 use PhpSpellcheck\Tests\TextTest;
-use PhpSpellcheck\Utils\TextEncoding;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
@@ -114,8 +113,7 @@ class LanguageToolTest extends TestCase
             $languageTool->check(
                 $this->getTextInput(),
                 ['en-US'],
-                ['ctx' => 'ctx'],
-                TextEncoding::UTF8
+                ['ctx' => 'ctx']
             )
         );
 

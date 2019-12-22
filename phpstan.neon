@@ -6,6 +6,7 @@ includes:
 
 parameters:
     level: max
+    checkMissingIterableValueType: false
     reportUnmatchedIgnoredErrors: true
     ignoreErrors:
         # symfony/process version testing
@@ -26,14 +27,6 @@ parameters:
         -
             message: "#^Call to static method Webmozart\\\\Assert\\\\Assert\\:\\:allIsInstanceOf\\(\\) with iterable\\<PhpSpellcheck\\\\Source\\\\SourceInterface\\> and 'PhpSpellcheck…' will always evaluate to true\\.$#"
             path: %currentWorkingDirectory%/src/Source/MultiSource.php
-
-        # return type missanalysis
-        -
-            message: "#^Method PhpSpellcheck\\\\Spellchecker\\\\MultiSpellchecker\\:\\:check\\(\\) should return iterable\\<PhpSpellcheck\\\\Misspelling\\> but returns iterable\\.$#"
-            path: %currentWorkingDirectory%/src/Spellchecker/MultiSpellchecker.php
-        -
-            message: "#^Method PhpSpellcheck\\\\Spellchecker\\\\MultiSpellchecker\\:\\:check\\(\\) should return iterable\\<PhpSpellcheck\\\\Misspelling\\> but returns array\\<int, PhpSpellcheck\\\\MisspellingInterface\\>\\.$#"
-            path: %currentWorkingDirectory%/src/Spellchecker/MultiSpellchecker.php
 
         # mixed variable is typed as intersect
         -

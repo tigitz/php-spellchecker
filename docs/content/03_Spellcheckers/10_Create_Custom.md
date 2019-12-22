@@ -12,8 +12,7 @@ $phpSpellcheckLibraryNameSpellchecker = new class implements SpellcheckerInterfa
     public function check(
         string $text,
         array $languages = [],
-        array $context = [],
-        ?string $encoding = \PhpSpellcheck\Utils\TextEncoding::UTF8
+        array $context = []
     ): iterable {
         foreach (['php-spellchecker', 'php-spellcheckerer', 'php spellchecker'] as $misspelledCandidate) {
             $matches = [];
@@ -21,7 +20,7 @@ $phpSpellcheckLibraryNameSpellchecker = new class implements SpellcheckerInterfa
             if (preg_match('/\b'.$misspelledCandidate.'\b/i', $text, $matches, PREG_OFFSET_CAPTURE) !== false) {
                 foreach ($matches as $match) {
                     [$word, $offset] = $match;
-                    [$line, $offsetFromLine] = LineAndOffset::findFromFirstCharacterOffset($text, $offset, $encoding);
+                    [$line, $offsetFromLine] = LineAndOffset::findFromFirstCharacterOffset($text, $offset);
 
                     yield new Misspelling(
                         $word,

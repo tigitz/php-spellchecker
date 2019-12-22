@@ -3,8 +3,6 @@
 declare(strict_types=1);
 
 use PhpSpellcheck\Source\File;
-use PhpSpellcheck\Text;
-use PhpSpellcheck\Utils\TextEncoding;
 use PHPUnit\Framework\TestCase;
 use Safe\Exceptions\FilesystemException;
 
@@ -17,9 +15,8 @@ class FileTest extends TestCase
         $texts = (new File(self::TEXT_FIXTURE_FILE_PATH))->toTexts(['ctx' => 'in tests']);
         $this->assertEquals(
             [
-                new Text(
+                t(
                     "mispelling1\n",
-                    TextEncoding::ASCII,
                     [
                         'ctx' => 'in tests',
                         'filePath' => realpath(self::TEXT_FIXTURE_FILE_PATH),
@@ -34,23 +31,5 @@ class FileTest extends TestCase
     {
         $this->expectException(FilesystemException::class);
         iterator_to_array((new File('invalidPath'))->toTexts());
-    }
-
-    public function testToTextsWithEncoding(): void
-    {
-        $texts = (new File(self::TEXT_FIXTURE_FILE_PATH, TextEncoding::UTF8))->toTexts(['ctx' => 'in tests']);
-        $this->assertEquals(
-            [
-                new Text(
-                    "mispelling1\n",
-                    TextEncoding::UTF8,
-                    [
-                        'ctx' => 'in tests',
-                        'filePath' => realpath(self::TEXT_FIXTURE_FILE_PATH),
-                    ]
-                ),
-            ],
-            iterator_to_array($texts)
-        );
     }
 }

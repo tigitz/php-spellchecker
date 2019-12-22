@@ -16,6 +16,8 @@ class IspellOutputParser
         $lines = explode(PHP_EOL, $output);
         $lineNumber = 1;
         foreach ($lines as $line) {
+//            echo $line.PHP_EOL.PHP_EOL;
+//            echo $lineNumber.PHP_EOL.PHP_EOL;
             $line = trim($line);
             if ('' === $line) {
                 ++$lineNumber;

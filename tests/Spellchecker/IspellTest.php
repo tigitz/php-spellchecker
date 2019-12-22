@@ -7,7 +7,6 @@ use PhpSpellcheck\Misspelling;
 use PhpSpellcheck\Spellchecker\Ispell;
 use PhpSpellcheck\Tests\TextTest;
 use PhpSpellcheck\Utils\CommandLine;
-use PhpSpellcheck\Utils\TextEncoding;
 use PHPUnit\Framework\TestCase;
 
 class IspellTest extends TestCase
@@ -94,8 +93,7 @@ class IspellTest extends TestCase
             $ispell->check(
                 $this->getTextInput(),
                 ['american'],
-                ['ctx'],
-                TextEncoding::UTF8
+                ['ctx']
             )
         );
 
