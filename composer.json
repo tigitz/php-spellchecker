@@ -39,7 +39,7 @@
         "phpunit/phpunit": "^8.4",
         "pixelrobin/php-feather": "^1.0",
         "symfony/filesystem": "^4.2",
-        "symfony/finder": "^4.2",
+        "symfony/finder": "^4.2 || ^5.0",
         "thecodingmachine/phpstan-safe-rule": "v1.0.0-beta1",
         "tigitz/phpcs": "^8.0"
     },
