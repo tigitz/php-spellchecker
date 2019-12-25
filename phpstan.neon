@@ -7,7 +7,7 @@ includes:
 parameters:
     level: max
     checkMissingIterableValueType: false
-    reportUnmatchedIgnoredErrors: true
+    reportUnmatchedIgnoredErrors: false
     ignoreErrors:
         # symfony/process version testing
         -
