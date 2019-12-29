@@ -35,6 +35,7 @@ jobs:
         - DOCKER_COMPOSE=docker-compose -f docker-compose.yml -f .travis/docker-compose.ci.yml
       script:
         - make tests
+        - make examples-test
       after_success:
         - if [[ "$WITH_COVERAGE" == true ]]; then bash <(curl -s https://codecov.io/bash); fi
       before_cache:

@@ -16,7 +16,7 @@ $phpSpellcheckLibraryNameSpellchecker = new class implements SpellcheckerInterfa
             if (preg_match('/\b'.$misspelledCandidate.'\b/i', $text, $matches, PREG_OFFSET_CAPTURE) !== false) {
                 foreach ($matches as $match) {
                     [$word, $offset] = $match;
-                    [$line, $offsetFromLine] = LineAndOffset::findFromFirstCharacterOffset($text, $offset, $encoding);
+                    [$line, $offsetFromLine] = LineAndOffset::findFromFirstCharacterOffset($text, $offset);
 
                     yield new Misspelling(
                         $word,
@@ -36,7 +36,7 @@ $phpSpellcheckLibraryNameSpellchecker = new class implements SpellcheckerInterfa
 };
 
 /** @var Misspelling[]|\Generator $misspellings */
-$misspellings = $phpSpellcheckLibraryNameSpellchecker->check('The PHP-Spellcheckerer library', ['en_US'],);
+$misspellings = $phpSpellcheckLibraryNameSpellchecker->check('The PHP-Spellcheckerer library', ['en_US'], ['context']);
 foreach ($misspellings as $misspelling) {
     print_r([
         $misspelling->getWord(), // 'PHP-Spellcheckerer'

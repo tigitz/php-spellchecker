@@ -12,5 +12,5 @@ $misspellingFinder = new MisspellingFinder(
 );
 /** @var \PhpSpellcheck\Misspelling[]|\Generator $misspellings */
 $misspellings = $misspellingFinder->find(
-    new \PhpSpellcheck\Source\File(__DIR__ . '/../tests/PhpSpellcheck/Tests/Fixtures/Text/mispelling1.txt'), ['en_US'], ['from' => 'aspell spellchecker']
+    new \PhpSpellcheck\Source\File(__DIR__ . '/../tests/Fixtures/Text/mispelling1.txt'), ['en_US'], ['from' => 'aspell spellchecker']
 );
