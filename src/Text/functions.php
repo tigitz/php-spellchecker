@@ -6,5 +6,5 @@ use PhpSpellcheck\Text;
 
 function t(string $string = '', array $context = []): Text
 {
-    return Text::create($string, $context);
+    return new Text($string, $context);
 }

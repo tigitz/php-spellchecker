@@ -28,7 +28,7 @@ class LanguageToolApiClient
         return $this->requestAPI(
             '/v2/check',
             'POST',
-            'Content-type: application/json; Accept: application/json',
+            'Content-type: application/x-www-form-urlencoded; Accept: application/json',
             $options
         );
     }

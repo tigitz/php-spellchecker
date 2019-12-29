@@ -89,6 +89,33 @@ class LanguageToolTest extends TestCase
     /**
      * @group integration
      */
+    public function testSpellcheckMultiBytesStringFromRealAPI(): void
+    {
+        $misspellings = iterator_to_array(
+            (new LanguageTool(new LanguageToolApiClient(self::realAPIEndpoint())))->check(
+                TextTest::CONTENT_STUB_MULTIBYTE,
+                ['ja-JP'],
+                ['ctx' => 'ctx']
+            )
+        );
+
+        $this->assertArrayHasKey('ctx', $misspellings[0]->getContext());
+        $this->assertSame($misspellings[0]->getWord(), '解決なる');
+        $this->assertSame($misspellings[0]->getOffset(), 4);
+        $this->assertSame($misspellings[0]->getLineNumber(), 1);
+        $this->assertNotEmpty($misspellings[0]->getSuggestions());
+
+        $this->assertArrayHasKey('ctx', $misspellings[1]->getContext());
+        $this->assertSame($misspellings[1]->getWord(), '解決なる');
+        $this->assertSame($misspellings[1]->getOffset(), 0);
+        $this->assertSame($misspellings[1]->getLineNumber(), 5);
+        $this->assertNotEmpty($misspellings[1]->getSuggestions());
+        $this->assertWorkingSpellcheck(new LanguageToolApiClient(self::realAPIEndpoint()));
+    }
+
+    /**
+     * @group integration
+     */
     public function testGetSupportedLanguagesFromRealBinaries(): void
     {
         $this->assertWorkingSupportedLanguages(new LanguageToolApiClient(self::realAPIEndpoint()));

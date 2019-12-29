@@ -10,8 +10,11 @@ use Webmozart\Assert\Assert;
 class LineAndOffset
 {
     /**
-     * When spellcheckers only gives the offset position of a word from the first character of the whole text
-     * and not from the first character of the word's line, this function helps computing it anyway.
+     * When spellcheckers gives the offset position of a misspelled word from the whole text's first character,
+     * this helps finding the offset position from line's first caracter instead.
+     *
+     * @param string $text Chunk of text from which the line and offset are computed
+     * @param int $offsetFromFirstCharacter Offset position from the text's first caracter
      *
      * @return array(int,int) Line number as the first element and offset from beginning of line as second element
      */
@@ -28,7 +31,7 @@ class LineAndOffset
         }
 
         $textBeforeOffset = mb_substr($text, 0, $offsetFromFirstCharacter);
-        $line = mb_substr_count($textBeforeOffset, PHP_EOL) + 1;
+        $line = \Safe\preg_match_all('/\R/u', $textBeforeOffset, $matches) + 1;
         $offsetOfPreviousLinebreak = mb_strrpos($textBeforeOffset, PHP_EOL, 0);
 
         $offset = $offsetFromFirstCharacter - ($offsetOfPreviousLinebreak !== false ? $offsetOfPreviousLinebreak + 1 : 0);

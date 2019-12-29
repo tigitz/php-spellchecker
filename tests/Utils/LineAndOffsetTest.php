@@ -8,6 +8,20 @@ use PHPUnit\Framework\TestCase;
 
 class LineAndOffsetTest extends TestCase
 {
+    public function testFindFromFirstCharacterOffsetWithMultiByteString(): void
+    {
+        $text = <<<TEXT
+❤❤ hello
+❤
+Misspel️
+TEXT;
+
+        $this->assertSame(
+            [3, 4],
+            LineAndOffset::findFromFirstCharacterOffset($text, 15)
+        );
+    }
+
     public function testFindFromFirstCharacterOffset(): void
     {
         $text = <<<TEXT
