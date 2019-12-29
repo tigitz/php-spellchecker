@@ -11,14 +11,14 @@ class ProcessFailedExceptionTest extends TestCase
 {
     public function testSymfonyRunningProcessFailedException(): void
     {
-        $process = new Process('non_existing_binaries');
+        $process = new Process(['non_existing_binaries']);
 
         try {
             $process->mustRun();
         } catch (ExceptionInterface $exception) {
             $processFailure = new ProcessFailedException($process, $exception);
             $this->assertSame(
-                'Process with command "non_existing_binaries" has failed running with exit code 127(Command not found)',
+                'Process with command "\'non_existing_binaries\'" has failed running with exit code 127(Command not found)',
                 $processFailure->getMessage()
             );
         }
@@ -26,14 +26,14 @@ class ProcessFailedExceptionTest extends TestCase
 
     public function testSymfonyBootingProcessFailedException(): void
     {
-        $process = new Process('echo test', __DIR__ . '/notfound/');
+        $process = new Process(['echo test'], __DIR__ . '/notfound/');
 
         try {
             $process->mustRun();
         } catch (ExceptionInterface $exception) {
             $processFailure = new ProcessFailedException($process, $exception);
             $this->assertSame(
-                'Process with command "echo test" has failed with exit code 0()',
+                'Process with command "\'echo test\'" has failed with exit code 0()',
                 $processFailure->getMessage()
             );
 
