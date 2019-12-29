@@ -37,6 +37,26 @@
     <link href="theme/css/simple-sidebar.css" rel="stylesheet">
     <link href="theme/css/lighty.css" rel="stylesheet">
 
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-44761854-2"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-44761854-2');
+    </script>
+    <!-- Hotjar Tracking Code for https://tigitz.github.io/php-spellchecker/ -->
+    <script>
+        (function(h,o,t,j,a,r){
+            h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+            h._hjSettings={hjid:1626389,hjsv:6};
+            a=o.getElementsByTagName('head')[0];
+            r=o.createElement('script');r.async=1;
+            r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+            a.appendChild(r);
+        })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+    </script>
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
@@ -291,6 +311,8 @@
 <ul>
 <li>[ ] Markdown - Find a way to keep original offset and line of words after stripping</li>
 <li>[ ] Add PHPDoc processor</li>
+<li>[ ] Add HTML Processor (<a href="https://github.com/mekras/php-speller/blob/master/src/Source/Filter/HtmlFilter.php">inspiration</a>)</li>
+<li>[ ] Add XLIFF Processor (<a href="https://github.com/mekras/php-speller/blob/master/src/Source/XliffSource.php">inspiration</a>)</li>
 </ul>
 <h2>Spellcheckers</h2>
 <ul>
@@ -298,8 +320,9 @@
 <li>[ ] Pspell - Find way to compute word offset</li>
 <li>[ ] LanguageTools - Evaluate <a href="https://github.com/php-http/httplug">HTTPlug library</a> to make API requests</li>
 <li>[ ] Pspell - find way to list available dictionaries</li>
-<li>[ ] Add JamSpell spellchecker</li>
-<li>[ ] Add NuSpell spellchecker</li>
+<li>[ ] Add <a href="https://github.com/bakwc/JamSpell#http-api">JamSpell</a> spellchecker</li>
+<li>[ ] Add <a href="https://github.com/nuspell/nuspell">NuSpell</a> spellchecker</li>
+<li>[ ] Add <a href="https://github.com/LeonErath/SymSpellAPI">SymSpell</a> spellchecker</li>
 </ul>
 <h2>Handlers</h2>
 <ul>
