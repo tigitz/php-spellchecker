@@ -146,6 +146,8 @@ Project is still in it's initial phase, requiring more real life usage to stabil
 
 - [ ] Markdown - Find a way to keep original offset and line of words after stripping
 - [ ] Add PHPDoc processor
+- [ ] Add HTML Processor ([inspiration](https://github.com/mekras/php-speller/blob/master/src/Source/Filter/HtmlFilter.php))
+- [ ] Add XLIFF Processor ([inspiration](https://github.com/mekras/php-speller/blob/master/src/Source/XliffSource.php))
 
 ## Spellcheckers
 
@@ -153,8 +155,9 @@ Project is still in it's initial phase, requiring more real life usage to stabil
 - [ ] Pspell - Find way to compute word offset
 - [ ] LanguageTools - Evaluate [HTTPlug library][httplug] to make API requests
 - [ ] Pspell - find way to list available dictionaries
-- [ ] Add JamSpell spellchecker
-- [ ] Add NuSpell spellchecker
+- [ ] Add [JamSpell](https://github.com/bakwc/JamSpell#http-api) spellchecker
+- [ ] Add [NuSpell](https://github.com/nuspell/nuspell) spellchecker
+- [ ] Add [SymSpell](https://github.com/LeonErath/SymSpellAPI) spellchecker
 
 ## Handlers
 

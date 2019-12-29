@@ -18,7 +18,7 @@ class ProcessFailedExceptionTest extends TestCase
         } catch (ExceptionInterface $exception) {
             $processFailure = new ProcessFailedException($process, $exception);
             $this->assertStringContainsString(
-                'Process with command "\'non_existing_binaries\'" has failed running with exit code ',
+                'Process with command "\'non_existing_binaries\'" has failed',
                 $processFailure->getMessage()
             );
         }
@@ -33,7 +33,7 @@ class ProcessFailedExceptionTest extends TestCase
         } catch (ExceptionInterface $exception) {
             $processFailure = new ProcessFailedException($process, $exception);
             $this->assertStringContainsString(
-                'Process with command "\'echo test\'" has failed with exit code',
+                'Process with command "\'echo test\'" has failed',
                 $processFailure->getMessage()
             );
 
