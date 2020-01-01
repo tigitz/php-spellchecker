@@ -158,6 +158,8 @@ Project is still in it's initial phase, requiring more real life usage to stabil
 - [ ] Add [JamSpell](https://github.com/bakwc/JamSpell#http-api) spellchecker
 - [ ] Add [NuSpell](https://github.com/nuspell/nuspell) spellchecker
 - [ ] Add [SymSpell](https://github.com/LeonErath/SymSpellAPI) spellchecker
+- [ ] Add [Yandex.Speller API](https://yandex.ru/dev/speller/doc/dg/concepts/api-overview-docpage/) spellchecker
+- [ ] Add [Bing Spell Check API](https://docs.microsoft.com/en-us/azure/cognitive-services/bing-spell-check/overview) spellchecker
 
 ## Handlers
 
