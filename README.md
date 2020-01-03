@@ -17,20 +17,20 @@
 ------
 # About
 
-PHP-Spellchecker is a spell checker abstraction library for PHP. By providing a unified interface for many different spell checkers, you’re able to swap out spell checkers without extensive rewrites.
+PHP-Spellchecker is a spellchecker abstraction library for PHP. By providing a unified interface for many different spellcheckers, you’re able to swap out spellcheckers without extensive rewrites.
 
 Using PHP-Spellchecker can eliminate vendor lock-in, reduce technical debt, and improve the testability of your code.
 
 # Features
 
-- 🧐 Supports many popular spell checkers out of the box: [Aspell][aspell], [Hunspell][hunspell], [Ispell][ispell], [PHP Pspell][pspell], [LanguageTools][languagetools] and [MultiSpellchecker][multispellchecker] [(add yours!)][spellchecker_custom]
+- 🧐 Supports many popular spellcheckers out of the box: [Aspell][aspell], [Hunspell][hunspell], [Ispell][ispell], [PHP Pspell][pspell], [LanguageTools][languagetools] and [MultiSpellchecker][multispellchecker] [(add yours!)][spellchecker_custom]
 - 📄 Supports different text sources: file system [file][filesource]/[directory][directory], [string][php-string], and [multi-source][multisource] [(add yours!)][source_custom]
 - 🛠 Supports text processors: [MarkdownRemover][markdownremover] [(add yours!)][textprocessor_custom]
 - 🔁 Supports misspelling handlers: [EchoHandler][echohandler] [(add yours!)][custom_handler]
 - ➰ Makes use of generators to reduce memory footprint
 - ⚖ Flexible and straightforward design
-- 💡 Makes it a breeze to implement your own spell checkers, text processors and misspellings handlers
-- 💪 Runs tests against real spell checkers to ensure full compatibility
+- 💡 Makes it a breeze to implement your own spellcheckers, text processors and misspellings handlers
+- 💪 Runs tests against real spellcheckers to ensure full compatibility
 
 **PHP-Spellchecker** is a welcoming project for new contributors.
 
@@ -48,7 +48,7 @@ $ composer require tigitz/php-spellchecker
 
 [Check out the documentation](https://tigitz.github.io/php-spellchecker) and [examples](https://github.com/tigitz/php-spellchecker/tree/master/examples)
 
-## Using the spell checker directly
+## Using the spellchecker directly
 
 You can check misspellings directly from a `PhpSpellCheck\SpellChecker` class and process them on your own.
 
@@ -127,9 +127,9 @@ The project is still in its initial phase, requiring more real life usage to sta
 ## Global
 
 - [ ] Add a CLI that could do something like `vendor/bin/php-spellchecker "misspell" Languagetools EchoHandler --lang=en_US`
-- [ ] Add asynchronous mechanism to spell checkers.
+- [ ] Add asynchronous mechanism to spellcheckers.
 - [ ] Make some computed misspelling properties optional to improve performance for certain use cases (e.g., lines and offset in `LanguageTools`).
-- [ ] Add a language mapper to manage different representations across spell checkers.
+- [ ] Add a language mapper to manage different representations across spellcheckers.
 - [ ] Evaluate `strtok` instead of `explode` to parse lines of text, for performance.
 - [ ] Evaluate `MutableMisspelling` for performance comparison.
 - [ ] Wrap `Webmozart/Assert` library exceptions to throw PHP-Spellchecker custom exceptions instead.
@@ -137,7 +137,7 @@ The project is still in its initial phase, requiring more real life usage to sta
 
 ## Sources
 
-- [ ] Make a `SourceInterface` class that's able to have an effect on the used spell checker configuration.
+- [ ] Make a `SourceInterface` class that's able to have an effect on the used spellchecker configuration.
 - [ ] `League/Flysystem` source.
 - [ ] `Symfony/Finder` source.
 
@@ -154,11 +154,11 @@ The project is still in its initial phase, requiring more real life usage to sta
 - [ ] Pspell - Find way to compute word offset.
 - [ ] LanguageTools - Evaluate [HTTPlug library][httplug] to make API requests.
 - [ ] Pspell - find way to list available dictionaries.
-- [ ] Add [JamSpell](https://github.com/bakwc/JamSpell#http-api) spell checker.
-- [ ] Add [NuSpell](https://github.com/nuspell/nuspell) spell checker.
-- [ ] Add [SymSpell](https://github.com/LeonErath/SymSpellAPI) spell checker.
-- [ ] Add [Yandex.Speller API](https://yandex.ru/dev/speller/doc/dg/concepts/api-overview-docpage/) spell checker.
-- [ ] Add [Bing Spell Check API](https://docs.microsoft.com/en-us/azure/cognitive-services/bing-spell-check/overview) spell checker.
+- [ ] Add [JamSpell](https://github.com/bakwc/JamSpell#http-api) spellchecker.
+- [ ] Add [NuSpell](https://github.com/nuspell/nuspell) spellchecker.
+- [ ] Add [SymSpell](https://github.com/LeonErath/SymSpellAPI) spellchecker.
+- [ ] Add [Yandex.Speller API](https://yandex.ru/dev/speller/doc/dg/concepts/api-overview-docpage/) spel checker.
+- [ ] Add [Bing Spell Check API](https://docs.microsoft.com/en-us/azure/cognitive-services/bing-spell-check/overview) spellchecker.
 
 ## Handlers
 
@@ -183,13 +183,13 @@ There still are many design decisions that should be confronted with real-world 
 
 - Are `TextInterface` and `MisspellingInterface` really useful?
 - Is using generators the right way to go?
-- Should all the contributed spell checkers be maintained by the package itself?
+- Should all the contributed spellcheckers be maintained by the package itself?
 - How to design an intuitive CLI given the needed flexibility of usage?
 - Is the "context" array passed through all the layers the right design to handle data sharing?
 
 # Testing
 
-Spell checkers come in many different forms, from HTTP API to command line tools. **PHP-Spellchecker** wants to ensure real-world usage is OK, so it contains integration tests. To run these, spell checkers need to all be available during tests execution.
+Spell checkers come in many different forms, from HTTP API to command line tools. **PHP-Spellchecker** wants to ensure real-world usage is OK, so it contains integration tests. To run these, spellcheckers need to all be available during tests execution.
 
 The most convenient way to do it is by using Docker and avoid polluting your local machine.
 
@@ -217,7 +217,7 @@ Todo
 
 ## Environment variables
 
-If spell checkers execution paths are different than their default values (e.g., `docker exec -ti myispell` instead of `ispell`) you can override the path used in tests by redefining environment variables in the [PHPUnit config file](https://github.com/tigitz/php-spellchecker/blob/master/phpunit.xml.dist).
+If spellcheckers execution paths are different than their default values (e.g., `docker exec -ti myispell` instead of `ispell`) you can override the path used in tests by redefining environment variables in the [PHPUnit config file](https://github.com/tigitz/php-spellchecker/blob/master/phpunit.xml.dist).
 
 # Contributing
 
