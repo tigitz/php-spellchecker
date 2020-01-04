@@ -19,12 +19,12 @@
 
 PHP-Spellchecker is a spellchecker abstraction library for PHP. By providing a unified interface for many different spellcheckers, you’re able to swap out spellcheckers without extensive rewrites.
 
-Using PHP-Spellchecker can eliminate vendor-lock in, reduce technical debt, and improve the testability of your code.
+Using PHP-Spellchecker can eliminate vendor lock-in, reduce technical debt, and improve the testability of your code.
 
 # Features
 
 - 🧐 Supports many popular spellcheckers out of the box: [Aspell][aspell], [Hunspell][hunspell], [Ispell][ispell], [PHP Pspell][pspell], [LanguageTools][languagetools] and [MultiSpellchecker][multispellchecker] [(add yours!)][spellchecker_custom]
-- 📄 Supports different text sources: filesystem [file][filesource]/[directory][directory], [string][php-string], and [multisource][multisource] [(add yours!)][source_custom]
+- 📄 Supports different text sources: file system [file][filesource]/[directory][directory], [string][php-string], and [multi-source][multisource] [(add yours!)][source_custom]
 - 🛠 Supports text processors: [MarkdownRemover][markdownremover] [(add yours!)][textprocessor_custom]
 - 🔁 Supports misspelling handlers: [EchoHandler][echohandler] [(add yours!)][custom_handler]
 - ➰ Makes use of generators to reduce memory footprint
@@ -70,17 +70,16 @@ foreach ($misspellings as $misspelling) {
 }
 ```
 
-## Using the MisspellingFinder orchestrator
+## Using the `MisspellingFinder` orchestrator
 
-You can also use an opinionated `MisspellingFinder` class to orchestrate your
-spellchecking flow:
+You can also use an opinionated `MisspellingFinder` class to orchestrate your spellchecking flow:
 
 <p align="center">
     <img src="https://i.imgur.com/n3JjWgh.png" alt="PHP-Spellchecker-misspellingfinder-flow">
 </p>
 
 Following the well-known [Unix philosophy](http://en.wikipedia.org/wiki/Unix_philosophy):
-> Write programs that do one thing and do it well. Write programs to work together. Write programs to handle text streams, because that is a universal interface
+> Write programs that do one thing and do it well. Write programs to work together. Write programs to handle text streams, because that is a universal interface.
 
 ```php
 <?php
@@ -123,43 +122,43 @@ $misspellingFinder->find($inMemoryTextProvider, ['en_US']);
 
 # Roadmap
 
-Project is still in it's initial phase, requiring more real life usage to stabilize it's final 1.0.0 API.
+The project is still in its initial phase, requiring more real life usage to stabilize its final 1.0.0 API.
 
 ## Global
 
 - [ ] Add a CLI that could do something like `vendor/bin/php-spellchecker "misspell" Languagetools EchoHandler --lang=en_US`
-- [ ] Add asynchronous mechanism to spellcheckers
-- [ ] Make some computed misspelling properties optional to improve performance for certain use cases (e.g., lines and offset in `LanguageTools`)
-- [ ] Add a languages mapper to manage different representations across spellcheckers
-- [ ] Evaluate `strtok` instead of `explode` to parse lines of text, for performance
-- [ ] Evaluate `MutableMisspelling` for performance comparison
-- [ ] Wrap `Webmozart/Assert` library exceptions to throw PHP-Spellchecker custom exceptions instead
-- [ ] Improve the `Makefile`
+- [ ] Add asynchronous mechanism to spellcheckers.
+- [ ] Make some computed misspelling properties optional to improve performance for certain use cases (e.g., lines and offset in `LanguageTools`).
+- [ ] Add a language mapper to manage different representations across spellcheckers.
+- [ ] Evaluate `strtok` instead of `explode` to parse lines of text, for performance.
+- [ ] Evaluate `MutableMisspelling` for performance comparison.
+- [ ] Wrap `Webmozart/Assert` library exceptions to throw PHP-Spellchecker custom exceptions instead.
+- [ ] Improve the `Makefile`.
 
 ## Sources
 
-- [ ] Make a `SourceInterface` class that's able to have an effect on the used spellchecker configuration
-- [ ] League/Flysystem source
-- [ ] Symfony/Finder source
+- [ ] Make a `SourceInterface` class that's able to have an effect on the used spellchecker configuration.
+- [ ] `League/Flysystem` source.
+- [ ] `Symfony/Finder` source.
 
 ## Text processors
 
-- [ ] Markdown - Find a way to keep original offset and line of words after stripping
-- [ ] Add PHPDoc processor
-- [ ] Add HTML Processor ([inspiration](https://github.com/mekras/php-speller/blob/master/src/Source/Filter/HtmlFilter.php))
-- [ ] Add XLIFF Processor ([inspiration](https://github.com/mekras/php-speller/blob/master/src/Source/XliffSource.php))
+- [ ] Markdown - Find a way to keep original offset and line of words after stripping.
+- [ ] Add PHPDoc processor.
+- [ ] Add HTML Processor ([inspiration](https://github.com/mekras/php-speller/blob/master/src/Source/Filter/HtmlFilter.php)).
+- [ ] Add XLIFF Processor ([inspiration](https://github.com/mekras/php-speller/blob/master/src/Source/XliffSource.php)).
 
-## Spellcheckers
+## Spell checkers
 
-- [ ] Cache suggestions of already spellchecked words (PSR-6/PSR-16?)
-- [ ] Pspell - Find way to compute word offset
-- [ ] LanguageTools - Evaluate [HTTPlug library][httplug] to make API requests
-- [ ] Pspell - find way to list available dictionaries
-- [ ] Add [JamSpell](https://github.com/bakwc/JamSpell#http-api) spellchecker
-- [ ] Add [NuSpell](https://github.com/nuspell/nuspell) spellchecker
-- [ ] Add [SymSpell](https://github.com/LeonErath/SymSpellAPI) spellchecker
-- [ ] Add [Yandex.Speller API](https://yandex.ru/dev/speller/doc/dg/concepts/api-overview-docpage/) spellchecker
-- [ ] Add [Bing Spell Check API](https://docs.microsoft.com/en-us/azure/cognitive-services/bing-spell-check/overview) spellchecker
+- [ ] Cache suggestions of already spellchecked words (PSR-6/PSR-16?).
+- [ ] Pspell - Find way to compute word offset.
+- [ ] LanguageTools - Evaluate [HTTPlug library][httplug] to make API requests.
+- [ ] Pspell - find way to list available dictionaries.
+- [ ] Add [JamSpell](https://github.com/bakwc/JamSpell#http-api) spellchecker.
+- [ ] Add [NuSpell](https://github.com/nuspell/nuspell) spellchecker.
+- [ ] Add [SymSpell](https://github.com/LeonErath/SymSpellAPI) spellchecker.
+- [ ] Add [Yandex.Speller API](https://yandex.ru/dev/speller/doc/dg/concepts/api-overview-docpage/) spel checker.
+- [ ] Add [Bing Spell Check API](https://docs.microsoft.com/en-us/azure/cognitive-services/bing-spell-check/overview) spellchecker.
 
 ## Handlers
 
@@ -172,8 +171,8 @@ Project is still in it's initial phase, requiring more real life usage to stabil
 
 ## Tests
 
-- [ ] Add or improve tests with different text encoding
-- [ ] Refactor duplicate Dockerfile content between PHP images
+- [ ] Add or improve tests with different text encoding.
+- [ ] Refactor duplicate Dockerfile content between PHP images.
 
 
 # Versioning
@@ -190,7 +189,7 @@ There still are many design decisions that should be confronted with real-world 
 
 # Testing
 
-Spellcheckers come in many different forms, from HTTP API to command line tools. **PHP-Spellchecker** wants to ensure real-world usage is OK, so it contains integration tests. To run these, spellcheckers need to all be available during tests execution.
+Spell checkers come in many different forms, from HTTP API to command line tools. **PHP-Spellchecker** wants to ensure real-world usage is OK, so it contains integration tests. To run these, spellcheckers need to all be available during tests execution.
 
 The most convenient way to do it is by using Docker and avoid polluting your local machine.
 
@@ -218,8 +217,7 @@ Todo
 
 ## Environment variables
 
-If spellcheckers execution paths are different than their default values
-(e.g., `docker exec -ti myispell` instead of `ispell`) you can override the path used in tests by redefining environment variables in the [PHPUnit config file](https://github.com/tigitz/php-spellchecker/blob/master/phpunit.xml.dist)
+If spellcheckers execution paths are different than their default values (e.g., `docker exec -ti myispell` instead of `ispell`) you can override the path used in tests by redefining environment variables in the [PHPUnit config file](https://github.com/tigitz/php-spellchecker/blob/master/phpunit.xml.dist).
 
 # Contributing
 
@@ -233,10 +231,10 @@ Please see [CONTRIBUTING](https://github.com/tigitz/php-spellchecker/tree/master
 
 # License
 
-The MIT License (MIT). Please see [License File](https://github.com/tigitz/php-spellchecker/blob/master/LICENSE.md) for more information.
+The MIT License (MIT). Please see [license file](https://github.com/tigitz/php-spellchecker/blob/master/LICENSE.md) for more information.
 
 **Logo**:
-Elements taken for the final rendering are [Designed by rawpixel.com / Freepik](http://www.freepik.com)
+Elements taken for the final rendering are [Designed by rawpixel.com / Freepik](http://www.freepik.com).
 
 [link-author]: https://github.com/tigitz
 [link-contributors]: ../../contributors
