@@ -56,7 +56,7 @@ return PhpCsFixer\Config::create()
         'phpdoc_types_order' => ['null_adjustment' => 'always_last'],
         'phpdoc_var_annotation_correct_order' => true,
 //        'phpdoc_to_param_type' => false,
-        'no_superfluous_phpdoc_tags' => true,
+        'no_superfluous_phpdoc_tags' => ['allow_mixed' => true],
         'binary_operator_spaces' => true,
         'single_quote' => true,
         'semicolon_after_instruction' => true,

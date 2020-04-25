@@ -10,6 +10,8 @@ interface MisspellingHandlerInterface
 {
     /**
      * @param MisspellingInterface[] $misspellings
+     *
+     * @return mixed
      */
     public function handle(iterable $misspellings);
 }
