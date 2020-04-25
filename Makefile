@@ -56,11 +56,9 @@ vendor:
 QA = docker run --rm -t -v `pwd`:/project mykiwi/phaudit
 
 phpcs: vendor
-	-$(EXEC_PHP) vendor/bin/phpcs -s
 	$(QA) php-cs-fixer fix -vv --dry-run --allow-risky=yes
 
 phpcbf: vendor
-	-$(EXEC_PHP) vendor/bin/phpcbf
 	$(QA) php-cs-fixer fix -vv --allow-risky=yes
 
 phpstan: vendor
