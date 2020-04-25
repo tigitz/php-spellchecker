@@ -55,9 +55,9 @@ class Directory implements SourceInterface
 
         /** @var array<string>|\SplFileInfo|string $file */
         foreach ($filesInDir as $file) {
-            if (is_string($file)) {
+            if (\is_string($file)) {
                 $file = new \SplFileInfo($file);
-            } elseif (is_array($file)) {
+            } elseif (\is_array($file)) {
                 // When regex pattern is used, an array containing the file path in its first element is returned
                 $file = new \SplFileInfo(current($file));
             }

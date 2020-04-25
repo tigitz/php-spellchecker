@@ -49,16 +49,16 @@ class MisspellingFinder
         array $languages = [],
         array $context = []
     ): iterable {
-        if (is_string($source)) {
+        if (\is_string($source)) {
             $texts = [new Text($source, $context)];
         } elseif ($source instanceof TextInterface) {
             $texts = [$source];
-        } elseif (is_array($source)) {
+        } elseif (\is_array($source)) {
             $texts = $source;
         } elseif ($source instanceof SourceInterface) {
             $texts = $source->toTexts($context);
         } else {
-            $sourceVarType = is_object($source) ? get_class($source) : gettype($source);
+            $sourceVarType = \is_object($source) ? \get_class($source) : \gettype($source);
             $allowedTypes = implode(' or ', ['"string"', '"' . SourceInterface::class . '"', '"iterable<' . TextInterface::class . '>"', '"' . TextInterface::class . '"']);
 
             throw new InvalidArgumentException('Source should be of type ' . $allowedTypes . ', "' . $sourceVarType . '" given');

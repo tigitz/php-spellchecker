@@ -71,7 +71,7 @@ class HunspellTest extends TestCase
     public function assertWorkingSupportedLanguages($binaries): void
     {
         $hunspell = new Hunspell(new CommandLine($binaries));
-        $languages = is_array($hunspell->getSupportedLanguages()) ? $hunspell->getSupportedLanguages() : iterator_to_array($hunspell->getSupportedLanguages());
+        $languages = \is_array($hunspell->getSupportedLanguages()) ? $hunspell->getSupportedLanguages() : iterator_to_array($hunspell->getSupportedLanguages());
         $this->assertNotFalse(array_search('en_US', $languages, true));
     }
 

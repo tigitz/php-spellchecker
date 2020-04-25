@@ -18,15 +18,15 @@ class CommandLine
      */
     public function __construct($command)
     {
-        if (is_array($command)) {
+        if (\is_array($command)) {
             $this->commandArgs = $command;
-        } elseif (is_string($command)) {
+        } elseif (\is_string($command)) {
             $this->commandArgs = [$command];
         } else {
             throw new InvalidArgumentException(
                 \Safe\sprintf(
                     'Command should be an "array<string>" or a "string", "%s" given',
-                    is_object($command) ? get_class($command) : gettype($command)
+                    \is_object($command) ? \get_class($command) : \gettype($command)
                 )
             );
         }
@@ -70,7 +70,6 @@ class CommandLine
     /**
      * Escapes a string to be used as a shell argument.
      */
-    //@codingStandardsIgnoreLine SlevomatCodingStandard.Classes.UnusedPrivateElements.UnusedMethod
     private function escapeArgument(string $argument): string
     {
         if ('\\' !== \DIRECTORY_SEPARATOR) {
@@ -89,6 +88,4 @@ class CommandLine
 
         return '"' . str_replace(['"', '^', '%', '!', "\n"], ['""', '"^^"', '"^%"', '"^!"', '!LF!'], $argument) . '"';
     }
-
-    //@codingStandardsIgnoreEnd
 }

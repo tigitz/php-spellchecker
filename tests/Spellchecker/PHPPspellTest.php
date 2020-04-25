@@ -12,7 +12,7 @@ class PHPPspellTest extends TestCase
 {
     public function setUp(): void
     {
-        if (!extension_loaded('pspell')) {
+        if (!\extension_loaded('pspell')) {
             Assert::markTestSkipped('Pspell extension is not loaded');
         }
     }

@@ -58,7 +58,7 @@ class AspellTest extends TestCase
     public function assertWorkingSupportedLanguages(string $binaries): void
     {
         $aspell = new Aspell(new CommandLine($binaries));
-        $languages = is_array($aspell->getSupportedLanguages()) ? $aspell->getSupportedLanguages(): iterator_to_array($aspell->getSupportedLanguages());
+        $languages = \is_array($aspell->getSupportedLanguages()) ? $aspell->getSupportedLanguages() : iterator_to_array($aspell->getSupportedLanguages());
         $this->assertNotFalse(array_search('en_GB', $languages, true));
     }
 

@@ -30,7 +30,7 @@ class PHPPspell implements SpellcheckerInterface
      */
     public function __construct(?int $mode = null, int $numberOfCharactersLowerLimit = 0)
     {
-        if (!extension_loaded('pspell')) {
+        if (!\extension_loaded('pspell')) {
             throw new RuntimeException('Pspell extension must be loaded to use the PHPPspell spellchecker');
         }
 

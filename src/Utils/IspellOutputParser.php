@@ -27,7 +27,7 @@ class IspellOutputParser
 
             switch ($line[0]) {
                 case '#':
-                    list(, $word, $offset) = explode(' ', $line);
+                    [, $word, $offset] = explode(' ', $line);
                     yield new Misspelling(
                         $word,
                         (int) trim($offset),
@@ -39,7 +39,7 @@ class IspellOutputParser
                     break;
                 case '&':
                     $parts = explode(':', $line);
-                    list(, $word, , $offset) = explode(' ', $parts[0]);
+                    [, $word, , $offset] = explode(' ', $parts[0]);
                     yield new Misspelling(
                         $word,
                         (int) trim($offset),

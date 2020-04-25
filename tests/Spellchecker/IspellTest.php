@@ -63,7 +63,7 @@ class IspellTest extends TestCase
             $shellEntryPoint !== null ? new CommandLine($shellEntryPoint) : null
         );
 
-        $languages = is_array($ispell->getSupportedLanguages()) ? $ispell->getSupportedLanguages() : iterator_to_array($ispell->getSupportedLanguages());
+        $languages = \is_array($ispell->getSupportedLanguages()) ? $ispell->getSupportedLanguages() : iterator_to_array($ispell->getSupportedLanguages());
         $this->assertNotFalse(array_search('american', $languages, true));
     }
 

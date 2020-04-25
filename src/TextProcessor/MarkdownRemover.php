@@ -22,8 +22,11 @@ class MarkdownRemover implements TextProcessorInterface
         // Github Flavored Markdown
         // Header
         $output = \Safe\preg_replace('/\n={2,}/', '\n', $output);
-        // Fenced codeblocks
-        //@TODO parse programming language comments from codeblock instead of removing whole block
+        /**
+         * Fenced codeblocks.
+         *
+         *@TODO parse programming language comments from codeblock instead of removing whole block
+         */
         $output = \Safe\preg_replace('/~{3}.*\n/', '', $output);
         // Strikethrough
         $output = \Safe\preg_replace('/~~/', '', $output);
@@ -43,9 +46,12 @@ class MarkdownRemover implements TextProcessorInterface
         $output = \Safe\preg_replace('/^\s{0,3}>\s?/', '', $output);
         // Remove reference-style links?
         $output = \Safe\preg_replace('/^\s{1,2}\[(.*?)\]: (\S+)( ".*?")?\s*$/', '', $output);
-        // Remove atx-style headers
-        //@TODO find a way to merge the two regex below
-        // remove ## Heading ##
+        /**
+         * Remove atx-style headers.
+         *
+         *@TODO find a way to merge the two regex below
+         * remove ## Heading ##
+         */
         $output = \Safe\preg_replace('/^#{1,6}\s+(.*)(\s+#{1,6})$/m', '$1', $output);
         // remove ## Heading
         $output = \Safe\preg_replace('/^#{1,6}\s+(.*)$/m', '$1', $output);

@@ -39,7 +39,7 @@ class MultiSpellchecker implements SpellcheckerInterface
         $misspellings = [];
         /** @var SpellcheckerInterface $spellChecker */
         foreach ($this->spellCheckers as $spellChecker) {
-            $supportedLanguages = is_array($spellChecker->getSupportedLanguages()) ?
+            $supportedLanguages = \is_array($spellChecker->getSupportedLanguages()) ?
                 $spellChecker->getSupportedLanguages() :
                 iterator_to_array($spellChecker->getSupportedLanguages());
 
@@ -97,7 +97,7 @@ class MultiSpellchecker implements SpellcheckerInterface
         array $context
     ): iterable {
         foreach ($this->spellCheckers as $spellChecker) {
-            $supportedLanguages = is_array($spellChecker->getSupportedLanguages()) ?
+            $supportedLanguages = \is_array($spellChecker->getSupportedLanguages()) ?
                 $spellChecker->getSupportedLanguages() :
                 iterator_to_array($spellChecker->getSupportedLanguages());
 
