@@ -25,15 +25,19 @@ class Misspelling implements MisspellingInterface
     private $lineNumber;
 
     /**
-     * @var string[]
+     * @var array<string>
      */
     private $suggestions;
 
     /**
-     * @var array
+     * @var array<mixed>
      */
     private $context;
 
+    /**
+     * @param array<mixed> $context
+     * @param array<string> $suggestions
+     */
     public function __construct(
         string $word,
         ?int $offset = null,
@@ -105,9 +109,6 @@ class Misspelling implements MisspellingInterface
         return !empty($this->context);
     }
 
-    /**
-     * @return string[]
-     */
     public function getSuggestions(): array
     {
         return $this->suggestions;

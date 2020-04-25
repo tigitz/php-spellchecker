@@ -29,9 +29,6 @@ class MultiSpellchecker implements SpellcheckerInterface
         $this->mergeMisspellingsSuggestions = $mergeMisspellingsSuggestions;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function check(string $text, array $languages, array $context): iterable
     {
         if (!$this->mergeMisspellingsSuggestions) {
@@ -76,9 +73,6 @@ class MultiSpellchecker implements SpellcheckerInterface
         return array_values($misspellings);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSupportedLanguages(): iterable
     {
         $supportedLanguages = [];
@@ -91,6 +85,12 @@ class MultiSpellchecker implements SpellcheckerInterface
         return array_values(array_unique($supportedLanguages));
     }
 
+    /**
+     * @param array<mixed> $context
+     * @param array<string> $languages
+     *
+     * @return iterable<MisspellingInterface>
+     */
     private function checkForAllSpellcheckers(
         string $text,
         array $languages,

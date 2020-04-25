@@ -27,7 +27,7 @@ class ProcessFailedException extends \RuntimeException implements ExceptionInter
             $process->isStarted() ? ' running' : '',
             $process->getExitCode(),
             $process->getExitCodeText(),
-            $failureReason ? ' because "' . $failureReason . '"' : ''
+            $failureReason !== '' ? ' because "' . $failureReason . '"' : ''
         );
 
         parent::__construct(

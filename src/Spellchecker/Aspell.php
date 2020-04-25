@@ -23,9 +23,6 @@ class Aspell implements SpellcheckerInterface
         $this->binaryPath = $binaryPath;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function check(string $text, array $languages = [], array $context = []): iterable
     {
         Assert::maxCount($languages, 1, 'Aspell spellchecker doesn\'t support multiple languages check');
@@ -55,9 +52,6 @@ class Aspell implements SpellcheckerInterface
         return $this->binaryPath;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSupportedLanguages(): iterable
     {
         $languages = [];

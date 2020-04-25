@@ -9,7 +9,9 @@ use PhpSpellcheck\TextInterface;
 interface SourceInterface
 {
     /**
-     * @return TextInterface[]
+     * @param array<mixed> $context
+     *
+     * @return iterable<TextInterface>
      */
     public function toTexts(array $context): iterable;
 }

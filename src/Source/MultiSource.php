@@ -22,9 +22,6 @@ class MultiSource implements SourceInterface
         $this->sources = $sources;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function toTexts(array $context = []): iterable
     {
         foreach ($this->sources as $source) {

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace PhpSpellcheck\Source;
 
-use PhpSpellcheck\TextInterface;
+use PhpSpellcheck\Text;
 
 class Directory implements SourceInterface
 {
@@ -24,15 +24,20 @@ class Directory implements SourceInterface
         $this->pattern = $pattern;
     }
 
+    /**
+     * @param array<mixed> $context
+     *
+     * @return iterable<Text>
+     */
     public function toTexts(array $context): iterable
     {
         foreach ($this->getContents() as $text) {
-            yield t($text->getContent(), array_merge($text->getContext(), $context));
+            yield new Text($text->getContent(), array_merge($text->getContext(), $context));
         }
     }
 
     /**
-     * @return \Generator<TextInterface>|TextInterface[]
+     * @return iterable<Text>
      */
     private function getContents(): iterable
     {
@@ -44,11 +49,11 @@ class Directory implements SourceInterface
             \RecursiveIteratorIterator::SELF_FIRST
         );
 
-        if ($this->pattern) {
+        if ($this->pattern !== null) {
             $filesInDir = new \RegexIterator($filesInDir, $this->pattern, \RegexIterator::GET_MATCH);
         }
 
-        /** @var array|\SplFileInfo|string $file */
+        /** @var array<string>|\SplFileInfo|string $file */
         foreach ($filesInDir as $file) {
             if (is_string($file)) {
                 $file = new \SplFileInfo($file);

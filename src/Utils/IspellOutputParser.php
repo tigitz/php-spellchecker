@@ -9,7 +9,9 @@ use PhpSpellcheck\Misspelling;
 class IspellOutputParser
 {
     /**
-     * @return Misspelling[]
+     * @param array<mixed> $context
+     *
+     * @return iterable<Misspelling>
      */
     public static function parseMisspellings(string $output, array $context = []): iterable
     {

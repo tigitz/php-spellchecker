@@ -9,12 +9,12 @@ use PhpSpellcheck\Exception\InvalidArgumentException;
 class CommandLine
 {
     /**
-     * @var array
+     * @var array<string>
      */
     private $commandArgs;
 
     /**
-     * @param array|string $command
+     * @param array<string>|string $command
      */
     public function __construct($command)
     {
@@ -25,7 +25,7 @@ class CommandLine
         } else {
             throw new InvalidArgumentException(
                 \Safe\sprintf(
-                    'Command should be an "array" or a "string", "%s" given',
+                    'Command should be an "array<string>" or a "string", "%s" given',
                     is_object($command) ? get_class($command) : gettype($command)
                 )
             );
@@ -41,7 +41,7 @@ class CommandLine
     }
 
     /**
-     * @param string[] $argsToAdd
+     * @param iterable<string> $argsToAdd
      */
     public function addArgs(iterable $argsToAdd): self
     {
@@ -54,6 +54,9 @@ class CommandLine
         return new self($args);
     }
 
+    /**
+     * @return array<string>
+     */
     public function getArgs(): array
     {
         return $this->commandArgs;
@@ -79,7 +82,7 @@ class CommandLine
         if (false !== strpos($argument, "\0")) {
             $argument = str_replace("\0", '?', $argument);
         }
-        if (!\Safe\preg_match('/[\/()%!^"<>&|\s]/', $argument)) {
+        if (\Safe\preg_match('/[\/()%!^"<>&|\s]/', $argument) !== 0) {
             return $argument;
         }
         $argument = \Safe\preg_replace('/(\\\\+)$/', '$1$1', $argument);

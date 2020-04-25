@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace PhpSpellcheck\Source;
 
+use PhpSpellcheck\Text;
+
 class File implements SourceInterface
 {
     /**
@@ -16,11 +18,16 @@ class File implements SourceInterface
         $this->filePath = $filePath;
     }
 
+    /**
+     * @param array<mixed> $context
+     *
+     * @return iterable<Text>
+     */
     public function toTexts(array $context = []): iterable
     {
         $context['filePath'] = \Safe\realpath($this->filePath);
 
-        yield t($this->getFileContent(), $context);
+        yield new Text($this->getFileContent(), $context);
     }
 
     private function getFileContent(): string

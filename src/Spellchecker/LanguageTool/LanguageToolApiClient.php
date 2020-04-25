@@ -16,6 +16,12 @@ class LanguageToolApiClient
         $this->baseUrl = $baseUrl;
     }
 
+    /**
+     * @param array<string> $languages
+     * @param array<array|string|null> $options
+     *
+     * @return array<string, array|string>
+     */
     public function spellCheck(string $text, array $languages, array $options): array
     {
         $options['text'] = $text;
@@ -33,6 +39,9 @@ class LanguageToolApiClient
         );
     }
 
+    /**
+     * @return array<string>
+     */
     public function getSupportedLanguages(): array
     {
         return array_column(
@@ -46,7 +55,11 @@ class LanguageToolApiClient
     }
 
     /**
+     * @param array<array|string|null> $queryParams
+     *
      * @throws \RuntimeException
+     *
+     * @return array<array|string>
      */
     public function requestAPI(string $endpoint, string $method, string $header, array $queryParams = []): array
     {

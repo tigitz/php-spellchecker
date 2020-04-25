@@ -16,7 +16,7 @@ class LineAndOffset
      * @param string $text Chunk of text from which the line and offset are computed
      * @param int $offsetFromFirstCharacter Offset position from the text's first caracter
      *
-     * @return array(int,int) Line number as the first element and offset from beginning of line as second element
+     * @return array<int,int> Line number as the first element and offset from beginning of line as second element
      */
     public static function findFromFirstCharacterOffset(string $text, int $offsetFromFirstCharacter): array
     {

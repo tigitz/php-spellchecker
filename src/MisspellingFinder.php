@@ -38,7 +38,9 @@ class MisspellingFinder
     }
 
     /**
-     * @param SourceInterface|string|TextInterface|TextInterface[] $source
+     * @param iterable<TextInterface>|SourceInterface|string|TextInterface $source
+     * @param array<mixed> $context
+     * @param array<string> $languages
      *
      * @return MisspellingInterface[]
      */
@@ -48,7 +50,7 @@ class MisspellingFinder
         array $context = []
     ): iterable {
         if (is_string($source)) {
-            $texts = [t($source, $context)];
+            $texts = [new Text($source, $context)];
         } elseif ($source instanceof TextInterface) {
             $texts = [$source];
         } elseif (is_array($source)) {
@@ -57,7 +59,7 @@ class MisspellingFinder
             $texts = $source->toTexts($context);
         } else {
             $sourceVarType = is_object($source) ? get_class($source) : gettype($source);
-            $allowedTypes = implode(' or ', ['"string"', '"' . SourceInterface::class . '"', '"' . TextInterface::class . '[]"', '"' . TextInterface::class . '"']);
+            $allowedTypes = implode(' or ', ['"string"', '"' . SourceInterface::class . '"', '"iterable<' . TextInterface::class . '>"', '"' . TextInterface::class . '"']);
 
             throw new InvalidArgumentException('Source should be of type ' . $allowedTypes . ', "' . $sourceVarType . '" given');
         }

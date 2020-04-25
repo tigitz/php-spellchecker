@@ -4,8 +4,16 @@ declare(strict_types=1);
 
 namespace PhpSpellcheck\Spellchecker;
 
+use PhpSpellcheck\MisspellingInterface;
+
 interface SpellcheckerInterface
 {
+    /**
+     * @param array<mixed> $context
+     * @param array<string> $languages
+     *
+     * @return iterable<MisspellingInterface>
+     */
     public function check(
         string $text,
         array $languages,
@@ -13,7 +21,7 @@ interface SpellcheckerInterface
     ): iterable;
 
     /**
-     * @return string[]
+     * @return iterable<string>
      */
     public function getSupportedLanguages(): iterable;
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PhpSpellcheck\Spellchecker;
 
+use PhpSpellcheck\Exception\RuntimeException;
 use PhpSpellcheck\Misspelling;
 use PhpSpellcheck\Spellchecker\LanguageTool\LanguageToolApiClient;
 use PhpSpellcheck\Utils\LineAndOffset;
@@ -22,7 +23,10 @@ class LanguageTool implements SpellcheckerInterface
     }
 
     /**
-     * @return Misspelling[]
+     * @param array<mixed> $context
+     * @param array<string> $languages
+     *
+     * @return \Generator<Misspelling>
      */
     public function check(
         string $text,
@@ -32,6 +36,10 @@ class LanguageTool implements SpellcheckerInterface
         Assert::notEmpty($languages, 'LanguageTool requires at least one language to be set to run it\'s spellchecking process');
 
         $check = $this->apiClient->spellCheck($text, $languages, $context[self::class] ?? []);
+
+        if (!is_array($check['matches'])) {
+            throw new RuntimeException('LanguageTool spellcheck response must contain a "matches" array');
+        }
 
         foreach ($check['matches'] as $match) {
             [$line, $offsetFromLine] = LineAndOffset::findFromFirstCharacterOffset(
@@ -57,7 +65,7 @@ class LanguageTool implements SpellcheckerInterface
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getSupportedLanguages(): array
     {

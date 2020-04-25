@@ -6,42 +6,18 @@ includes:
 
 parameters:
     level: max
-    checkMissingIterableValueType: false
     reportUnmatchedIgnoredErrors: false
+    treatPhpDocTypesAsCertain: false
     ignoreErrors:
         # symfony/process version testing
         -
             message: "#^Call to function method_exists\\(\\) with Symfony\\\\Component\\\\Process\\\\Process and 'inheritEnvironmentV…' will always evaluate to true#"
             path: %currentWorkingDirectory%/src/Utils/ProcessRunner.php
 
-        # webmozart/assert missanalysis
+        # yeah OK Process is technically and iterable type...
         -
-            message: "#^Call to static method Webmozart\\\\Assert\\\\Assert\\:\\:stringNotEmpty\\(\\) with string will always evaluate to true\\.$#"
-            path: %currentWorkingDirectory%/src/Misspelling.php
-        -
-            message: "#^Instanceof between PhpSpellcheck\\\\Source\\\\SourceInterface and PhpSpellcheck\\\\Source\\\\SourceInterface will always evaluate to true\\.$#"
-            path: %currentWorkingDirectory%/src/MisspellingFinder.php
-        -
-            message: "#^Call to static method Webmozart\\\\Assert\\\\Assert\\:\\:allIsInstanceOf\\(\\) with iterable\\<PhpSpellcheck\\\\Spellchecker\\\\SpellcheckerInterface\\> and 'PhpSpellcheck…' will always evaluate to true\\.$#"
-            path: %currentWorkingDirectory%/src/Spellchecker/MultiSpellchecker.php
-        -
-            message: "#^Call to static method Webmozart\\\\Assert\\\\Assert\\:\\:allIsInstanceOf\\(\\) with iterable\\<PhpSpellcheck\\\\Source\\\\SourceInterface\\> and 'PhpSpellcheck…' will always evaluate to true\\.$#"
-            path: %currentWorkingDirectory%/src/Source/MultiSource.php
-
-        # mixed variable is typed as intersect
-        -
-            message: "#^Call to function is_object\\(\\) with \\*NEVER\\* will always evaluate to true\\.$#"
-            path: %currentWorkingDirectory%/src/MisspellingFinder.php
-        -
-            message: "#^Else branch is unreachable because ternary operator condition is always true\\.$#"
-            path: %currentWorkingDirectory%/src/MisspellingFinder.php
-        -
-            message: "#^Call to function (is_object|is_string)\\(\\) with (\\*NEVER\\*|string) will always evaluate to true\\.$#"
-            path: %currentWorkingDirectory%/src/Utils/CommandLine.php
-        -
-            message: "#^Else branch is unreachable because ternary operator condition is always true\\.$#"
-            path: %currentWorkingDirectory%/src/Utils/CommandLine.php
-
+            message: "#no value type specified in iterable type Symfony\\\\Component\\\\Process\\\\Process#"
+            path: %currentWorkingDirectory%
         # Missing strict comparison
         - '#^Construct empty\(\) is not allowed. Use more strict comparison.$#'
-        - '#^Only booleans are allowed in#'
+#        - '#^Only booleans are allowed in#'

@@ -7,7 +7,7 @@ namespace PhpSpellcheck;
 class Text implements TextInterface
 {
     /**
-     * @var array
+     * @var array<mixed>
      */
     private $context;
 
@@ -16,12 +16,18 @@ class Text implements TextInterface
      */
     private $string;
 
+    /**
+     * @param array<mixed> $context
+     */
     public function __construct(string $string, array $context)
     {
         $this->string = $string;
         $this->context = $context;
     }
 
+    /**
+     * @param array<mixed> $context
+     */
     public function setContext(array $context): self
     {
         $this->context = $context;

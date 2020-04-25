@@ -12,6 +12,7 @@ class ProcessRunner
 {
     /**
      * @param float|int|null $timeout The timeout in seconds
+     * @param array<string, string> $env
      */
     public static function run(Process $process, $timeout = null, callable $callback = null, array $env = []): Process
     {
