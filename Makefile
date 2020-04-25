@@ -53,13 +53,13 @@ vendor:
 	if [ $(DEPS) = "LOCKED" ]; then $(COMPOSER) install; fi
 	if [ $(DEPS) = "HIGHEST" ]; then $(COMPOSER) update; fi
 
-QA = docker run --rm -t -v `pwd`:/project mykiwi/phaudit
+PHP_CS_FIXER = docker run --rm -t -v `pwd`:/data cytopia/php-cs-fixer:latest
 
 phpcs: vendor
-	$(QA) php-cs-fixer fix -vv --dry-run --allow-risky=yes
+	$(PHP_CS_FIXER) fix -vv --dry-run --allow-risky=yes
 
 phpcbf: vendor
-	$(QA) php-cs-fixer fix -vv --allow-risky=yes
+	$(PHP_CS_FIXER) fix -vv --allow-risky=yes
 
 phpstan: vendor
 	$(EXEC_PHP) vendor/bin/phpstan analyse src -c phpstan.neon -a vendor/autoload.php
