@@ -24,5 +24,10 @@ services:
     build: docker/php7.4
     <<: *php-common-conf
 
+  jamspell:
+    build: docker/jamspell
+    ports:
+      - 5466:8080
+
   languagetools:
     image: silviof/docker-languagetool
