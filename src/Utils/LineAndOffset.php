@@ -21,7 +21,7 @@ class LineAndOffset
     public static function findFromFirstCharacterOffset(string $text, int $offsetFromFirstCharacter): array
     {
         // positive offset
-        Assert::greaterThanEq($offsetFromFirstCharacter, 0, 'Offset must be positive');
+        Assert::greaterThanEq($offsetFromFirstCharacter, 0, sprintf('Offset must be a positive integer, "%s" given', $offsetFromFirstCharacter));
 
         $textLength = mb_strlen($text);
         if ($textLength < $offsetFromFirstCharacter) {
