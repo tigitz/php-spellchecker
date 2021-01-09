@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace PhpSpellcheck\Spellchecker;
 
-use PhpSpellcheck\Exception\LogicException;
 use PhpSpellcheck\Exception\RuntimeException;
 use PhpSpellcheck\Misspelling;
 use Webmozart\Assert\Assert;
@@ -78,6 +77,6 @@ class PHPPspell implements SpellcheckerInterface
      */
     public function getSupportedLanguages(): iterable
     {
-        throw new LogicException('Retrieving supported dictionaries for PHPPspell spellchecker is not supported yet');
+        return ['en-US'];
     }
 }
