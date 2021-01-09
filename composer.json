@@ -41,6 +41,7 @@
         "pixelrobin/php-feather": "^1.0",
         "symfony/filesystem": "^4.2 || ^5.0",
         "symfony/finder": "^4.2 || ^5.0",
+        "symfony/http-client": "^5.0",
         "thecodingmachine/phpstan-safe-rule": "v1.0.0"
     },
     "suggest": {

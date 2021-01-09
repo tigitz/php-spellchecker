@@ -1,8 +1,7 @@
 <?php
-
+declare(strict_types=1);
 
 namespace PhpSpellcheck\Spellchecker;
-
 
 use Nyholm\Psr7\Factory\Psr17Factory;
 use Nyholm\Psr7\Stream;
@@ -17,6 +16,7 @@ class Jamspell implements SpellcheckerInterface
      * @var ClientInterface
      */
     private $httpClient;
+
     /**
      * @var string
      */
