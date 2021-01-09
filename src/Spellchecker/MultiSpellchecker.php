@@ -70,7 +70,7 @@ class MultiSpellchecker implements SpellcheckerInterface
             }
         }
 
-        return array_values($misspellings);
+        yield from array_values($misspellings);
     }
 
     public function getSupportedLanguages(): iterable
