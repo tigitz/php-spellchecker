@@ -18,6 +18,14 @@ parameters:
         -
             message: "#no value type specified in iterable type Symfony\\\\Component\\\\Process\\\\Process#"
             path: %currentWorkingDirectory%
+
+        # It's checked by Assert:count(1)
+        -
+            message: "#^Parameter \\#1 \\$language of function Safe\\\\pspell_config_create expects string, string\\|false given\\.$#"
+            count: 1
+            path: src/Spellchecker/PHPPspell.php
+
+
         # Missing strict comparison
         - '#^Construct empty\(\) is not allowed. Use more strict comparison.$#'
 #        - '#^Only booleans are allowed in#'

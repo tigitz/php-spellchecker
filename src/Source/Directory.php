@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PhpSpellcheck\Source;
 
+use PhpSpellcheck\Exception\RuntimeException;
 use PhpSpellcheck\Text;
 
 class Directory implements SourceInterface
@@ -57,9 +58,11 @@ class Directory implements SourceInterface
         foreach ($filesInDir as $file) {
             if (\is_string($file)) {
                 $file = new \SplFileInfo($file);
-            } elseif (\is_array($file)) {
+            } elseif (\is_array($file) && !empty($file)) {
                 // When regex pattern is used, an array containing the file path in its first element is returned
                 $file = new \SplFileInfo(current($file));
+            } else {
+                throw new RuntimeException(\Safe\sprintf('Couldn\'t create "%s" object from the given file', \SplFileInfo::class));
             }
 
             if (!$file->isDir() && $file->getRealPath() !== false) {

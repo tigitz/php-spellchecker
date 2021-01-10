@@ -51,7 +51,7 @@ class PHPPspell implements SpellcheckerInterface
         array $languages,
         array $context
     ): iterable {
-        Assert::count($languages, 1, 'PHPPspell spellchecker doesn\'t support multiple languages check');
+        Assert::count($languages, 1, 'PHPPspell spellchecker doesn\'t support multi-language check');
 
         $pspellConfig = \Safe\pspell_config_create(current($languages));
         \Safe\pspell_config_mode($pspellConfig, $this->mode);
@@ -66,6 +66,11 @@ class PHPPspell implements SpellcheckerInterface
             foreach ($words as $key => $word) {
                 if (!pspell_check($dictionary, $word)) {
                     $suggestions = pspell_suggest($dictionary, $word);
+
+                    Assert::isArray(
+                        $suggestions,
+                        \Safe\sprintf('pspell_suggest method failed with dictionary "%s" and word "%s"', $dictionary, $word)
+                    );
                     yield new Misspelling($word, 0, $lineNumber + 1, $suggestions, $context);
                 }
             }
