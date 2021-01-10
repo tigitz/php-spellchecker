@@ -58,7 +58,7 @@ You can check misspellings directly from a `PhpSpellCheck\SpellChecker` class an
 $aspell = Aspell::create();
 
 // or if you want to use binaries from Docker
-$aspell = new Aspell(new CommandLine(['docker','run','--rm', '-i', 'starefossen/aspell']);
+$aspell = new Aspell(new CommandLine(['docker','run','--rm', '-i', 'starefossen/aspell']));
 
 $misspellings = $aspell->check('mispell', ['en_US'], ['from_example']);
 foreach ($misspellings as $misspelling) {
@@ -154,10 +154,10 @@ The project is still in its initial phase, requiring more real life usage to sta
 - [ ] Pspell - Find way to compute word offset.
 - [ ] LanguageTools - Evaluate [HTTPlug library][httplug] to make API requests.
 - [x] Pspell - find way to list available dictionaries.
-- [ ] Add [JamSpell](https://github.com/bakwc/JamSpell#http-api) spellchecker.
+- [x] Add [JamSpell](https://github.com/bakwc/JamSpell#http-api) spellchecker.
 - [ ] Add [NuSpell](https://github.com/nuspell/nuspell) spellchecker.
 - [ ] Add [SymSpell](https://github.com/LeonErath/SymSpellAPI) spellchecker.
-- [ ] Add [Yandex.Speller API](https://yandex.ru/dev/speller/doc/dg/concepts/api-overview-docpage/) spel checker.
+- [ ] Add [Yandex.Speller API](https://yandex.ru/dev/speller/doc/dg/concepts/api-overview-docpage/) spellchecker.
 - [ ] Add [Bing Spell Check API](https://docs.microsoft.com/en-us/azure/cognitive-services/bing-spell-check/overview) spellchecker.
 
 ## Handlers
