@@ -14,7 +14,7 @@
     <link href="https://tigitz.github.io/php-spellchecker/" rel="canonical">
     <meta content="summary_large_image" name="twitter:card">
     <meta content="@php-spellchecker" name="twitter:site">
-    <meta name="twitter:title">
+    <meta content="PHP Pspell  - PHP-Spellchecker Documentation" name="twitter:title">
     <meta content="" name="twitter:description">
     <meta content="tigitz.github.io/php-spellchecker/theme/img/logo.png" name="twitter:image:src">
     <meta content="tigitz.github.io/php-spellchecker" name="twitter:domain">
@@ -292,7 +292,12 @@ foreach ($misspellings as $misspelling) {
     $misspelling-&gt;getContext();
 }</code></pre>
 <h3>Available dictionaries</h3>
-<p>Not implemented yet.</p>
+<pre><code class="language-php">&lt;?php
+
+$phpPspell = new PHPPspell();
+
+// Same one as aspell as it's using it underneath
+$misspellings = $phpPspell-&gt;getSupportedLanguages();</code></pre>
 <p>Check the tests for more examples.</p>            </div>
         </div>
     </div>

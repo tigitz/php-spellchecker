@@ -14,7 +14,7 @@
     <link href="https://tigitz.github.io/php-spellchecker/" rel="canonical">
     <meta content="summary_large_image" name="twitter:card">
     <meta content="@php-spellchecker" name="twitter:site">
-    <meta name="twitter:title">
+    <meta content="What is PHP-Spellchecker ? - PHP-Spellchecker Documentation" name="twitter:title">
     <meta content="" name="twitter:description">
     <meta content="tigitz.github.io/php-spellchecker/theme/img/logo.png" name="twitter:image:src">
     <meta content="tigitz.github.io/php-spellchecker" name="twitter:domain">
@@ -274,11 +274,11 @@
 <hr />
 <h1>About</h1>
 <p>PHP-Spellchecker is a spellchecker abstraction library for PHP. By providing a unified interface for many different spellcheckers, you’re able to swap out spellcheckers without extensive rewrites.</p>
-<p>Using PHP-Spellchecker can eliminate vendor-lock in, reduce technical debt, and improve the testability of your code.</p>
+<p>Using PHP-Spellchecker can eliminate vendor lock-in, reduce technical debt, and improve the testability of your code.</p>
 <h1>Features</h1>
 <ul>
 <li>🧐 Supports many popular spellcheckers out of the box: <a href="https://tigitz.github.io/php-spellchecker/docs/spellcheckers/aspell.html">Aspell</a>, <a href="https://tigitz.github.io/php-spellchecker/docs/spellcheckers/hunspell.html">Hunspell</a>, <a href="https://tigitz.github.io/php-spellchecker/docs/spellcheckers/ispell.html">Ispell</a>, <a href="https://tigitz.github.io/php-spellchecker/docs/spellcheckers/php-pspell.html">PHP Pspell</a>, <a href="https://tigitz.github.io/php-spellchecker/docs/spellcheckers/languagetools.html">LanguageTools</a> and <a href="https://tigitz.github.io/php-spellchecker/docs/spellcheckers/multispellchecker.html">MultiSpellchecker</a> <a href="https://tigitz.github.io/php-spellchecker/docs/spellcheckers/create-custom.html">(add yours!)</a></li>
-<li>📄 Supports different text sources: filesystem <a href="https://tigitz.github.io/php-spellchecker/docs/text-sources/file.html">file</a>/<a href="https://tigitz.github.io/php-spellchecker/docs/text-sources/directory.html">directory</a>, <a href="https://tigitz.github.io/php-spellchecker/docs/text-sources/php-string.html">string</a>, and <a href="https://tigitz.github.io/php-spellchecker/docs/text-sources/multisource.html">multisource</a> <a href="https://tigitz.github.io/php-spellchecker/docs/text-sources/create-custom.html">(add yours!)</a></li>
+<li>📄 Supports different text sources: file system <a href="https://tigitz.github.io/php-spellchecker/docs/text-sources/file.html">file</a>/<a href="https://tigitz.github.io/php-spellchecker/docs/text-sources/directory.html">directory</a>, <a href="https://tigitz.github.io/php-spellchecker/docs/text-sources/php-string.html">string</a>, and <a href="https://tigitz.github.io/php-spellchecker/docs/text-sources/multisource.html">multi-source</a> <a href="https://tigitz.github.io/php-spellchecker/docs/text-sources/create-custom.html">(add yours!)</a></li>
 <li>🛠 Supports text processors: <a href="https://tigitz.github.io/php-spellchecker/docs/text-processors/markdown-remover.html">MarkdownRemover</a> <a href="https://tigitz.github.io/php-spellchecker/docs/text-processors/create-custom.html">(add yours!)</a></li>
 <li>🔁 Supports misspelling handlers: <a href="https://tigitz.github.io/php-spellchecker/docs/misspellings-handlers/echohandler.html">EchoHandler</a> <a href="https://tigitz.github.io/php-spellchecker/docs/misspellings-handlers/create-custom.html">(add yours!)</a></li>
 <li>➰ Makes use of generators to reduce memory footprint</li>
@@ -289,40 +289,42 @@
 <p><strong>PHP-Spellchecker</strong> is a welcoming project for new contributors.</p>
 <p>Want to make <strong>your first open source contribution</strong>? Check the <a href="#roadmap">roadmap</a>, pick one task, <a href="https://github.com/tigitz/php-spellchecker/issues/new">open an issue</a> and we'll help you go through it 🤓🚀</p>
 <h1>Roadmap</h1>
-<p>Project is still in it's initial phase, requiring more real life usage to stabilize it's final 1.0.0 API.</p>
+<p>The project is still in its initial phase, requiring more real life usage to stabilize its final 1.0.0 API.</p>
 <h2>Global</h2>
 <ul>
 <li>[ ] Add a CLI that could do something like <code>vendor/bin/php-spellchecker "misspell" Languagetools EchoHandler --lang=en_US</code></li>
-<li>[ ] Add asynchronous mechanism to spellcheckers</li>
-<li>[ ] Make some computed misspelling properties optional to improve performance for certain use cases (e.g., lines and offset in <code>LanguageTools</code>)</li>
-<li>[ ] Add a languages mapper to manage different representations across spellcheckers</li>
-<li>[ ] Evaluate <code>strtok</code> instead of <code>explode</code> to parse lines of text, for performance</li>
-<li>[ ] Evaluate <code>MutableMisspelling</code> for performance comparison</li>
-<li>[ ] Wrap <code>Webmozart/Assert</code> library exceptions to throw PHP-Spellchecker custom exceptions instead</li>
-<li>[ ] Improve the <code>Makefile</code></li>
+<li>[ ] Add asynchronous mechanism to spellcheckers.</li>
+<li>[ ] Make some computed misspelling properties optional to improve performance for certain use cases (e.g., lines and offset in <code>LanguageTools</code>).</li>
+<li>[ ] Add a language mapper to manage different representations across spellcheckers.</li>
+<li>[ ] Evaluate <code>strtok</code> instead of <code>explode</code> to parse lines of text, for performance.</li>
+<li>[ ] Evaluate <code>MutableMisspelling</code> for performance comparison.</li>
+<li>[ ] Wrap <code>Webmozart/Assert</code> library exceptions to throw PHP-Spellchecker custom exceptions instead.</li>
+<li>[ ] Improve the <code>Makefile</code>.</li>
 </ul>
 <h2>Sources</h2>
 <ul>
-<li>[ ] Make a <code>SourceInterface</code> class that's able to have an effect on the used spellchecker configuration</li>
-<li>[ ] League/Flysystem source</li>
-<li>[ ] Symfony/Finder source</li>
+<li>[ ] Make a <code>SourceInterface</code> class that's able to have an effect on the used spellchecker configuration.</li>
+<li>[ ] <code>League/Flysystem</code> source.</li>
+<li>[ ] <code>Symfony/Finder</code> source.</li>
 </ul>
 <h2>Text processors</h2>
 <ul>
-<li>[ ] Markdown - Find a way to keep original offset and line of words after stripping</li>
-<li>[ ] Add PHPDoc processor</li>
-<li>[ ] Add HTML Processor (<a href="https://github.com/mekras/php-speller/blob/master/src/Source/Filter/HtmlFilter.php">inspiration</a>)</li>
-<li>[ ] Add XLIFF Processor (<a href="https://github.com/mekras/php-speller/blob/master/src/Source/XliffSource.php">inspiration</a>)</li>
+<li>[ ] Markdown - Find a way to keep original offset and line of words after stripping.</li>
+<li>[ ] Add PHPDoc processor.</li>
+<li>[ ] Add HTML Processor (<a href="https://github.com/mekras/php-speller/blob/master/src/Source/Filter/HtmlFilter.php">inspiration</a>).</li>
+<li>[ ] Add XLIFF Processor (<a href="https://github.com/mekras/php-speller/blob/master/src/Source/XliffSource.php">inspiration</a>).</li>
 </ul>
-<h2>Spellcheckers</h2>
+<h2>Spell checkers</h2>
 <ul>
-<li>[ ] Cache suggestions of already spellchecked words (PSR-6/PSR-16?)</li>
-<li>[ ] Pspell - Find way to compute word offset</li>
-<li>[ ] LanguageTools - Evaluate <a href="https://github.com/php-http/httplug">HTTPlug library</a> to make API requests</li>
-<li>[ ] Pspell - find way to list available dictionaries</li>
-<li>[ ] Add <a href="https://github.com/bakwc/JamSpell#http-api">JamSpell</a> spellchecker</li>
-<li>[ ] Add <a href="https://github.com/nuspell/nuspell">NuSpell</a> spellchecker</li>
-<li>[ ] Add <a href="https://github.com/LeonErath/SymSpellAPI">SymSpell</a> spellchecker</li>
+<li>[ ] Cache suggestions of already spellchecked words (PSR-6/PSR-16?).</li>
+<li>[ ] Pspell - Find way to compute word offset.</li>
+<li>[ ] LanguageTools - Evaluate <a href="https://github.com/php-http/httplug">HTTPlug library</a> to make API requests.</li>
+<li>[x] Pspell - find way to list available dictionaries.</li>
+<li>[ ] Add <a href="https://github.com/bakwc/JamSpell#http-api">JamSpell</a> spellchecker.</li>
+<li>[ ] Add <a href="https://github.com/nuspell/nuspell">NuSpell</a> spellchecker.</li>
+<li>[ ] Add <a href="https://github.com/LeonErath/SymSpellAPI">SymSpell</a> spellchecker.</li>
+<li>[ ] Add <a href="https://yandex.ru/dev/speller/doc/dg/concepts/api-overview-docpage/">Yandex.Speller API</a> spel checker.</li>
+<li>[ ] Add <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/bing-spell-check/overview">Bing Spell Check API</a> spellchecker.</li>
 </ul>
 <h2>Handlers</h2>
 <ul>
@@ -335,8 +337,8 @@
 </ul>
 <h2>Tests</h2>
 <ul>
-<li>[ ] Add or improve tests with different text encoding</li>
-<li>[ ] Refactor duplicate Dockerfile content between PHP images</li>
+<li>[ ] Add or improve tests with different text encoding.</li>
+<li>[ ] Refactor duplicate Dockerfile content between PHP images.</li>
 </ul>
 <h1>Versioning</h1>
 <p>We follow <a href="http://semver.org/">SemVer v2.0.0</a>.</p>
@@ -357,9 +359,9 @@
 <li><a href="../../contributors">All Contributors</a></li>
 </ul>
 <h1>License</h1>
-<p>The MIT License (MIT). Please see <a href="https://github.com/tigitz/php-spellchecker/blob/master/LICENSE.md">License File</a> for more information.</p>
+<p>The MIT License (MIT). Please see <a href="https://github.com/tigitz/php-spellchecker/blob/master/LICENSE.md">license file</a> for more information.</p>
 <p><strong>Logo</strong>:
-Elements taken for the final rendering are <a href="http://www.freepik.com">Designed by rawpixel.com / Freepik</a></p>            </div>
+Elements taken for the final rendering are <a href="http://www.freepik.com">Designed by rawpixel.com / Freepik</a>.</p>            </div>
         </div>
     </div>
 </div>
