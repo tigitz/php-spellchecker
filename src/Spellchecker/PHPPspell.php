@@ -6,7 +6,6 @@ namespace PhpSpellcheck\Spellchecker;
 
 use PhpSpellcheck\Exception\RuntimeException;
 use PhpSpellcheck\Misspelling;
-use PhpSpellcheck\Utils\CommandLine;
 use Webmozart\Assert\Assert;
 
 class PHPPspell implements SpellcheckerInterface
@@ -38,8 +37,7 @@ class PHPPspell implements SpellcheckerInterface
         ?int $mode = null,
         int $numberOfCharactersLowerLimit = 0,
         Aspell $aspell = null
-    )
-    {
+    ) {
         if (!\extension_loaded('pspell')) {
             throw new RuntimeException('Pspell extension must be loaded to use the PHPPspell spellchecker');
         }
