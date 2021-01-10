@@ -56,6 +56,6 @@ class Jamspell implements SpellcheckerInterface
 
     public function getSupportedLanguages(): iterable
     {
-        return ['en-US'];
+        throw new RuntimeException('Jamspell doesn\'t provide a way to retrieve the language its actually supporting through its HTTP API. Rely on the language models it has been setup with.');
     }
 }

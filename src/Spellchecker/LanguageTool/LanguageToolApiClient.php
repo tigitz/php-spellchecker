@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace PhpSpellcheck\Spellchecker\LanguageTool;
 
+/**
+ * @TODO refactor by using PSR HTTP Client
+ */
 class LanguageToolApiClient
 {
     /**

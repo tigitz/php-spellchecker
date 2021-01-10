@@ -23,6 +23,7 @@
         <env name="ASPELL_BINARY_PATH" value="aspell"/>
         <env name="HUNSPELL_BINARY_PATH" value="hunspell"/>
         <env name="LANGUAGETOOLS_ENDPOINT" value="http://languagetools:8010"/>
+        <env name="JAMSPELL_ENDPOINT" value="http://jamspell:8080"/>
     </php>
 
     <testsuites>

@@ -13,21 +13,23 @@ x-php-common-conf:
 
 services:
   php7.2:
-    build: docker/php7.2
+    build:
+      context: docker/php7.2
     <<: *php-common-conf
 
   php7.3:
-    build: docker/php7.3
+    build: 
+      context: docker/php7.3
     <<: *php-common-conf
 
   php7.4:
-    build: docker/php7.4
+    build: 
+      context: docker/php7.4
     <<: *php-common-conf
 
   jamspell:
-    build: docker/jamspell
-    ports:
-      - 5466:8080
+    build: 
+      context: docker/jamspell
 
   languagetools:
     image: silviof/docker-languagetool
