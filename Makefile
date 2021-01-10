@@ -16,7 +16,7 @@ kill:
 
 setup: ## Setup spellcheckers dependencies
 setup: build
-	$(DOCKER_COMPOSE) up -d --remove-orphans --no-recreate languagetools
+	$(DOCKER_COMPOSE) up -d --remove-orphans --no-recreate languagetools jamspell
 
 .PHONY: build kill setup
 
