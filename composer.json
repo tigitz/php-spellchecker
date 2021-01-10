@@ -35,7 +35,7 @@
         "phpstan/phpstan-strict-rules": "^0.12",
         "phpstan/phpstan-webmozart-assert": "^0.12",
         "phpstan/phpstan-phpunit": "^0.12",
-        "phpunit/phpunit": "^8.4",
+        "phpunit/phpunit": "^9.0",
         "pixelrobin/php-feather": "^1.0",
         "symfony/filesystem": "^4.2 || ^5.0",
         "symfony/finder": "^4.2 || ^5.0",
