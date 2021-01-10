@@ -43,6 +43,13 @@ foreach ($misspellings as $misspelling) {
 
 ### Available dictionaries
 
-Not implemented yet.
+```php
+<?php
+
+$phpPspell = new PHPPspell();
+
+// Same one as aspell as it's using it underneath
+$misspellings = $phpPspell->getSupportedLanguages();
+```
 
 Check the tests for more examples.

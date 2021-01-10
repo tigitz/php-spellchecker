@@ -6,6 +6,7 @@ namespace PhpSpellcheck\Spellchecker;
 
 use PhpSpellcheck\Exception\RuntimeException;
 use PhpSpellcheck\Misspelling;
+use PhpSpellcheck\Utils\CommandLine;
 use Webmozart\Assert\Assert;
 
 class PHPPspell implements SpellcheckerInterface
@@ -21,13 +22,23 @@ class PHPPspell implements SpellcheckerInterface
     private $numberOfCharactersLowerLimit;
 
     /**
+     * @var Aspell
+     */
+    private $aspell;
+
+    /**
      * @see http://php.net/manual/en/function.pspell-config-mode.php
      * @see http://php.net/manual/en/function.pspell-config-ignore.php
      *
      * @param int $mode the mode parameter is the mode in which the spellchecker will work
      * @param int $numberOfCharactersLowerLimit Words less than n characters will be skipped
+     * @param Aspell|null $aspell Aspell spellchecker that pspell extension is using underneath. Used to help retrieving supported languages
      */
-    public function __construct(?int $mode = null, int $numberOfCharactersLowerLimit = 0)
+    public function __construct(
+        ?int $mode = null,
+        int $numberOfCharactersLowerLimit = 0,
+        Aspell $aspell = null
+    )
     {
         if (!\extension_loaded('pspell')) {
             throw new RuntimeException('Pspell extension must be loaded to use the PHPPspell spellchecker');
@@ -41,6 +52,7 @@ class PHPPspell implements SpellcheckerInterface
 
         $this->mode = $mode;
         $this->numberOfCharactersLowerLimit = $numberOfCharactersLowerLimit;
+        $this->aspell = $aspell ?? Aspell::create();
     }
 
     /**
@@ -71,6 +83,7 @@ class PHPPspell implements SpellcheckerInterface
                         $suggestions,
                         \Safe\sprintf('pspell_suggest method failed with dictionary "%s" and word "%s"', $dictionary, $word)
                     );
+
                     yield new Misspelling($word, 0, $lineNumber + 1, $suggestions, $context);
                 }
             }
@@ -82,6 +95,6 @@ class PHPPspell implements SpellcheckerInterface
      */
     public function getSupportedLanguages(): iterable
     {
-        return ['en-US'];
+        return $this->aspell->getSupportedLanguages();
     }
 }

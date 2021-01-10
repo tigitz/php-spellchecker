@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-use PhpSpellcheck\Exception\LogicException;
 use PhpSpellcheck\Misspelling;
+use PhpSpellcheck\Spellchecker\Aspell;
 use PhpSpellcheck\Spellchecker\PHPPspell;
+use PhpSpellcheck\Utils\CommandLine;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 
@@ -32,7 +33,10 @@ class PHPPspellTest extends TestCase
 
     public function testGetSupportedLanguages(): void
     {
-        $pspell = new PHPPspell(PSPELL_FAST);
-        $this->assertSame(['en-US'], $pspell->getSupportedLanguages());
+        $pspell = new PHPPspell();
+        $this->assertSame(
+            (new Aspell(new CommandLine(AspellTest::realBinaryPath())))->getSupportedLanguages(),
+            $pspell->getSupportedLanguages()
+        );
     }
 }

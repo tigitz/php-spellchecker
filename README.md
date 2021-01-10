@@ -153,7 +153,7 @@ The project is still in its initial phase, requiring more real life usage to sta
 - [ ] Cache suggestions of already spellchecked words (PSR-6/PSR-16?).
 - [ ] Pspell - Find way to compute word offset.
 - [ ] LanguageTools - Evaluate [HTTPlug library][httplug] to make API requests.
-- [ ] Pspell - find way to list available dictionaries.
+- [x] Pspell - find way to list available dictionaries.
 - [ ] Add [JamSpell](https://github.com/bakwc/JamSpell#http-api) spellchecker.
 - [ ] Add [NuSpell](https://github.com/nuspell/nuspell) spellchecker.
 - [ ] Add [SymSpell](https://github.com/LeonErath/SymSpellAPI) spellchecker.
