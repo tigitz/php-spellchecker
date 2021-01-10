@@ -28,7 +28,7 @@ tests-dox: ## Run all tests in dox format
 tests-dox:
 	if [ $(WITH_COVERAGE) = true ]; then $(EXEC_PHP) vendor/bin/phpunit --coverage-clover clover.xml --testdox; else $(EXEC_PHP) vendor/bin/phpunit --testdox; fi
 
-# @TODO not optimized, it recreates a container for each examples
+# @TODO not optimized, it recreates a container for each example
 examples-test:
 	for file in `ls examples/*.php`; \
            do \

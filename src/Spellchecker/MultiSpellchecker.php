@@ -32,7 +32,9 @@ class MultiSpellchecker implements SpellcheckerInterface
     public function check(string $text, array $languages, array $context): iterable
     {
         if (!$this->mergeMisspellingsSuggestions) {
-            return $this->checkForAllSpellcheckers($text, $languages, $context);
+            yield from $this->checkForAllSpellcheckers($text, $languages, $context);
+
+            return;
         }
 
         /** @var MisspellingInterface[] $misspellings */

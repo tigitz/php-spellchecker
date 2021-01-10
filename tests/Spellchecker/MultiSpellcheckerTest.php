@@ -30,7 +30,7 @@ class MultiSpellcheckerTest extends TestCase
 
         $multiSpellchecker = new MultiSpellchecker([$spellChecker1, $spellChecker2]);
 
-        $misspellings = $multiSpellchecker->check('test', ['en_US'], ['ctx']);
+        $misspellings = iterator_to_array($multiSpellchecker->check('test', ['en_US'], ['ctx']));
         $this->assertEquals(
             [
                 $misspelling1->setContext(['ctx']),
@@ -62,7 +62,7 @@ class MultiSpellcheckerTest extends TestCase
 
         $multiSpellchecker = new MultiSpellchecker([$spellChecker1, $spellChecker2], false);
 
-        $misspellings = $multiSpellchecker->check('test', ['en_US'], ['ctx']);
+        $misspellings = iterator_to_array($multiSpellchecker->check('test', ['en_US'], ['ctx']));
         $this->assertEquals(
             [
                 $misspelling1->setContext(['ctx']),
@@ -70,7 +70,7 @@ class MultiSpellcheckerTest extends TestCase
                 $misspelling2b->setContext(['ctx']),
                 $misspelling3->setContext(['ctx']),
             ],
-            iterator_to_array($misspellings)
+            $misspellings
         );
     }
 

@@ -32,8 +32,7 @@ class PHPPspellTest extends TestCase
 
     public function testGetSupportedLanguages(): void
     {
-        $this->expectException(LogicException::class);
         $pspell = new PHPPspell(PSPELL_FAST);
-        $pspell->getSupportedLanguages();
+        $this->assertSame(['en-US'], $pspell->getSupportedLanguages());
     }
 }
