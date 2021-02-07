@@ -4,7 +4,7 @@
     <img src="https://i.imgur.com/C8hHwW9.png" alt="PHP-Spellchecker" width="300" height="300">
 </p>
 <p align="center">
-    <a href="https://travis-ci.org/tigitz/php-spellchecker"><img src="https://img.shields.io/travis/com/tigitz/php-spellchecker/master.svg?style=flat-square&logo=travis" alt="Build Status"></a>
+    <a href="https://github.com/tigitz/php-spellchecker/actions"><img src="https://img.shields.io/github/checks-status/tigitz/php-spellchecker/master?logo=github&style=flat-square" alt="Build Status"></a>
     <a href="https://codecov.io/gh/tigitz/php-spellchecker/branch/master"><img src="https://img.shields.io/codecov/c/github/tigitz/php-spellchecker/master.svg?style=flat-square&logo=codecov" alt="Code coverage"></a>
     <a href="https://scrutinizer-ci.com/g/tigitz/php-spellchecker/?branch=master"><img src="https://img.shields.io/scrutinizer/g/tigitz/php-spellchecker.svg?style=flat-square&logo=scrutinizer" alt="Code coverage"></a>
     <a href="https://gitter.im/php-spellchecker/php-spellchecker"><img src="https://img.shields.io/gitter/room/tigitz/php-spellchecker.svg?style=flat-square" alt="PHP-Spellchecker chat room"></a>
