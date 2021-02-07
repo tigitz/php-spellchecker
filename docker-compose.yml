@@ -10,26 +10,23 @@ x-php-common-conf:
       - COMPOSER_CACHE_DIR=/root/composer/cache
     depends_on:
       - languagetools
+      - jamspell
 
 services:
   php7.2:
+    image: tigitz/phpspellchecker:7.2
     build:
       context: docker/php7.2
     <<: *php-common-conf
-
-  php7.3:
-    build: 
-      context: docker/php7.3
-    <<: *php-common-conf
-
-  php7.4:
-    build: 
-      context: docker/php7.4
+  
+  php8.0:
+    image: tigitz/phpspellchecker:8.0
+    build:
+      context: docker/php8.0
     <<: *php-common-conf
 
   jamspell:
-    build: 
-      context: docker/jamspell
+    image: tigitz/jamspell
 
   languagetools:
     image: silviof/docker-languagetool

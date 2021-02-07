@@ -1,7 +1,10 @@
-FROM php:7.3-cli-stretch
+FROM php:8.0-cli-buster
 
+ENV XDEBUG_MODE=coverage
 RUN echo "memory_limit=-1" > "$PHP_INI_DIR/conf.d/memory-limit.ini" \
  && echo "date.timezone=${PHP_TIMEZONE:-UTC}" > "$PHP_INI_DIR/conf.d/date_timezone.ini"
+
+ARG XDEBUG_VERSION=3.0.2
 
 RUN apt-get update \
     && apt install -y \
@@ -18,7 +21,9 @@ RUN apt-get update \
      aspell \
      aspell-en \
      libpspell-dev \
+    && pecl install xdebug-${XDEBUG_VERSION} \
     && docker-php-ext-configure pspell \
+	&& docker-php-ext-enable xdebug \
     && docker-php-ext-install pspell \
     && docker-php-ext-install zip \
     && rm -r /var/lib/apt/lists/*
@@ -31,7 +36,7 @@ RUN cp /usr/share/hunspell/en_US.aff  /usr/share/hunspell/en_US.aff.orig \
     && sed -i '/SET ISO8859-1/c\SET UTF-8' /usr/share/hunspell/en_US.aff
 
 # install composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 ENV COMPOSER_ALLOW_SUPERUSER 1
 
 WORKDIR /usr/src/myapp

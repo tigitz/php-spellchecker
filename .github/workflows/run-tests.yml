@@ -1,0 +1,66 @@
+name: Tests
+
+on: [push]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php: ["7.2", "8.0"]
+        stability: [--prefer-lowest, --prefer-stable]
+    env:
+      PHP_VERSION: ${{ matrix.php }}
+      DEPS_STRATEGY: ${{ matrix.stability }}
+
+    name: PHP${{ matrix.php }} ${{ matrix.stability }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      
+      - uses: jitterbit/get-changed-files@v1
+        id: files
+     
+      - name: Setup spellcheker dependencies
+        run: make pull
+        
+      - name: Define folders which changes within requires docker build step
+        run: echo "FILES_REQUIRING_DOCKER_BUILD=php${{ matrix.php }}/Dockerfile" >> $GITHUB_ENV
+        
+      - name: Build docker images
+        run: make build
+        if: contains(steps.files.outputs.all, env.FILES_REQUIRING_DOCKER_BUILD)
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1
+        if: contains(steps.files.outputs.all, env.FILES_REQUIRING_DOCKER_BUILD)
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_TOKEN }}
+          
+      - name: Push docker image
+        run: make push
+        if: contains(steps.files.outputs.all, env.FILES_REQUIRING_DOCKER_BUILD)
+        
+      - name: Cache composer dependencies
+        uses: actions/cache@v2
+        with:
+          path: vendor
+          key: composer${{ matrix.stability }}-${{ hashFiles('composer.lock') }}
+        
+      - name: Install composer deps
+        run: |
+          export WITH_COVERAGE=$(if [[ ("${{ matrix.php }}" = "8.0") && ("${{ matrix.stability }}" = "--prefer-stable") ]]; then echo "true"; else echo "false"; fi)
+          echo "WITH_COVERAGE=${WITH_COVERAGE}" >> $GITHUB_ENV
+          make vendor
+          make tests
+      
+      - name: Run examples
+        run: make examples-test
+        
+      - uses: codecov/codecov-action@v1
+        if: env.WITH_COVERAGE == 'true'
+        with:
+          fail_ci_if_error: true
+          verbose: true

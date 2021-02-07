@@ -23,7 +23,7 @@ Using PHP-Spellchecker can eliminate vendor lock-in, reduce technical debt, and 
 
 # Features
 
-- 🧐 Supports many popular spellcheckers out of the box: [Aspell][aspell], [Hunspell][hunspell], [Ispell][ispell], [PHP Pspell][pspell], [LanguageTools][languagetools] and [MultiSpellchecker][multispellchecker] [(add yours!)][spellchecker_custom]
+- 🧐 Supports many popular spellcheckers out of the box: [Aspell][aspell], [Hunspell][hunspell], [Ispell][ispell], [PHP Pspell][pspell], [LanguageTools][languagetools], [JamSpell][jamspell] and [MultiSpellchecker][multispellchecker] [(add yours!)][spellchecker_custom]
 - 📄 Supports different text sources: file system [file][filesource]/[directory][directory], [string][php-string], and [multi-source][multisource] [(add yours!)][source_custom]
 - 🛠 Supports text processors: [MarkdownRemover][markdownremover] [(add yours!)][textprocessor_custom]
 - 🔁 Supports misspelling handlers: [EchoHandler][echohandler] [(add yours!)][custom_handler]
@@ -243,6 +243,7 @@ Elements taken for the final rendering are [Designed by rawpixel.com / Freepik](
 [hunspell]: https://tigitz.github.io/php-spellchecker/docs/spellcheckers/hunspell.html
 [ispell]: https://tigitz.github.io/php-spellchecker/docs/spellcheckers/ispell.html
 [languagetools]: https://tigitz.github.io/php-spellchecker/docs/spellcheckers/languagetools.html
+[jamspell]: https://tigitz.github.io/php-spellchecker/docs/spellcheckers/jamspell.html
 [pspell]: https://tigitz.github.io/php-spellchecker/docs/spellcheckers/php-pspell.html
 [multispellchecker]: https://tigitz.github.io/php-spellchecker/docs/spellcheckers/multispellchecker.html
 [spellchecker_custom]: https://tigitz.github.io/php-spellchecker/docs/spellcheckers/create-custom.html

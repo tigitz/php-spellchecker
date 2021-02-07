@@ -31,9 +31,8 @@ RUN cp /usr/share/hunspell/en_US.aff  /usr/share/hunspell/en_US.aff.orig \
     && sed -i '/SET ISO8859-1/c\SET UTF-8' /usr/share/hunspell/en_US.aff
 
 # install composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 ENV COMPOSER_ALLOW_SUPERUSER 1
 
-RUN pecl install xdebug && docker-php-ext-enable xdebug
-
 WORKDIR /usr/src/myapp
+

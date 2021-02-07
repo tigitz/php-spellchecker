@@ -4,12 +4,13 @@ declare(strict_types=1);
 namespace PhpSpellcheck\Tests\Spellchecker;
 
 use PhpSpellcheck\Exception\RuntimeException;
-use PhpSpellcheck\Spellchecker\Jamspell;
+use PhpSpellcheck\Spellchecker\JamSpell;
 use PhpSpellcheck\Tests\TextTest;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\HttpClient\NativeHttpClient;
 use Symfony\Component\HttpClient\Psr18Client;
 
-class JamspellTest extends TestCase
+class JamSpellTest extends TestCase
 {
     /**
      * @group integration
@@ -17,7 +18,7 @@ class JamspellTest extends TestCase
     public function testSpellcheckFromRealAPI(): void
     {
         $misspellings = iterator_to_array(
-            (new Jamspell(new Psr18Client(), $this->realAPIEndpoint().'/candidates'))->check(
+            $this->realJamSpellClient()->check(
                 TextTest::CONTENT_STUB,
                 ['ja-JP'],
                 ['ctx' => 'ctx']
@@ -34,10 +35,15 @@ class JamspellTest extends TestCase
     public function testSupportedLanguages(): void
     {
         $this->expectException(RuntimeException::class);
-        (new Jamspell(new Psr18Client(), $this->realAPIEndpoint().'/candidates'))->getSupportedLanguages();
+        $this->realJamSpellClient()->getSupportedLanguages();
     }
 
-    private static function realAPIEndpoint(): string
+    private function realJamSpellClient(): JamSpell
+    {
+        return new JamSpell(new Psr18Client(new NativeHttpClient()), $this->realAPIEndpoint().'/candidates');
+    }
+
+    private function realAPIEndpoint(): string
     {
         if (getenv('JAMSPELL_ENDPOINT') === false) {
             throw new \RuntimeException('"JAMSPELL_ENDPOINT" env must be set to run the tests on');

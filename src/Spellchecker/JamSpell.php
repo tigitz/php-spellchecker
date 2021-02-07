@@ -10,7 +10,7 @@ use PhpSpellcheck\Misspelling;
 use PhpSpellcheck\Utils\LineAndOffset;
 use Psr\Http\Client\ClientInterface;
 
-class Jamspell implements SpellcheckerInterface
+class JamSpell implements SpellcheckerInterface
 {
     /**
      * @var ClientInterface

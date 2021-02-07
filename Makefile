@@ -1,14 +1,19 @@
 DOCKER_COMPOSE 	?= docker-compose
 EXEC_PHP      	= $(DOCKER_COMPOSE) run --rm -T php$(PHP_VERSION)
-PHP_VERSION     ?= 7.4
-DEPS     		?= "LOCKED"
+PHP_VERSION     ?= 8.0
+DEPS_STRATEGY   ?= --prefer-stable
 COMPOSER      	= $(EXEC_PHP) composer
 WITH_COVERAGE   ?= "FALSE"
 EXAMPLES_DIR   ?= "examples"
 
+pull:
+	@$(DOCKER_COMPOSE) pull languagetools jamspell php$(PHP_VERSION)
+
 build:
-	@$(DOCKER_COMPOSE) pull --parallel --ignore-pull-failures 2> /dev/null
 	$(DOCKER_COMPOSE) build php$(PHP_VERSION)
+
+push:
+	$(DOCKER_COMPOSE) push php$(PHP_VERSION)
 
 kill:
 	$(DOCKER_COMPOSE) kill
@@ -49,16 +54,14 @@ ti: vendor
 .PHONY: tests tests-dox examples-test tu ti
 
 vendor:
-	if [ $(DEPS) = "LOWEST" ]; then $(COMPOSER) update --prefer-lowest; fi
-	if [ $(DEPS) = "LOCKED" ]; then $(COMPOSER) install; fi
-	if [ $(DEPS) = "HIGHEST" ]; then $(COMPOSER) update; fi
+	$(COMPOSER) update $(DEPS_STRATEGY)
 
-PHP_CS_FIXER = docker run --rm -t -v `pwd`:/data cytopia/php-cs-fixer:latest
+PHP_CS_FIXER = docker pull cytopia/php-cs-fixer:latest && docker run --rm -t -v `pwd`:/data cytopia/php-cs-fixer:latest
 
-phpcs: vendor
+phpcs:
 	$(PHP_CS_FIXER) fix -vv --dry-run --allow-risky=yes
 
-phpcbf: vendor
+phpcbf:
 	$(PHP_CS_FIXER) fix -vv --allow-risky=yes
 
 phpstan: vendor

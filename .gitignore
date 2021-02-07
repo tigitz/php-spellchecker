@@ -2,4 +2,6 @@ build
 composer.lock
 vendor
 .idea
-.phpcs-cache
+.php_cs.cache
+.phpunit.result.cache
+cache

@@ -1,0 +1,28 @@
+name: Check & fix styling
+
+on: [push]
+
+jobs:
+  php-cs-fixer:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 7.2
+          coverage: none
+          tools: php-cs-fixer, cs2pr
+
+      - name: Restore PHP-CS-Fixer cache
+        uses: actions/cache@v2
+        with:
+          path: .php_cs.cache
+          key: "php-cs-fixer"
+          restore-keys: "php-cs-fixer"
+
+      - name: Run PHP-CS-Fixer
+        run: php-cs-fixer fix --dry-run --format=checkstyle --allow-risky=yes | cs2pr
