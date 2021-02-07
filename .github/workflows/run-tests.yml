@@ -43,13 +43,7 @@ jobs:
         run: make push
         if: contains(steps.files.outputs.all, env.FILES_REQUIRING_DOCKER_BUILD)
         
-      - name: Cache composer dependencies
-        uses: actions/cache@v2
-        with:
-          path: vendor
-          key: composer${{ matrix.stability }}-${{ hashFiles('composer.lock') }}
-        
-      - name: Install composer deps
+      - name: Run tests
         run: |
           export WITH_COVERAGE=$(if [[ ("${{ matrix.php }}" = "8.0") && ("${{ matrix.stability }}" = "--prefer-stable") ]]; then echo "true"; else echo "false"; fi)
           echo "WITH_COVERAGE=${WITH_COVERAGE}" >> $GITHUB_ENV
