@@ -1,4 +1,4 @@
-FROM php:7.2-cli-stretch
+FROM php:7.3-cli-stretch
 
 RUN echo "memory_limit=-1" > "$PHP_INI_DIR/conf.d/memory-limit.ini" \
  && echo "date.timezone=${PHP_TIMEZONE:-UTC}" > "$PHP_INI_DIR/conf.d/date_timezone.ini"
