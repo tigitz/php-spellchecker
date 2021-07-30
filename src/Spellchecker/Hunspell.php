@@ -30,7 +30,8 @@ class Hunspell implements SpellcheckerInterface
         array $languages = [],
         array $context = []
     ): iterable {
-        $cmd = $this->binaryPath->addArg('-a');
+        $cmd = $this->binaryPath->addArgs(['-i', 'UTF-8']);
+        $cmd = $cmd->addArg('-a');
 
         if (!empty($languages)) {
             $cmd = $cmd->addArgs(['-d', implode(',', $languages)]);
