@@ -10,7 +10,7 @@ pull:
 	@$(DOCKER_COMPOSE) pull languagetools jamspell php$(PHP_VERSION)
 
 build:
-	$(DOCKER_COMPOSE) build php$(PHP_VERSION)
+	$(DOCKER_COMPOSE) build --no-cache php$(PHP_VERSION)
 
 push:
 	$(DOCKER_COMPOSE) push php$(PHP_VERSION)
