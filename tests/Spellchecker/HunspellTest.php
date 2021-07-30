@@ -100,8 +100,8 @@ class HunspellTest extends TestCase
         $this->assertNotEmpty($misspellings[0]->getSuggestions());
 
         $this->assertSame(['ctx'], $misspellings[1]->getContext());
-        $this->assertSame('страх', $misspellings[1]->getWord());
-//        $this->assertSame(3, $misspellings[1]->getOffset());
-//        $this->assertSame(2, $misspellings[1]->getLineNumber());
+        $this->assertSame('theforests', $misspellings[1]->getWord());
+        $this->assertSame(3, $misspellings[1]->getOffset());
+        $this->assertSame(2, $misspellings[1]->getLineNumber());
     }
 }
