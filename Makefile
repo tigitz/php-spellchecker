@@ -56,7 +56,7 @@ ti: vendor
 vendor:
 	$(COMPOSER) update $(DEPS_STRATEGY)
 
-PHP_CS_FIXER = docker pull cytopia/php-cs-fixer:latest && docker run --rm -t -v `pwd`:/data cytopia/php-cs-fixer:latest
+PHP_CS_FIXER = docker pull cytopia/php-cs-fixer:latest-php7.2 && docker run --rm -t -v `pwd`:/data cytopia/php-cs-fixer:latest-php7.2
 
 phpcs:
 	$(PHP_CS_FIXER) fix -vv --dry-run --allow-risky=yes

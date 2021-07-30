@@ -1,10 +1,10 @@
 <?php
 
-$finder = PhpCsFixer\Finder::create()
+$finder = (new PhpCsFixer\Finder())
     ->in([__DIR__.'/src', __DIR__.'/tests'])
 ;
 
-return PhpCsFixer\Config::create()
+return (new PhpCsFixer\Config())
     ->setRules([
         '@PSR2' => true,
         'no_unused_imports' => true,
@@ -43,7 +43,7 @@ return PhpCsFixer\Config::create()
         'phpdoc_no_empty_return' => true,
         'include' => true,
         'phpdoc_no_useless_inheritdoc' => true,
-        'no_unneeded_control_parentheses' => ['break', 'clone', 'continue', 'return', 'switch_case', 'yield'],
+        'no_unneeded_control_parentheses' => true,
         'no_leading_import_slash' => true,
         'phpdoc_order' => true,
         'phpdoc_return_self_reference' => true,
@@ -64,8 +64,8 @@ return PhpCsFixer\Config::create()
         'short_scalar_cast' => true,
         'single_blank_line_before_namespace' => true,
         'single_line_comment_style' => true,
-        'psr4' => true,
-        'class_attributes_separation' => ['elements' => ['method', 'property']],
+        'psr_autoloading' => true,
+        'class_attributes_separation' => ['elements' => ['method' => 'one', 'property' => 'one']],
         'space_after_semicolon' => true,
         'no_whitespace_in_blank_line' => true,
         'strict_comparison' => true,

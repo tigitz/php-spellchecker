@@ -20,7 +20,7 @@ TEXT;
 
 さよなら
 
-解決なる 
+解決なる
 TEXT;
 
     public function testContextOverridingMerge(): void
