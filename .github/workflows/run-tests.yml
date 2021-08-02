@@ -27,7 +27,7 @@ jobs:
         run: make pull
         
       - name: Define folders which changes within requires docker build step
-        run: echo "FILES_REQUIRING_DOCKER_BUILD=php${{ matrix.php }}/Dockerfile" >> $GITHUB_ENV
+        run: echo "FILES_REQUIRING_DOCKER_BUILD=php/Dockerfile" >> $GITHUB_ENV
         
       - name: Build docker images
         run: make build
@@ -48,6 +48,8 @@ jobs:
         run: |
           export WITH_COVERAGE=$(if [[ ("${{ matrix.php }}" = "8.0") && ("${{ matrix.stability }}" = "--prefer-stable") ]]; then echo "true"; else echo "false"; fi)
           echo "WITH_COVERAGE=${WITH_COVERAGE}" >> $GITHUB_ENV
+          export XDEBUG_VERSION=$(if [[ ("${{ matrix.php }}" = "7.2") then echo "2.9.3"; else echo "3.0.4"; fi)
+          echo "XDEBUG_VERSION=${XDEBUG_VERSION}" >> $GITHUB_ENV
           make vendor
           make tests
       

@@ -13,10 +13,10 @@ class HunspellTest extends TestCase
 {
     private const FAKE_BINARIES_PATH = [PHP_BINARY, __DIR__ . '/../Fixtures/Hunspell/bin/hunspell.php'];
 
-//    public function testSpellcheckFromFakeBinaries(): void
-//    {
-//        $this->assertWorkingSpellcheck(self::FAKE_BINARIES_PATH);
-//    }
+    public function testSpellcheckFromFakeBinaries(): void
+    {
+        $this->assertWorkingSpellcheckENText(self::FAKE_BINARIES_PATH, TextTest::CONTENT_STUB, ['en_US']);
+    }
 
     public function testGetSupportedLanguagesFromFakeBinaries(): void
     {
@@ -44,7 +44,15 @@ class HunspellTest extends TestCase
      */
     public function testSpellcheckFromRealBinaries(): void
     {
-        $this->assertWorkingSpellcheck(self::realBinaryPath());
+        $this->assertWorkingSpellcheckENText(self::realBinaryPath(), TextTest::CONTENT_STUB, ['en_US']);
+    }
+
+    /**
+     * @group integration
+     */
+    public function testSpellcheckFromRealBinariesUTF8(): void
+    {
+        $this->assertWorkingSpellcheckRUText(self::realBinaryPath(), TextTest::CONTENT_STUB_RU, ['ru_RU']);
     }
 
     /**
@@ -53,11 +61,6 @@ class HunspellTest extends TestCase
     public function testGetSupportedLanguagesFromRealBinaries(): void
     {
         $this->assertWorkingSupportedLanguages(self::realBinaryPath());
-    }
-
-    public function getTextInput(): string
-    {
-        return TextTest::CONTENT_STUB;
     }
 
     public function getFakeDicts(): array
@@ -87,11 +90,11 @@ class HunspellTest extends TestCase
     /**
      * @param array|string $binaries
      */
-    private function assertWorkingSpellcheck($binaries): void
+    private function assertWorkingSpellcheckENText($binaries, string $textInput, array $locales): void
     {
         $hunspell = new Hunspell(new CommandLine($binaries));
         /** @var Misspelling[] $misspellings */
-        $misspellings = iterator_to_array($hunspell->check($this->getTextInput(), ['en_US'], ['ctx']));
+        $misspellings = iterator_to_array($hunspell->check($textInput, $locales, ['ctx']));
 
         $this->assertSame(['ctx'], $misspellings[0]->getContext());
         $this->assertSame('Tigr', $misspellings[0]->getWord());
@@ -101,7 +104,27 @@ class HunspellTest extends TestCase
 
         $this->assertSame(['ctx'], $misspellings[1]->getContext());
         $this->assertSame('страх', $misspellings[1]->getWord());
-//        $this->assertSame(3, $misspellings[1]->getOffset());
-//        $this->assertSame(2, $misspellings[1]->getLineNumber());
+        $this->assertSame(21, $misspellings[1]->getOffset());
+        $this->assertSame(1, $misspellings[1]->getLineNumber());
+    }
+
+    /**
+     * @param array|string $binaries
+     */
+    private function assertWorkingSpellcheckRUText($binaries, string $textInput, array $locales): void
+    {
+        $hunspell = new Hunspell(new CommandLine($binaries));
+        /** @var Misspelling[] $misspellings */
+        $misspellings = iterator_to_array($hunspell->check($textInput, $locales, ['ctx']));
+
+        $this->assertSame(['ctx'], $misspellings[0]->getContext());
+        $this->assertSame('граматических', $misspellings[0]->getWord());
+        $this->assertSame(1, $misspellings[0]->getLineNumber());
+        $this->assertSame(54, $misspellings[0]->getOffset());
+
+        $this->assertSame(['ctx'], $misspellings[1]->getContext());
+        $this->assertSame('англиских', $misspellings[1]->getWord());
+        $this->assertSame(1, $misspellings[1]->getLineNumber());
+        $this->assertSame(94, $misspellings[1]->getOffset());
     }
 }

@@ -1,19 +1,20 @@
 DOCKER_COMPOSE 	?= docker-compose
-EXEC_PHP      	= $(DOCKER_COMPOSE) run --rm -T php$(PHP_VERSION)
+EXEC_PHP      	= $(DOCKER_COMPOSE) run --rm -T php
 PHP_VERSION     ?= 8.0
+XDEBUG_VERSION  ?= 3.0.4
 DEPS_STRATEGY   ?= --prefer-stable
 COMPOSER      	= $(EXEC_PHP) composer
 WITH_COVERAGE   ?= "FALSE"
 EXAMPLES_DIR   ?= "examples"
 
 pull:
-	@$(DOCKER_COMPOSE) pull languagetools jamspell php$(PHP_VERSION)
+	@$(DOCKER_COMPOSE) pull languagetools jamspell php
 
 build:
-	$(DOCKER_COMPOSE) build --no-cache php$(PHP_VERSION)
+	$(DOCKER_COMPOSE) build --no-cache php
 
 push:
-	$(DOCKER_COMPOSE) push php$(PHP_VERSION)
+	$(DOCKER_COMPOSE) push php
 
 kill:
 	$(DOCKER_COMPOSE) kill

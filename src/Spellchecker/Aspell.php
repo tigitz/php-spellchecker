@@ -27,7 +27,8 @@ class Aspell implements SpellcheckerInterface
     {
         Assert::maxCount($languages, 1, 'Aspell spellchecker doesn\'t support multiple languages check');
 
-        $cmd = $this->binaryPath->addArg('-a');
+        $cmd = $this->binaryPath->addArgs(['--encoding', 'utf-8']);
+        $cmd = $cmd->addArg('-a');
 
         if (!empty($languages)) {
             $cmd = $cmd->addArg('--lang=' . implode(',', $languages));

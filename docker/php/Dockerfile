@@ -1,10 +1,12 @@
-FROM php:8.0-cli-buster
+ARG PHP_VERSION
+
+FROM php:${PHP_VERSION}-cli-buster
 
 ENV XDEBUG_MODE=coverage
 RUN echo "memory_limit=-1" > "$PHP_INI_DIR/conf.d/memory-limit.ini" \
  && echo "date.timezone=${PHP_TIMEZONE:-UTC}" > "$PHP_INI_DIR/conf.d/date_timezone.ini"
 
-ARG XDEBUG_VERSION=3.0.2
+ARG XDEBUG_VERSION
 
 RUN apt-get update \
     && apt install -y \
@@ -16,10 +18,13 @@ RUN apt-get update \
      libzip-dev \
      ispell \
      iamerican \
+     irussian \
      hunspell \
      hunspell-en-us \
+     hunspell-ru \
      aspell \
      aspell-en \
+     aspell-ru \
      libpspell-dev \
     && pecl install xdebug-${XDEBUG_VERSION} \
     && docker-php-ext-configure pspell \

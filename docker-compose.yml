@@ -1,7 +1,13 @@
 version: '3.4'
 
-x-php-common-conf:
-  - &php-common-conf
+services:
+  php:
+    image: tigitz/phpspellchecker:${PHP_VERSION:-8.0}
+    build:
+      context: docker/php
+      args:
+        PHP_VERSION: ${PHP_VERSION:-8.0}
+        XDEBUG_VERSION: ${XDEBUG_VERSION:-3.0.4}
     volumes:
       - .:/usr/src/myapp
       - ./cache:/root/composer/cache
@@ -11,19 +17,6 @@ x-php-common-conf:
     depends_on:
       - languagetools
       - jamspell
-
-services:
-  php7.2:
-    image: tigitz/phpspellchecker:7.2
-    build:
-      context: docker/php7.2
-    <<: *php-common-conf
-  
-  php8.0:
-    image: tigitz/phpspellchecker:8.0
-    build:
-      context: docker/php8.0
-    <<: *php-common-conf
 
   jamspell:
     image: tigitz/jamspell

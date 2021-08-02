@@ -40,14 +40,17 @@ class AspellTest extends TestCase
     /**
      * @group integration
      */
+    public function testSpellcheckFromRealBinariesUTF8(): void
+    {
+        $this->assertWorkingSpellcheckRUText(self::realBinaryPath());
+    }
+
+    /**
+     * @group integration
+     */
     public function testGetSupportedLanguagesFromRealBinaries(): void
     {
         $this->assertWorkingSupportedLanguages(self::realBinaryPath());
-    }
-
-    public function getTextInput(): string
-    {
-        return TextTest::CONTENT_STUB;
     }
 
     public function getFakeDicts(): array
@@ -77,7 +80,7 @@ class AspellTest extends TestCase
         /** @var Misspelling[] $misspellings */
         $misspellings = iterator_to_array(
             $aspell->check(
-                $this->getTextInput(),
+                TextTest::CONTENT_STUB,
                 ['en_US'],
                 ['ctx']
             )
@@ -94,5 +97,25 @@ class AspellTest extends TestCase
         $this->assertSame(3, $misspellings[1]->getOffset());
         $this->assertSame(2, $misspellings[1]->getLineNumber());
         $this->assertNotEmpty($misspellings[1]->getSuggestions());
+    }
+
+    /**
+     * @param array|string $binaries
+     */
+    private function assertWorkingSpellcheckRUText($binaries): void
+    {
+        $aspell = new Aspell(new CommandLine($binaries));
+        /** @var Misspelling[] $misspellings */
+        $misspellings = iterator_to_array($aspell->check(TextTest::CONTENT_STUB_RU, ['ru'], ['ctx']));
+
+        $this->assertSame(['ctx'], $misspellings[0]->getContext());
+        $this->assertSame('граматических', $misspellings[0]->getWord());
+        $this->assertSame(1, $misspellings[0]->getLineNumber());
+        $this->assertSame(54, $misspellings[0]->getOffset());
+
+        $this->assertSame(['ctx'], $misspellings[1]->getContext());
+        $this->assertSame('англиских', $misspellings[1]->getWord());
+        $this->assertSame(1, $misspellings[1]->getLineNumber());
+        $this->assertSame(94, $misspellings[1]->getOffset());
     }
 }

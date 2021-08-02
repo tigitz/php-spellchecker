@@ -1,5 +1,6 @@
 @(#) International Ispell Version 3.2.06 (but really Hunspell 1.7.0)
 & Tigr 6 0: Ti gr, Ti-gr, Tiger, Trig, Tier, Tigris
+# страх 21
 
 & theforests 6 3: the forests, the-forests, therefore, afforests, forests, forefathers
 

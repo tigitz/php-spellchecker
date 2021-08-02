@@ -93,7 +93,7 @@ class LanguageToolTest extends TestCase
     {
         $misspellings = iterator_to_array(
             (new LanguageTool(new LanguageToolApiClient(self::realAPIEndpoint())))->check(
-                TextTest::CONTENT_STUB_MULTIBYTE,
+                TextTest::CONTENT_STUB_JP,
                 ['ja-JP'],
                 ['ctx' => 'ctx']
             )
