@@ -7,7 +7,6 @@ services:
       context: docker/php
       args:
         PHP_VERSION: ${PHP_VERSION:-8.0}
-        XDEBUG_VERSION: ${XDEBUG_VERSION:-3.0.4}
     volumes:
       - .:/usr/src/myapp
       - ./cache:/root/composer/cache

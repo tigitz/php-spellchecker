@@ -1,7 +1,6 @@
 DOCKER_COMPOSE 	?= docker-compose
 EXEC_PHP      	= $(DOCKER_COMPOSE) run --rm -T php
 PHP_VERSION     ?= 8.0
-XDEBUG_VERSION  ?= 3.0.4
 DEPS_STRATEGY   ?= --prefer-stable
 COMPOSER      	= $(EXEC_PHP) composer
 WITH_COVERAGE   ?= "FALSE"
