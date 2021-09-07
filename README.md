@@ -50,7 +50,7 @@ $ composer require tigitz/php-spellchecker
 
 ## Using the spellchecker directly
 
-You can check misspellings directly from a `PhpSpellCheck\SpellChecker` class and process them on your own.
+You can check misspellings directly from a `PhpSpellcheck\Spellchecker` class and process them on your own.
 
 ```php
 <?php
