@@ -33,7 +33,7 @@
         "cocur/slugify": "^3.2 || ^4.0",
         "erusev/parsedown": "^1.7",
         "erusev/parsedown-extra": "^0.8",
-        "phpstan/phpstan": "^0.12",
+        "phpstan/phpstan": "^1.0",
         "phpstan/phpstan-strict-rules": "^0.12",
         "phpstan/phpstan-webmozart-assert": "^0.12",
         "phpstan/phpstan-phpunit": "^0.12",
