@@ -42,7 +42,7 @@ examples-test:
            echo "**************************************************************\n"; \
            $(EXEC_PHP) php $$file; \
         done
-#	@for f in $(shell ls ${EXAMPLES_DIR}); do echo $${f}; done
+
 tu: ## Run unit tests
 tu: vendor
 	$(EXEC_PHP) vendor/bin/phpunit --exclude-group integration
@@ -56,7 +56,7 @@ ti: vendor
 vendor:
 	$(COMPOSER) update $(DEPS_STRATEGY)
 
-PHP_CS_FIXER = docker pull cytopia/php-cs-fixer:latest-php7.2 && docker run --rm -t -v `pwd`:/data cytopia/php-cs-fixer:latest-php7.2
+PHP_CS_FIXER = docker pull cytopia/php-cs-fixer:latest-php7.4 && docker run --rm -t -v `pwd`:/data cytopia/php-cs-fixer:latest-php7.4
 
 phpcs:
 	$(PHP_CS_FIXER) fix -vv --dry-run --allow-risky=yes

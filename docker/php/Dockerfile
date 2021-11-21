@@ -6,7 +6,7 @@ ENV XDEBUG_MODE=coverage
 RUN echo "memory_limit=-1" > "$PHP_INI_DIR/conf.d/memory-limit.ini" \
  && echo "date.timezone=${PHP_TIMEZONE:-UTC}" > "$PHP_INI_DIR/conf.d/date_timezone.ini"
 
-ARG XDEBUG_VERSION=3.0.4
+ARG XDEBUG_VERSION=3.1.1
 
 RUN apt-get update \
     && apt install -y \

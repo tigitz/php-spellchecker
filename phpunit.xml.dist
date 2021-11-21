@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
          bootstrap="tests/bootstrap.php"
@@ -13,28 +12,27 @@
          processIsolation="false"
          failOnRisky="true"
          failOnWarning="true"
-         stopOnFailure="false">
-    <php>
-        <ini name="error_reporting" value="-1"/>
-        <ini name="memory_limit" value="-1"/>
-        <env name="ISPELL_BINARY_PATH" value="ispell"/>
-        <!-- Shell used to run ispell binary, mandatory for dictionaries listing -->
-        <env name="ISPELL_SHELL_PATH" value=""/>
-        <env name="ASPELL_BINARY_PATH" value="aspell"/>
-        <env name="HUNSPELL_BINARY_PATH" value="hunspell"/>
-        <env name="LANGUAGETOOLS_ENDPOINT" value="http://languagetools:8010"/>
-        <env name="JAMSPELL_ENDPOINT" value="http://jamspell:8080"/>
-    </php>
-
-    <testsuites>
-        <testsuite name="PHPSpellCheck test suite">
-            <directory>tests</directory>
-        </testsuite>
-    </testsuites>
-
-    <filter>
-        <whitelist>
-            <directory suffix=".php">src/</directory>
-        </whitelist>
-    </filter>
+         stopOnFailure="false"
+>
+  <coverage>
+    <include>
+      <directory suffix=".php">src/</directory>
+    </include>
+  </coverage>
+  <php>
+    <ini name="error_reporting" value="-1"/>
+    <ini name="memory_limit" value="-1"/>
+    <env name="ISPELL_BINARY_PATH" value="ispell"/>
+    <!-- Shell used to run ispell binary, mandatory for dictionaries listing -->
+    <env name="ISPELL_SHELL_PATH" value=""/>
+    <env name="ASPELL_BINARY_PATH" value="aspell"/>
+    <env name="HUNSPELL_BINARY_PATH" value="hunspell"/>
+    <env name="LANGUAGETOOLS_ENDPOINT" value="http://languagetools:8010"/>
+    <env name="JAMSPELL_ENDPOINT" value="http://jamspell:8080"/>
+  </php>
+  <testsuites>
+    <testsuite name="PHPSpellCheck test suite">
+      <directory>tests</directory>
+    </testsuite>
+  </testsuites>
 </phpunit>

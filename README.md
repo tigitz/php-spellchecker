@@ -203,10 +203,10 @@ $ make setup # start spellcheckers container
 $ make tests-dox
 ```
 
-You can also specify PHP version, dependency version target and if you want coverage. Coverage is only supported by PHP 7.2 for now.
+You can also specify PHP version, dependency version target and if you want coverage. Coverage is only supported on PHP 8.0 for now.
 
 ```sh
-$ PHP_VERSION=7.2 DEPS=LOWEST WITH_COVERAGE="true" make tests-dox
+$ PHP_VERSION=8.0 DEPS=LOWEST WITH_COVERAGE="true" make tests-dox
 ```
 
 Run `make help` to list all available tasks.
