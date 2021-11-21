@@ -25,7 +25,7 @@ jobs:
           restore-keys: "php-cs-fixer"
 
       - name: Run PHP-CS-Fixer with output for CI debugging
-        run: php-cs-fixer fix -vv --dry-run --format=checkstyle --allow-risky=yes
+        run: php-cs-fixer fix -vv --dry-run --allow-risky=yes
 
       - name: Run PHP-CS-Fixer with automatic pull request comments
         run: php-cs-fixer fix --dry-run --format=checkstyle --allow-risky=yes | cs2pr
