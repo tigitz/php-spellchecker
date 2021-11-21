@@ -35,7 +35,12 @@ class LanguageTool implements SpellcheckerInterface
     ): iterable {
         Assert::notEmpty($languages, 'LanguageTool requires at least one language to be set to run it\'s spellchecking process');
 
-        $check = $this->apiClient->spellCheck($text, $languages, $context[self::class] ?? []);
+        if (isset($context[self::class])) {
+            Assert::isArray($context[self::class]);
+            /** @var array<mixed> $options */
+            $options = $context[self::class];
+        }
+        $check = $this->apiClient->spellCheck($text, $languages, $options ?? []);
 
         if (!\is_array($check['matches'])) {
             throw new RuntimeException('LanguageTool spellcheck response must contain a "matches" array');

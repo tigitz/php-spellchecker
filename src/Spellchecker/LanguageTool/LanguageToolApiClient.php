@@ -21,9 +21,9 @@ class LanguageToolApiClient
 
     /**
      * @param array<string> $languages
-     * @param array<array|string|null> $options
+     * @param array<mixed> $options
      *
-     * @return array<string, array|string>
+     * @return array<string, mixed>
      */
     public function spellCheck(string $text, array $languages, array $options): array
     {
@@ -58,11 +58,11 @@ class LanguageToolApiClient
     }
 
     /**
-     * @param array<array|string|null> $queryParams
+     * @param array<mixed> $queryParams
      *
      * @throws \RuntimeException
      *
-     * @return array<array|string>
+     * @return array<mixed>
      */
     public function requestAPI(string $endpoint, string $method, string $header, array $queryParams = []): array
     {
@@ -76,7 +76,9 @@ class LanguageToolApiClient
         }
 
         $content = \Safe\file_get_contents($this->baseUrl . $endpoint, false, stream_context_create(['http' => $httpData]));
+        /** @var array<mixed> $contentAsArray */
+        $contentAsArray = \Safe\json_decode($content, true);
 
-        return \Safe\json_decode($content, true);
+        return $contentAsArray;
     }
 }

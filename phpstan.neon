@@ -6,14 +6,9 @@ includes:
 
 parameters:
     level: max
-    reportUnmatchedIgnoredErrors: false
+    reportUnmatchedIgnoredErrors: true
     treatPhpDocTypesAsCertain: false
     ignoreErrors:
-        # symfony/process version testing
-        -
-            message: "#^Call to function method_exists\\(\\) with Symfony\\\\Component\\\\Process\\\\Process and 'inheritEnvironmentV…' will always evaluate to true#"
-            path: %currentWorkingDirectory%/src/Utils/ProcessRunner.php
-
         # yeah OK Process is technically and iterable type...
         -
             message: "#no value type specified in iterable type Symfony\\\\Component\\\\Process\\\\Process#"
@@ -25,7 +20,5 @@ parameters:
             count: 1
             path: src/Spellchecker/PHPPspell.php
 
-
         # Missing strict comparison
         - '#^Construct empty\(\) is not allowed. Use more strict comparison.$#'
-#        - '#^Only booleans are allowed in#'

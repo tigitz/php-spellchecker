@@ -9,6 +9,7 @@ use PhpSpellcheck\Exception\RuntimeException;
 use PhpSpellcheck\Misspelling;
 use PhpSpellcheck\Utils\LineAndOffset;
 use Psr\Http\Client\ClientInterface;
+use Webmozart\Assert\Assert;
 
 class JamSpell implements SpellcheckerInterface
 {
@@ -34,14 +35,15 @@ class JamSpell implements SpellcheckerInterface
             ->createRequest('POST', $this->endpoint)
             ->withBody(Stream::create($text));
 
-        $spellcheckResponse = \Safe\json_decode($this->httpClient->sendRequest($request)->getBody()->getContents(), true);
+        $spellcheckResponseAsArray = \Safe\json_decode($spellcheckResponse = $this->httpClient->sendRequest($request)->getBody()->getContents(), true);
+        Assert::isArray($spellcheckResponseAsArray);
 
         // @TODO use json api validation schema
-        if (!isset($spellcheckResponse['results'])) {
+        if (!isset($spellcheckResponseAsArray['results'])) {
             throw new RuntimeException('Jamspell spellcheck HTTP response must include a "results" key. Response given: "'.$spellcheckResponse.'"');
         }
 
-        foreach ($spellcheckResponse['results'] as $result) {
+        foreach ($spellcheckResponseAsArray['results'] as $result) {
             [$line, $offset] = LineAndOffset::findFromFirstCharacterOffset($text, $result['pos_from']);
 
             yield new Misspelling(

@@ -33,16 +33,16 @@
         "cocur/slugify": "^3.2 || ^4.0",
         "erusev/parsedown": "^1.7",
         "erusev/parsedown-extra": "^0.8",
-        "phpstan/phpstan": "^0.12",
-        "phpstan/phpstan-strict-rules": "^0.12",
-        "phpstan/phpstan-webmozart-assert": "^0.12",
-        "phpstan/phpstan-phpunit": "^0.12",
+        "phpstan/phpstan": "^1.2.0",
+        "phpstan/phpstan-strict-rules": "^1.1.0",
+        "phpstan/phpstan-webmozart-assert": "^1.0.0",
+        "phpstan/phpstan-phpunit": "^1.0.0",
         "phpunit/phpunit": "^8.4|| ^9",
         "pixelrobin/php-feather": "^1.0",
         "symfony/filesystem": "^4.2 || ^5.0",
         "symfony/finder": "^4.2 || ^5.0",
         "symfony/http-client": "^5.0",
-        "thecodingmachine/phpstan-safe-rule": "v1.0.1"
+        "thecodingmachine/phpstan-safe-rule": "v1.1.0"
     },
     "suggest": {
         "symfony/http-client": "A PSR-18 Client implementation to use spellcheckers relying on http api endpoints"
