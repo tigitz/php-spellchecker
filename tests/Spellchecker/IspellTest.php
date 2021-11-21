@@ -21,7 +21,7 @@ class IspellTest extends TestCase
 
     public function testGetSupportedLanguagesFromFakeBinaries(): void
     {
-        $this->assertWorkingSupportedLanguages(self::FAKE_BINARIES_PATH, self:: FAKE_BINARIES_PATH);
+        $this->assertWorkingSupportedLanguages(self::FAKE_BINARIES_PATH, self::FAKE_BINARIES_PATH);
     }
 
     public function testBadCheckRequest(): void

@@ -14,5 +14,6 @@
 /docs               export-ignore
 /docker             export-ignore
 /docker-compose.yml export-ignore
+/tools export-ignore
 /Makefile export-ignore
 /phpstan.neon export-ignore

@@ -56,13 +56,14 @@ ti: vendor
 vendor:
 	$(COMPOSER) update $(DEPS_STRATEGY)
 
-PHP_CS_FIXER = docker pull cytopia/php-cs-fixer:latest-php7.4 && docker run --rm -t -v `pwd`:/data cytopia/php-cs-fixer:latest-php7.4
+PHP_CS_FIXER = docker-compose run --rm -T php tools/php-cs-fixer/vendor/bin/php-cs-fixer fix -vv --allow-risky=yes
 
 phpcs:
-	$(PHP_CS_FIXER) fix -vv --dry-run --allow-risky=yes
+	PHP_VERSION=7.4 docker-compose run --rm -T php composer require --working-dir=tools/php-cs-fixer friendsofphp/php-cs-fixer
+	PHP_VERSION=7.4 $(PHP_CS_FIXER) --dry-run
 
 phpcbf:
-	$(PHP_CS_FIXER) fix -vv --allow-risky=yes
+	$(PHP_CS_FIXER)
 
 phpstan: vendor
 	$(EXEC_PHP) vendor/bin/phpstan analyse src -c phpstan.neon -a vendor/autoload.php
