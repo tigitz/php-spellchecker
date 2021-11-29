@@ -39,9 +39,9 @@
         "phpstan/phpstan-phpunit": "^1.0.0",
         "phpunit/phpunit": "^9.5",
         "pixelrobin/php-feather": "^1.0",
-        "symfony/filesystem": "^4.2 || ^5.0",
-        "symfony/finder": "^4.2 || ^5.0",
-        "symfony/http-client": "^5.0",
+        "symfony/filesystem": "^6.0",
+        "symfony/finder": "^6.0",
+        "symfony/http-client": "^6.0",
         "thecodingmachine/phpstan-safe-rule": "v1.1.0"
     },
     "suggest": {
