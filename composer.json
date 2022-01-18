@@ -42,7 +42,7 @@
         "symfony/filesystem": "^4.2 || ^5.0",
         "symfony/finder": "^4.2 || ^5.0",
         "symfony/http-client": "^5.0",
-        "thecodingmachine/phpstan-safe-rule": "v1.1.0"
+        "thecodingmachine/phpstan-safe-rule": "v1.2.0"
     },
     "suggest": {
         "symfony/http-client": "A PSR-18 Client implementation to use spellcheckers relying on http api endpoints"
