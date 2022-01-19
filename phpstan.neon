@@ -6,19 +6,68 @@ includes:
 
 parameters:
     level: max
-    reportUnmatchedIgnoredErrors: true
+
+    # Some errors ignored are specific to a php version so they're reported as unmatched when phpstan is ran with a
+    # different php version
+    reportUnmatchedIgnoredErrors: false
+
     treatPhpDocTypesAsCertain: false
     ignoreErrors:
-        # yeah OK Process is technically and iterable type...
-        -
-            message: "#no value type specified in iterable type Symfony\\\\Component\\\\Process\\\\Process#"
-            path: %currentWorkingDirectory%
+        # Missing strict comparison
+        - '#^Construct empty\(\) is not allowed. Use more strict comparison.$#'
 
-        # It's checked by Assert:count(1)
+        # thecodingmachine/safe and thecodingmachine/phpstan-safe-rule don't support 8.1 Pspell
         -
-            message: "#^Parameter \\#1 \\$language of function Safe\\\\pspell_config_create expects string, string\\|false given\\.$#"
+            message: "#^Function pspell_config_create is unsafe to use\\. It can return FALSE instead of throwing an exception\\. Please add 'use function Safe\\\\pspell_config_create;' at the beginning of the file to use the variant provided by the 'thecodingmachine/safe' library\\.$#"
             count: 1
             path: src/Spellchecker/PHPPspell.php
 
-        # Missing strict comparison
-        - '#^Construct empty\(\) is not allowed. Use more strict comparison.$#'
+        -
+            message: "#^Function pspell_config_ignore is unsafe to use\\. It can return FALSE instead of throwing an exception\\. Please add 'use function Safe\\\\pspell_config_ignore;' at the beginning of the file to use the variant provided by the 'thecodingmachine/safe' library\\.$#"
+            count: 1
+            path: src/Spellchecker/PHPPspell.php
+
+        -
+            message: "#^Function pspell_config_mode is unsafe to use\\. It can return FALSE instead of throwing an exception\\. Please add 'use function Safe\\\\pspell_config_mode;' at the beginning of the file to use the variant provided by the 'thecodingmachine/safe' library\\.$#"
+            count: 1
+            path: src/Spellchecker/PHPPspell.php
+
+        -
+            message: "#^Function pspell_new_config is unsafe to use\\. It can return FALSE instead of throwing an exception\\. Please add 'use function Safe\\\\pspell_new_config;' at the beginning of the file to use the variant provided by the 'thecodingmachine/safe' library\\.$#"
+            count: 1
+            path: src/Spellchecker/PHPPspell.php
+
+        -
+            message: "#^Parameter \\#1 \\$dictionary of function pspell_check expects int, int\\|false given\\.$#"
+            count: 1
+            path: src/Spellchecker/PHPPspell.php
+
+        -
+            message: "#^Parameter \\#1 \\$dictionary of function pspell_suggest expects int, int\\|false given\\.$#"
+            count: 1
+            path: src/Spellchecker/PHPPspell.php
+
+        -
+            message: "#^Parameter \\#1 \\$conf of function pspell_config_ignore expects int, int\\|false given\\.$#"
+            count: 1
+            path: src/Spellchecker/PHPPspell.php
+
+        -
+            message: "#^Parameter \\#1 \\$conf of function pspell_config_mode expects int, int\\|false given\\.$#"
+            count: 1
+            path: src/Spellchecker/PHPPspell.php
+
+        -
+            message: "#^Parameter \\#1 \\$config of function pspell_new_config expects int, int\\|false given\\.$#"
+            count: 1
+            path: src/Spellchecker/PHPPspell.php
+
+        -
+            message: "#^Parameter \\#1 \\$pspell of function pspell_check expects int, int\\|false given\\.$#"
+            count: 1
+            path: src/Spellchecker/PHPPspell.php
+
+        -
+            message: "#^Parameter \\#1 \\$pspell of function pspell_suggest expects int, int\\|false given\\.$#"
+            count: 1
+            path: src/Spellchecker/PHPPspell.php

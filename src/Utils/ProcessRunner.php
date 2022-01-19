@@ -16,13 +16,6 @@ class ProcessRunner
      */
     public static function run(Process $process, $timeout = null, callable $callback = null, array $env = []): Process
     {
-        if (method_exists($process, 'inheritEnvironmentVariables')) {
-            // Symfony 3.2+
-            $process->inheritEnvironmentVariables(true);
-        } else {
-            // Symfony < 3.2
-            $process->setEnv(['LANG' => getenv('LANG')]);
-        }
         $process->setTimeout($timeout);
 
         try {
