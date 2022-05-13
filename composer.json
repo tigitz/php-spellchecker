@@ -50,8 +50,7 @@
     "autoload": {
         "psr-4": {
             "PhpSpellcheck\\": "src"
-        },
-        "files": [ "src/Text/functions.php" ]
+        }
     },
     "autoload-dev": {
         "psr-4": {
