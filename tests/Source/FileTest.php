@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use PhpSpellcheck\Source\File;
+use PhpSpellcheck\Text;
 use PHPUnit\Framework\TestCase;
 use Safe\Exceptions\FilesystemException;
 
@@ -15,7 +16,7 @@ class FileTest extends TestCase
         $texts = (new File(self::TEXT_FIXTURE_FILE_PATH))->toTexts(['ctx' => 'in tests']);
         $this->assertEquals(
             [
-                t(
+                new Text(
                     "mispelling1\n",
                     [
                         'ctx' => 'in tests',

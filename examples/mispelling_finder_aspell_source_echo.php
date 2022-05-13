@@ -33,8 +33,8 @@ $inMemoryTextProvider = new class implements SourceInterface
 {
     public function toTexts(array $context): iterable
     {
-        yield t('my_mispell', ['from_source_interface']);
-        yield t('my_other_mispell', ['from_named_constructor']);
+        yield new Text('my_mispell', ['from_source_interface']);
+        yield new Text('my_other_mispell', ['from_named_constructor']);
     }
 };
 

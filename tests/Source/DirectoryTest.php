@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use PhpSpellcheck\Source\Directory;
+use PhpSpellcheck\Text;
 use PHPUnit\Framework\TestCase;
 
 class DirectoryTest extends TestCase
@@ -13,12 +14,12 @@ class DirectoryTest extends TestCase
     {
         $textsFromDirectory = (new Directory(self::TEXT_FIXTURES_PATH))->toTexts(['ctx' => 'in tests']);
         $expectedValues = [
-            t("mispélling3\n", ['ctx' => 'in tests', 'filePath' => realpath(self::TEXT_FIXTURES_PATH . '/mispelling3.txt')]),
-            t(
+            new Text("mispélling3\n", ['ctx' => 'in tests', 'filePath' => realpath(self::TEXT_FIXTURES_PATH . '/mispelling3.txt')]),
+            new Text(
                 "mispelling2\n",
                 ['ctx' => 'in tests', 'filePath' => realpath(self::TEXT_FIXTURES_PATH . '/mispelling2.txt')]
             ),
-            t(
+            new Text(
                 "mispelling4\n",
                 [
                     'ctx' => 'in tests',
@@ -39,11 +40,11 @@ class DirectoryTest extends TestCase
             ->toTexts(['ctx' => 'in tests']);
 
         $expectedValues = [
-            t(
+            new Text(
                 "mispelling2\n",
                 ['ctx' => 'in tests', 'filePath' => realpath(self::TEXT_FIXTURES_PATH . '/mispelling2.txt')]
             ),
-            t("mispelling4\n", [
+            new Text("mispelling4\n", [
                 'ctx' => 'in tests',
                 'filePath' => realpath(self::TEXT_FIXTURES_PATH . '/SubDirectory/mispelling4.txt'),
             ]),

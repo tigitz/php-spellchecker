@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PhpSpellcheck\Tests;
 
+use PhpSpellcheck\Text;
 use PHPUnit\Framework\TestCase;
 
 class TextTest extends TestCase
@@ -32,14 +33,14 @@ TEXT;
 
     public function testContextOverridingMerge(): void
     {
-        $text = t('test', ['idx' => '1'])->mergeContext(['idx' => 'foo', 'idx2' => '2']);
+        $text = new Text('test', ['idx' => '1'])->mergeContext(['idx' => 'foo', 'idx2' => '2']);
 
         $this->assertEquals(t('test', ['idx' => 'foo', 'idx2' => '2']), $text);
     }
 
     public function testContextNonOverridingMerge(): void
     {
-        $text = t('test', ['idx' => '1'])->mergeContext(['idx' => 'foo', 'idx2' => '2'], false);
+        $text = new Text('test', ['idx' => '1'])->mergeContext(['idx' => 'foo', 'idx2' => '2'], false);
 
         $this->assertEquals(t('test', ['idx' => '1', 'idx2' => '2']), $text);
     }
