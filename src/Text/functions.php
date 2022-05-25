@@ -2,12 +2,14 @@
 
 declare(strict_types=1);
 
-use PhpSpellcheck\Text;
+namespace PhpSpellcheck;
 
-/**
- * @param array<mixed> $context
- */
-function t(string $string = '', array $context = []): Text
-{
-    return new Text($string, $context);
+if (!\function_exists(t::class)) {
+    /**
+     * @param array<mixed> $context
+     */
+    function t(string $string = '', array $context = []): Text
+    {
+        return new Text($string, $context);
+    }
 }

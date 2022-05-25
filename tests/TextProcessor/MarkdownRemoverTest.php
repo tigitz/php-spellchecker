@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use PhpSpellcheck\TextProcessor\MarkdownRemover;
 use PHPUnit\Framework\TestCase;
+use function PhpSpellcheck\t;
 
 class MarkdownRemoverTest extends TestCase
 {

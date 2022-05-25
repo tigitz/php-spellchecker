@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace PhpSpellcheck\Tests;
 
 use PHPUnit\Framework\TestCase;
+use function PhpSpellcheck\t;
 
 class TextTest extends TestCase
 {
