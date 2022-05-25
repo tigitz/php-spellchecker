@@ -31,7 +31,7 @@ class LineAndOffset
         }
 
         $textBeforeOffset = mb_substr($text, 0, $offsetFromFirstCharacter);
-        $line = \Safe\preg_match_all('/\R/u', $textBeforeOffset, $matches) + 1;
+        $line = ((int) \Safe\preg_match_all('/\R/u', $textBeforeOffset, $matches)) + 1;
         $offsetOfPreviousLinebreak = mb_strrpos($textBeforeOffset, PHP_EOL, 0);
 
         $offset = $offsetFromFirstCharacter - ($offsetOfPreviousLinebreak !== false ? $offsetOfPreviousLinebreak + 1 : 0);

@@ -66,13 +66,14 @@ phpcbf:
 	PHP_VERSION=7.4 $(PHP_CS_FIXER)
 
 phpstan: vendor
-	$(EXEC_PHP) vendor/bin/phpstan analyse src -c phpstan.neon -a vendor/autoload.php
+	$(EXEC_PHP) vendor/bin/phpstan analyse src -c phpstan.$(PHP_VERSION).neon -a vendor/autoload.php
 
-phpstan: vendor
-	$(EXEC_PHP) vendor/bin/phpstan analyse src -c phpstan.neon -a vendor/autoload.php
+phpstan-all-php-versions:
+	PHP_VERSION=7.4 make phpstan
+	PHP_VERSION=8.1 make phpstan
 
 phpstan-baseline: vendor
-	$(EXEC_PHP) vendor/bin/phpstan analyse src -c phpstan.neon -a vendor/autoload.php --generate-baseline
+	$(EXEC_PHP) vendor/bin/phpstan analyse src -c phpstan.$(PHP_VERSION).neon -a vendor/autoload.php --generate-baseline
 
 infection: vendor
 	$(EXEC_PHP) vendor/bin/phpunit --coverage-xml=build/coverage/coverage-xml --log-junit=build/coverage/phpunit.junit.xml

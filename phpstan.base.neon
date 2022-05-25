@@ -1,0 +1,19 @@
+includes:
+    - vendor/phpstan/phpstan-webmozart-assert/extension.neon
+    - vendor/phpstan/phpstan-strict-rules/rules.neon
+    - vendor/thecodingmachine/phpstan-safe-rule/phpstan-safe-rule.neon
+    - vendor/phpstan/phpstan-phpunit/extension.neon
+
+parameters:
+    level: max
+
+    treatPhpDocTypesAsCertain: false
+    ignoreErrors:
+        # Missing strict comparison
+        - '#^Construct empty\(\) is not allowed. Use more strict comparison.$#'
+
+        # function_exists call
+        -
+            message: "#^Class PhpSpellcheck\\\\t not found\\.$#"
+            count: 1
+            path: src/Text/functions.php

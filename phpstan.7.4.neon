@@ -1,22 +1,9 @@
 includes:
-    - vendor/phpstan/phpstan-webmozart-assert/extension.neon
-    - vendor/phpstan/phpstan-strict-rules/rules.neon
-    - vendor/thecodingmachine/phpstan-safe-rule/phpstan-safe-rule.neon
-    - vendor/phpstan/phpstan-phpunit/extension.neon
+    - phpstan.base.neon
 
 parameters:
-    level: max
-
-    # Some errors ignored are specific to a php version so they're reported as unmatched when phpstan is ran with a
-    # different php version
-    reportUnmatchedIgnoredErrors: false
-
-    treatPhpDocTypesAsCertain: false
     ignoreErrors:
-        # Missing strict comparison
-        - '#^Construct empty\(\) is not allowed. Use more strict comparison.$#'
-
-        # thecodingmachine/safe and thecodingmachine/phpstan-safe-rule don't support 8.1 Pspell
+        # php 8.1 code
         -
             message: "#^Function pspell_config_create is unsafe to use\\. It can return FALSE instead of throwing an exception\\. Please add 'use function Safe\\\\pspell_config_create;' at the beginning of the file to use the variant provided by the 'thecodingmachine/safe' library\\.$#"
             count: 1
@@ -34,16 +21,6 @@ parameters:
 
         -
             message: "#^Function pspell_new_config is unsafe to use\\. It can return FALSE instead of throwing an exception\\. Please add 'use function Safe\\\\pspell_new_config;' at the beginning of the file to use the variant provided by the 'thecodingmachine/safe' library\\.$#"
-            count: 1
-            path: src/Spellchecker/PHPPspell.php
-
-        -
-            message: "#^Parameter \\#1 \\$dictionary of function pspell_check expects int, int\\|false given\\.$#"
-            count: 1
-            path: src/Spellchecker/PHPPspell.php
-
-        -
-            message: "#^Parameter \\#1 \\$dictionary of function pspell_suggest expects int, int\\|false given\\.$#"
             count: 1
             path: src/Spellchecker/PHPPspell.php
 
@@ -71,3 +48,9 @@ parameters:
             message: "#^Parameter \\#1 \\$pspell of function pspell_suggest expects int, int\\|false given\\.$#"
             count: 1
             path: src/Spellchecker/PHPPspell.php
+
+        # preg_match_all can be null in php >8
+        -
+            message: "#^Casting to int something that's already int\\.$#"
+            count: 1
+            path: src/Utils/LineAndOffset.php
