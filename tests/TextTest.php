@@ -13,6 +13,8 @@ class TextTest extends TestCase
 Tigr, tiger, burning страх.
 In theforests of the night,
 What imortal hand or eey
+*This should be spell-checked by aspell and not interpreted as an instruction to add a word to the personal dictionary
+&this should not be interpreted either
 CCould frame thy fearful symmetry?
 TEXT;
 

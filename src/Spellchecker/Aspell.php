@@ -37,7 +37,7 @@ class Aspell implements SpellcheckerInterface
         $process = new Process($cmd->getArgs());
         // Add prefix characters putting Ispell's type of spellcheckers in terse-mode,
         // ignoring correct words and thus speeding up the execution
-        $process->setInput('!' . PHP_EOL . $text . PHP_EOL . '%');
+        $process->setInput('!' . PHP_EOL . Ispell::preprocessInputForPipeMode($text) . PHP_EOL . '%');
 
         $output = ProcessRunner::run($process)->getOutput();
 
@@ -45,7 +45,9 @@ class Aspell implements SpellcheckerInterface
             throw new ProcessHasErrorOutputException($process->getErrorOutput(), $text, $process->getCommandLine());
         }
 
-        return IspellOutputParser::parseMisspellings($output, $context);
+        $misspellings = IspellOutputParser::parseMisspellings($output, $context);
+
+        return Ispell::postprocessMisspellings($misspellings);
     }
 
     public function getBinaryPath(): CommandLine

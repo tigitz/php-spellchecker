@@ -11,7 +11,7 @@ class EchoHandler implements MisspellingHandlerInterface
     /**
      * @param MisspellingInterface[] $misspellings
      */
-    public function handle(iterable $misspellings): void
+    public function handle(iterable $misspellings)
     {
         foreach ($misspellings as $misspelling) {
             $output = \Safe\sprintf(

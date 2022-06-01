@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace PhpSpellcheck\Spellchecker;
 
 use PhpSpellcheck\Exception\ProcessHasErrorOutputException;
+use PhpSpellcheck\Misspelling;
 use PhpSpellcheck\Utils\CommandLine;
 use PhpSpellcheck\Utils\IspellOutputParser;
 use PhpSpellcheck\Utils\ProcessRunner;
@@ -51,7 +52,7 @@ class Ispell implements SpellcheckerInterface
 
         // Add prefix characters putting Ispell's type of spellcheckers in terse-mode,
         // ignoring correct words and thus speeding execution
-        $process->setInput('!' . PHP_EOL . $text . PHP_EOL . '%');
+        $process->setInput('!' . PHP_EOL . self::preprocessInputForPipeMode($text) . PHP_EOL . '%');
 
         $output = ProcessRunner::run($process)->getOutput();
 
@@ -59,7 +60,9 @@ class Ispell implements SpellcheckerInterface
             throw new ProcessHasErrorOutputException($process->getErrorOutput(), $text, $process->getCommandLine());
         }
 
-        return IspellOutputParser::parseMisspellings($output, $context);
+        $misspellings = IspellOutputParser::parseMisspellings($output, $context);
+
+        return self::postprocessMisspellings($misspellings);
     }
 
     public function getCommandLine(): CommandLine
@@ -111,5 +114,60 @@ class Ispell implements SpellcheckerInterface
     public static function create(?string $ispellCommandLineAsString): self
     {
         return new self(new CommandLine($ispellCommandLineAsString ?? 'ispell'));
+    }
+
+    /**
+     * Preprocess the source text so that aspell/ispell pipe mode instruction are ignored.
+     *
+     * in pipe mode some special characters at the beginning of the line are instructions for aspell/ispell
+     * see http://aspell.net/man-html/Through-A-Pipe.html#Through-A-Pipe
+     * users put these chars innocently at the beginning of lines
+     * we must tell the spellchecker to not interpret them using the ^ symbol
+     *
+     * @param string $text the text to preprocess
+     *
+     * @return string the result of the preprocessing
+     */
+    public static function preprocessInputForPipeMode(string $text): string
+    {
+        $lines = explode("\n", $text);
+
+        $prefixedLines = array_map(
+            function ($line) {
+                return \strlen($line) === 0 ? "$line" : "^$line";
+            },
+            $lines
+        );
+
+        $preprocessedText = implode(
+            "\n",
+            $prefixedLines
+        );
+
+        return $preprocessedText;
+    }
+
+    /**
+     * Adapts misspellings to compensate the additional caret added in self::preprocessInputForPipeMode.
+     *
+     * @param iterable<Misspelling> $misspellings
+     *
+     * @return iterable<Misspelling> copies of input misspells with corrected offset
+     */
+    public static function postprocessMisspellings(iterable $misspellings): iterable
+    {
+        foreach ($misspellings as $m) {
+            $offset = $m->getOffset();
+            if ($offset !== null) {
+                $offset--;
+            }
+            yield new Misspelling(
+                $m->getWord(),
+                $offset,
+                $m->getLineNumber(),
+                $m->getSuggestions(),
+                $m->getContext()
+            );
+        }
     }
 }

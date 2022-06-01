@@ -200,6 +200,7 @@ Requires `docker` and `docker-compose` to be installed (tested on Linux).
 ```sh
 $ make build # build container images
 $ make setup # start spellcheckers container
+$ make vendor # install dependencies
 $ make tests-dox
 ```
 

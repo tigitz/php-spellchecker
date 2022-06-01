@@ -47,21 +47,37 @@ class LanguageToolTest extends TestCase
                         ],
                     ],
                     [
-                        'message' => 'Possible spelling mistake found',
-                        'replacements' => [['value' => 'Could']],
-                        'offset' => 81,
+                        'message' => 'Possible spelling mistake found.',
+                        'shortMessage' => 'Spelling mistake',
+                        'replacements' => [['value' => 'Could', ]],
+                        'offset' => 239,
                         'length' => 6,
                         'context' => [
-                            'text' => '... of the night, What imortal hand or eey CCould frame thy fearful symmetry?',
-                            'offset' => 43,
-                            'length' => 6,
-                        ],
-                        'sentence' => "In theforests of the night,\nWhat imortal hand or eey\nCCould frame thy fearful symmetry?",
+                                'text' => '... &this should not be interpreted either CCould frame thy fearful symmetry?',
+                                'offset' => 43,
+                                'length' => 6,
+                            ],
+                        'sentence' => <<<TEXT
+In theforests of the night,
+What imortal hand or eey
+*This should be spell-checked by aspell and not interpreted as an instruction to add a word to the personal dictionary
+&this should not be interpreted either
+CCould frame thy fearful symmetry?
+TEXT,
+                        'type' => ['typeName' => 'Other', ],
                         'rule' => [
+                            'id' => 'MORFOLOGIK_RULE_EN_US',
                             'description' => 'Possible spelling mistake',
                             'issueType' => 'misspelling',
+                            'category' => [
+                                'id' => 'TYPOS',
+                                'name' => 'Possible Typo',
+                            ],
                         ],
+                        'ignoreForIncompleteSentence' => false,
+                        'contextForSureMatch' => 0,
                     ],
+
                 ],
             ]);
 
@@ -157,7 +173,7 @@ class LanguageToolTest extends TestCase
         $this->assertArrayHasKey('ctx', $misspellings[$lastKey]->getContext());
         $this->assertSame($misspellings[$lastKey]->getWord(), 'CCould');
         $this->assertSame($misspellings[$lastKey]->getOffset(), 0);
-        $this->assertSame($misspellings[$lastKey]->getLineNumber(), 4);
+        $this->assertSame($misspellings[$lastKey]->getLineNumber(), 6);
         $this->assertNotEmpty($misspellings[$lastKey]->getSuggestions());
     }
 

@@ -1,5 +1,5 @@
 @(#) International Ispell Version 3.4.00 8 Feb 2015
-& Tigr 2 0: Tier, Tiger
+& Tigr 3 1: Tier, Tiger, Tigre
 *
 *
 *
@@ -9,18 +9,47 @@
 *
 
 *
-& theforests 2 3: the forests, the-forests
+& theforests 2 4: the forests, the-forests
 *
 *
 *
 
 *
-& imortal 2 5: immortal, mortal
+& imortal 4 6: immortal, i mortal, i-mortal, mortal
 *
 *
-& eey 16 21: bey, dey, eeg, eel, eely, eery, Ely, eye, fey, gey, hey, key, ley, ney, rey, sey
+& eey 16 22: bey, dey, eeg, eek, eel, eely, eery, Ely, eye, fey, gey, hey, key, ley, rey, sey
 
-& CCould 1 0: Could
+& CCould 3 1: Could, C Could, C-Could
+*
+*
+*
+*
+
+*
+*
+*
+*
+*
+*
+*
+*
+*
+*
++ A
+*
+*
+*
+*
+*
+*
+*
+*
+*
+*
+
+*
+*
 *
 *
 *
