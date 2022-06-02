@@ -35,7 +35,7 @@ class IspellParser
                          * a `^` character is added to each line while sending text as input so it needs to
                          * account for that. {@see IspellParser::adaptInputForTerseModeProcessing}.
                          */
-                        trim($offset) - 1,
+                        (int) trim($offset) - 1,
                         $lineNumber,
                         [],
                         $context
@@ -51,7 +51,7 @@ class IspellParser
                          * a `^` character is added to each line while sending text as input so it needs to
                          * account for that. {@see IspellParser::adaptInputForTerseModeProcessing}.
                          */
-                        trim($offset) - 1,
+                        (int) trim($offset) - 1,
                         $lineNumber,
                         explode(', ', trim($parts[1])),
                         $context
@@ -72,6 +72,6 @@ class IspellParser
      */
     public static function adaptInputForTerseModeProcessing(string $input): string
     {
-        return preg_replace('/^/m', '^', $input);
+        return \Safe\preg_replace('/^/m', '^', $input);
     }
 }
