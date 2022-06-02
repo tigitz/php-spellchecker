@@ -80,7 +80,7 @@ class AspellTest extends TestCase
         /** @var Misspelling[] $misspellings */
         $misspellings = iterator_to_array(
             $aspell->check(
-                TextTest::CONTENT_STUB,
+                IspellTest::CONTENT_STUB,
                 ['en_US'],
                 ['ctx']
             )
@@ -97,6 +97,12 @@ class AspellTest extends TestCase
         $this->assertSame(3, $misspellings[1]->getOffset());
         $this->assertSame(2, $misspellings[1]->getLineNumber());
         $this->assertNotEmpty($misspellings[1]->getSuggestions());
+
+        $this->assertSame(['ctx'], $misspellings[5]->getContext());
+        $this->assertSame('mispell', $misspellings[5]->getWord());
+        $this->assertSame(1, $misspellings[5]->getOffset());
+        $this->assertSame(6, $misspellings[5]->getLineNumber());
+        $this->assertNotEmpty($misspellings[5]->getSuggestions());
     }
 
     /**

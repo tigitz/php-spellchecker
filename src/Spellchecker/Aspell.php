@@ -6,7 +6,7 @@ namespace PhpSpellcheck\Spellchecker;
 
 use PhpSpellcheck\Exception\ProcessHasErrorOutputException;
 use PhpSpellcheck\Utils\CommandLine;
-use PhpSpellcheck\Utils\IspellOutputParser;
+use PhpSpellcheck\Utils\IspellParser;
 use PhpSpellcheck\Utils\ProcessRunner;
 use Symfony\Component\Process\Process;
 use Webmozart\Assert\Assert;
@@ -37,7 +37,7 @@ class Aspell implements SpellcheckerInterface
         $process = new Process($cmd->getArgs());
         // Add prefix characters putting Ispell's type of spellcheckers in terse-mode,
         // ignoring correct words and thus speeding up the execution
-        $process->setInput('!' . PHP_EOL . $text . PHP_EOL . '%');
+        $process->setInput('!' . PHP_EOL . IspellParser::adaptInputForTerseModeProcessing($text) . PHP_EOL . '%');
 
         $output = ProcessRunner::run($process)->getOutput();
 
@@ -45,7 +45,7 @@ class Aspell implements SpellcheckerInterface
             throw new ProcessHasErrorOutputException($process->getErrorOutput(), $text, $process->getCommandLine());
         }
 
-        return IspellOutputParser::parseMisspellings($output, $context);
+        return IspellParser::parseMisspellingsFromOutput($output, $context);
     }
 
     public function getBinaryPath(): CommandLine

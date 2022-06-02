@@ -15,7 +15,7 @@ class HunspellTest extends TestCase
 
     public function testSpellcheckFromFakeBinaries(): void
     {
-        $this->assertWorkingSpellcheckENText(self::FAKE_BINARIES_PATH, TextTest::CONTENT_STUB, ['en_US']);
+        $this->assertWorkingSpellcheckENText(self::FAKE_BINARIES_PATH, IspellTest::CONTENT_STUB, ['en_US']);
     }
 
     public function testGetSupportedLanguagesFromFakeBinaries(): void
@@ -44,7 +44,7 @@ class HunspellTest extends TestCase
      */
     public function testSpellcheckFromRealBinaries(): void
     {
-        $this->assertWorkingSpellcheckENText(self::realBinaryPath(), TextTest::CONTENT_STUB, ['en_US']);
+        $this->assertWorkingSpellcheckENText(self::realBinaryPath(), IspellTest::CONTENT_STUB, ['en_US']);
     }
 
     /**
@@ -96,6 +96,9 @@ class HunspellTest extends TestCase
         /** @var Misspelling[] $misspellings */
         $misspellings = iterator_to_array($hunspell->check($textInput, $locales, ['ctx']));
 
+//        var_dump($textInput);
+//        var_dump($misspellings);
+
         $this->assertSame(['ctx'], $misspellings[0]->getContext());
         $this->assertSame('Tigr', $misspellings[0]->getWord());
         $this->assertSame(0, $misspellings[0]->getOffset());
@@ -106,6 +109,12 @@ class HunspellTest extends TestCase
         $this->assertSame('страх', $misspellings[1]->getWord());
         $this->assertSame(21, $misspellings[1]->getOffset());
         $this->assertSame(1, $misspellings[1]->getLineNumber());
+
+        $this->assertSame(['ctx'], $misspellings[6]->getContext());
+        $this->assertSame('mispell', $misspellings[6]->getWord());
+        $this->assertSame(1, $misspellings[6]->getOffset());
+        $this->assertSame(6, $misspellings[6]->getLineNumber());
+        $this->assertNotEmpty($misspellings[6]->getSuggestions());
     }
 
     /**

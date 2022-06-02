@@ -11,6 +11,8 @@ use PHPUnit\Framework\TestCase;
 
 class IspellTest extends TestCase
 {
+    public const CONTENT_STUB = TextTest::CONTENT_STUB.PHP_EOL.PHP_EOL.'*mispell';
+
     public const FAKE_BAD_BINARIES_PATH = __DIR__ . '/../Fixtures/Ispell/bin/empty_output.sh';
     private const FAKE_BINARIES_PATH = __DIR__ . '/../Fixtures/Ispell/bin/ispell.sh';
 
@@ -48,7 +50,7 @@ class IspellTest extends TestCase
 
     public function getTextInput(): string
     {
-        return TextTest::CONTENT_STUB;
+        return self::CONTENT_STUB;
     }
 
     public function getFakeDicts(): array
@@ -97,16 +99,22 @@ class IspellTest extends TestCase
             )
         );
 
-        $this->assertSame($misspellings[0]->getContext(), ['ctx']);
-        $this->assertSame($misspellings[0]->getWord(), 'Tigr');
-        $this->assertSame($misspellings[0]->getOffset(), 0);
-        $this->assertSame($misspellings[0]->getLineNumber(), 1);
+        $this->assertSame(['ctx'], $misspellings[0]->getContext());
+        $this->assertSame('Tigr', $misspellings[0]->getWord());
+        $this->assertSame(0, $misspellings[0]->getOffset());
+        $this->assertSame(1, $misspellings[0]->getLineNumber());
         $this->assertNotEmpty($misspellings[0]->getSuggestions());
 
-        $this->assertSame($misspellings[1]->getContext(), ['ctx']);
-        $this->assertSame($misspellings[1]->getWord(), 'theforests');
-        $this->assertSame($misspellings[1]->getOffset(), 3);
-        $this->assertSame($misspellings[1]->getLineNumber(), 2);
+        $this->assertSame(['ctx'], $misspellings[1]->getContext());
+        $this->assertSame('theforests', $misspellings[1]->getWord());
+        $this->assertSame(3, $misspellings[1]->getOffset());
+        $this->assertSame(2, $misspellings[1]->getLineNumber());
         $this->assertNotEmpty($misspellings[1]->getSuggestions());
+
+        $this->assertSame(['ctx'], $misspellings[5]->getContext());
+        $this->assertSame('mispell', $misspellings[5]->getWord());
+        $this->assertSame(1, $misspellings[5]->getOffset());
+        $this->assertSame(6, $misspellings[5]->getLineNumber());
+        $this->assertNotEmpty($misspellings[5]->getSuggestions());
     }
 }

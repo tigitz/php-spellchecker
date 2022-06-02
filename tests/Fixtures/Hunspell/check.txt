@@ -1,10 +1,13 @@
 @(#) International Ispell Version 3.2.06 (but really Hunspell 1.7.0)
-& Tigr 6 0: Ti gr, Ti-gr, Tiger, Trig, Tier, Tigris
-# страх 21
+& Tigr 6 1: Ti gr, Ti-gr, Tiger, Trig, Tier, Tigris
+# страх 22
 
-& theforests 6 3: the forests, the-forests, therefore, afforests, forests, forefathers
+& theforests 6 4: the forests, the-forests, therefore, afforests, forests, forefathers
 
-& imortal 4 5: mortal, immortal, i mortal, immoral
-& eey 9 21: ea, eye, eel, hey, bey, fey, eek, key, Key
+& imortal 4 6: mortal, immortal, i mortal, immoral
+& eey 9 22: ea, eye, eel, hey, bey, fey, eek, key, Key
 
-& CCould 2 0: C Could, Could
+& CCould 2 1: C Could, Could
+
+
+& mispell 10 2: mi spell, mi-spell, misspell, Ispell, misspells, misplay, spell, misapply, Aspell, dispel
