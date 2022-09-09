@@ -11,13 +11,13 @@ $ composer require tigitz/php-spellchecker
 
 ## Using the Spellchecker directly
 
-You can check misspellings directly from a `PhpSpellcheck\SpellChecker` class and process them on your own.
+You can check misspellings directly from a `PhpSpellcheck\Spellchecker` class and process them on your own.
 
 In this example we use the popular [Aspell](../03_Spellcheckers/01_Aspell.md) spellchecker.
 
 ```php
 <?php
-use PhpSpellcheck\SpellChecker\Aspell;
+use PhpSpellcheck\Spellchecker\Aspell;
 
 // if you made the default aspell installation on you local machine
 $aspell = Aspell::create();
@@ -48,7 +48,7 @@ spellchecking flow:
 <?php
 use PhpSpellcheck\MisspellingFinder;
 use PhpSpellcheck\MisspellingHandler\EchoHandler;
-use PhpSpellcheck\SpellChecker\Aspell;
+use PhpSpellcheck\Spellchecker\Aspell;
 use PhpSpellcheck\TextInterface;
 use PhpSpellcheck\TextProcessor\TextProcessorInterface;
 
