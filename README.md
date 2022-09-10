@@ -54,7 +54,7 @@ You can check misspellings directly from a `PhpSpellcheck\Spellchecker` class an
 
 ```php
 <?php
-// if you made the default aspell installation on you local machine
+// if you made the default aspell installation on your local machine
 $aspell = Aspell::create();
 
 // or if you want to use binaries from Docker
@@ -122,7 +122,7 @@ $misspellingFinder->find($inMemoryTextProvider, ['en_US']);
 
 # Roadmap
 
-The project is still in its initial phase, requiring more real life usage to stabilize its final 1.0.0 API.
+The project is still in its initial phase, requiring more real-life usage to stabilize its final 1.0.0 API.
 
 ## Global
 
@@ -143,7 +143,7 @@ The project is still in its initial phase, requiring more real life usage to sta
 
 ## Text processors
 
-- [ ] Markdown - Find a way to keep original offset and line of words after stripping.
+- [ ] Markdown - Find a way to keep the original offset and line of words after stripping.
 - [ ] Add PHPDoc processor.
 - [ ] Add HTML Processor ([inspiration](https://github.com/mekras/php-speller/blob/master/src/Source/Filter/HtmlFilter.php)).
 - [ ] Add XLIFF Processor ([inspiration](https://github.com/mekras/php-speller/blob/master/src/Source/XliffSource.php)).
