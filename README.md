@@ -143,7 +143,7 @@ The project is still in its initial phase, requiring more real-life usage to sta
 
 ## Text processors
 
-- [ ] Markdown - Find a way to keep original offset and line of words after stripping.
+- [ ] Markdown - Find a way to keep the original offset and line of words after stripping.
 - [ ] Add PHPDoc processor.
 - [ ] Add HTML Processor ([inspiration](https://github.com/mekras/php-speller/blob/master/src/Source/Filter/HtmlFilter.php)).
 - [ ] Add XLIFF Processor ([inspiration](https://github.com/mekras/php-speller/blob/master/src/Source/XliffSource.php)).
