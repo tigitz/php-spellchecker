@@ -268,10 +268,10 @@
 <pre><code class="language-sh">$ composer require tigitz/php-spellchecker</code></pre>
 <h1>Usage</h1>
 <h2>Using the Spellchecker directly</h2>
-<p>You can check misspellings directly from a <code>PhpSpellcheck\SpellChecker</code> class and process them on your own.</p>
+<p>You can check misspellings directly from a <code>PhpSpellcheck\Spellchecker</code> class and process them on your own.</p>
 <p>In this example we use the popular <a href="../03_Spellcheckers/01_Aspell.md">Aspell</a> spellchecker.</p>
 <pre><code class="language-php">&lt;?php
-use PhpSpellcheck\SpellChecker\Aspell;
+use PhpSpellcheck\Spellchecker\Aspell;
 
 // if you made the default aspell installation on you local machine
 $aspell = Aspell::create();
@@ -296,7 +296,7 @@ spellchecking flow:</p>
 <pre><code class="language-php">&lt;?php
 use PhpSpellcheck\MisspellingFinder;
 use PhpSpellcheck\MisspellingHandler\EchoHandler;
-use PhpSpellcheck\SpellChecker\Aspell;
+use PhpSpellcheck\Spellchecker\Aspell;
 use PhpSpellcheck\TextInterface;
 use PhpSpellcheck\TextProcessor\TextProcessorInterface;
 
