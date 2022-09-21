@@ -5,6 +5,7 @@ declare(strict_types=1);
 use PhpSpellcheck\Source\File;
 use PHPUnit\Framework\TestCase;
 use Safe\Exceptions\FilesystemException;
+
 use function PhpSpellcheck\t;
 
 class FileTest extends TestCase

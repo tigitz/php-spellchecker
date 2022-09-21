@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use PhpSpellcheck\Source\Directory;
 use PHPUnit\Framework\TestCase;
+
 use function PhpSpellcheck\t;
 
 class DirectoryTest extends TestCase
