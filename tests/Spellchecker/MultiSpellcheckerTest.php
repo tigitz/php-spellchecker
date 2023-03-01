@@ -3,6 +3,9 @@
 declare(strict_types=1);
 
 use PhpSpellcheck\Misspelling;
+use PhpSpellcheck\Spellchecker\Hunspell;
+use PhpSpellcheck\Spellchecker\LanguageTool;
+use PhpSpellcheck\Spellchecker\LanguageTool\LanguageToolApiClient;
 use PhpSpellcheck\Spellchecker\MultiSpellchecker;
 use PhpSpellcheck\Spellchecker\SpellcheckerInterface;
 use PHPUnit\Framework\TestCase;
@@ -86,5 +89,19 @@ class MultiSpellcheckerTest extends TestCase
         $multipleSpellchecker = new MultiSpellchecker([$spellChecker1, $spellChecker2]);
 
         $this->assertSame(['en', 'fr', 'ru'], $multipleSpellchecker->getSupportedLanguages());
+    }
+
+    /**
+     * @group integration
+     */
+    public function testGetSupportedLanguage(): void
+    {
+        $lt = new LanguageTool(new LanguageToolApiClient(LanguageToolTest::realAPIEndpoint()));
+        $multipleSpellchecker = new MultiSpellchecker([Hunspell::create(), $lt]);
+
+        /** @see LanguageToolTest::assertWorkingSupportedLanguages() */
+        $this->assertNotFalse(array_search('en', $multipleSpellchecker->getSupportedLanguages(), true));
+        /** @see HunspellTest::assertWorkingSupportedLanguages() */
+        $this->assertNotFalse(array_search('en_US', $multipleSpellchecker->getSupportedLanguages(), true));
     }
 }

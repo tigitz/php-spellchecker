@@ -132,6 +132,15 @@ class LanguageToolTest extends TestCase
         $this->assertNotFalse(array_search('en', $languageTool->getSupportedLanguages(), true));
     }
 
+    public static function realAPIEndpoint(): string
+    {
+        if (getenv('LANGUAGETOOLS_ENDPOINT') === false) {
+            throw new \RuntimeException('"LANGUAGETOOLS_ENDPOINT" env must be set to run the tests on');
+        }
+
+        return getenv('LANGUAGETOOLS_ENDPOINT');
+    }
+
     private function assertWorkingSpellcheck(LanguageToolApiClient $apiClient): void
     {
         $languageTool = new LanguageTool($apiClient);
@@ -159,14 +168,5 @@ class LanguageToolTest extends TestCase
         $this->assertSame($misspellings[$lastKey]->getOffset(), 0);
         $this->assertSame($misspellings[$lastKey]->getLineNumber(), 4);
         $this->assertNotEmpty($misspellings[$lastKey]->getSuggestions());
-    }
-
-    private static function realAPIEndpoint(): string
-    {
-        if (getenv('LANGUAGETOOLS_ENDPOINT') === false) {
-            throw new \RuntimeException('"LANGUAGETOOLS_ENDPOINT" env must be set to run the tests on');
-        }
-
-        return getenv('LANGUAGETOOLS_ENDPOINT');
     }
 }
