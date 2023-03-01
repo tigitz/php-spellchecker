@@ -96,9 +96,6 @@ class HunspellTest extends TestCase
         /** @var Misspelling[] $misspellings */
         $misspellings = iterator_to_array($hunspell->check($textInput, $locales, ['ctx']));
 
-//        var_dump($textInput);
-//        var_dump($misspellings);
-
         $this->assertSame(['ctx'], $misspellings[0]->getContext());
         $this->assertSame('Tigr', $misspellings[0]->getWord());
         $this->assertSame(0, $misspellings[0]->getOffset());
