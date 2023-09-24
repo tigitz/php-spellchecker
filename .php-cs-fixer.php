@@ -1,7 +1,11 @@
 <?php
 
 $finder = (new PhpCsFixer\Finder())
-    ->in([__DIR__.'/src', __DIR__.'/tests'])
+    ->in([
+        __DIR__.'/src',
+        __DIR__.'/tests',
+        __DIR__.'/examples'
+    ])
 ;
 
 return (new PhpCsFixer\Config())
@@ -12,7 +16,7 @@ return (new PhpCsFixer\Config())
         'cast_spaces' => true,
         'comment_to_phpdoc' => true,
         'declare_strict_types' => true,
-        'function_typehint_space' => true,
+        'type_declaration_spaces' => true,
         'linebreak_after_opening_tag' => true,
         'list_syntax' => ['syntax' => 'short'],
         'lowercase_static_reference' => true,
@@ -62,7 +66,6 @@ return (new PhpCsFixer\Config())
         'semicolon_after_instruction' => true,
         'return_type_declaration' => true,
         'short_scalar_cast' => true,
-        'single_blank_line_before_namespace' => true,
         'single_line_comment_style' => true,
         'psr_autoloading' => true,
         'class_attributes_separation' => ['elements' => ['method' => 'one', 'property' => 'one']],

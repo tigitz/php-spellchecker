@@ -22,6 +22,7 @@ class IspellParser
             $line = trim($line);
             if ('' === $line) {
                 ++$lineNumber;
+
                 // Go to the next line
                 continue;
             }

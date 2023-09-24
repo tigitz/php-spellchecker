@@ -1,19 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 use PhpSpellcheck\MisspellingFinder;
 use PhpSpellcheck\MisspellingHandler\EchoHandler;
 use PhpSpellcheck\Source\SourceInterface;
 use PhpSpellcheck\Spellchecker\Aspell;
-use PhpSpellcheck\Text;
 use PhpSpellcheck\TextInterface;
 use PhpSpellcheck\TextProcessor\TextProcessorInterface;
-use PhpSpellcheck\Utils\TextEncoding;
+
+use function PhpSpellcheck\t;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
 // My custom text processor that replaces "_" by " "
-$customTextProcessor = new class implements TextProcessorInterface
-{
+$customTextProcessor = new class () implements TextProcessorInterface {
     public function process(TextInterface $text): TextInterface
     {
         $contentProcessed = str_replace('_', ' ', $text->getContent());
@@ -29,8 +30,7 @@ $misspellingFinder = new MisspellingFinder(
 );
 
 // Using a custom SourceInterface that generates Text
-$inMemoryTextProvider = new class implements SourceInterface
-{
+$inMemoryTextProvider = new class () implements SourceInterface {
     public function toTexts(array $context): iterable
     {
         yield t('my_mispell', ['from_source_interface']);
