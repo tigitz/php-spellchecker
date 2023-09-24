@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        php: ["7.4", "8.0", "8.1"]
+        php: ["7.4", "8.0", "8.1", "8.2"]
         stability: [--prefer-lowest, --prefer-stable]
     env:
       PHP_VERSION: ${{ matrix.php }}
@@ -46,7 +46,7 @@ jobs:
         
       - name: Run tests
         run: |
-          export WITH_COVERAGE=$(if [[ ("${{ matrix.php }}" = "8.1") && ("${{ matrix.stability }}" = "--prefer-stable") ]]; then echo "true"; else echo "false"; fi)
+          export WITH_COVERAGE=$(if [[ ("${{ matrix.php }}" = "8.2") && ("${{ matrix.stability }}" = "--prefer-stable") ]]; then echo "true"; else echo "false"; fi)
           echo "WITH_COVERAGE=${WITH_COVERAGE}" >> $GITHUB_ENV
           make vendor
           make tests

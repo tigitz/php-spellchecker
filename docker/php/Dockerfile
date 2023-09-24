@@ -6,7 +6,7 @@ ENV XDEBUG_MODE=coverage
 RUN echo "memory_limit=-1" > "$PHP_INI_DIR/conf.d/memory-limit.ini" \
  && echo "date.timezone=${PHP_TIMEZONE:-UTC}" > "$PHP_INI_DIR/conf.d/date_timezone.ini"
 
-ARG XDEBUG_VERSION=3.1.1
+ARG PHP_VERSION
 
 RUN apt-get update \
     && apt install -y \
@@ -25,9 +25,13 @@ RUN apt-get update \
      aspell \
      aspell-en \
      aspell-ru \
-     libpspell-dev \
-    && pecl install xdebug-${XDEBUG_VERSION} \
-    && docker-php-ext-configure pspell \
+     libpspell-dev
+RUN set -eux; \
+      case "$PHP_VERSION" in \
+          8.2*) pecl install xdebug-3.2.2;; \
+          *) pecl install xdebug-3.1.1;; \
+      esac
+RUN docker-php-ext-configure pspell \
 	&& docker-php-ext-enable xdebug \
     && docker-php-ext-install pspell \
     && docker-php-ext-install zip \

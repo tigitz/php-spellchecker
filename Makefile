@@ -1,6 +1,6 @@
 DOCKER_COMPOSE 	?= docker-compose
 EXEC_PHP      	= $(DOCKER_COMPOSE) run --rm -T php
-PHP_VERSION     ?= 8.1
+PHP_VERSION     ?= 8.2
 DEPS_STRATEGY   ?= --prefer-stable
 COMPOSER      	= $(EXEC_PHP) composer
 WITH_COVERAGE   ?= "FALSE"
@@ -40,7 +40,7 @@ examples-test:
            echo "\n**************************************************************"; \
            echo "Run example: $$file"; \
            echo "**************************************************************\n"; \
-           $(EXEC_PHP) php $$file; \
+           sh -c "$(EXEC_PHP) php $$file" || exit 1 ;\
         done
 
 tu: ## Run unit tests
@@ -70,7 +70,7 @@ phpstan: vendor
 
 phpstan-all-php-versions:
 	PHP_VERSION=7.4 make phpstan
-	PHP_VERSION=8.1 make phpstan
+	PHP_VERSION=8.2 make phpstan
 
 phpstan-baseline: vendor
 	$(EXEC_PHP) vendor/bin/phpstan analyse src -c phpstan.$(PHP_VERSION).neon -a vendor/autoload.php --generate-baseline
