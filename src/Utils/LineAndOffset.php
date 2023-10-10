@@ -11,10 +11,10 @@ class LineAndOffset
 {
     /**
      * When spellcheckers gives the offset position of a misspelled word from the whole text's first character,
-     * this helps finding the offset position from line's first caracter instead.
+     * this helps finding the offset position from line's first character instead.
      *
      * @param string $text Chunk of text from which the line and offset are computed
-     * @param int $offsetFromFirstCharacter Offset position from the text's first caracter
+     * @param int $offsetFromFirstCharacter Offset position from the text's first character
      *
      * @return array<int,int> Line number as the first element and offset from beginning of line as second element
      */
