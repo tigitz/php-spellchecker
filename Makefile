@@ -55,15 +55,15 @@ ti: vendor
 
 vendor:
 	$(COMPOSER) update $(DEPS_STRATEGY)
-	$(EXEC_PHP) composer -d tools/php-cs-fixer update
 
 PHP_CS_FIXER = docker-compose run --rm -T php tools/php-cs-fixer/vendor/bin/php-cs-fixer fix -vv --allow-risky=yes
 
 phpcs:
-	PHP_VERSION=8.1 docker-compose run --rm -T php composer require --working-dir=tools/php-cs-fixer friendsofphp/php-cs-fixer
+	PHP_VERSION=8.1 $(EXEC_PHP) composer -d tools/php-cs-fixer update
 	PHP_VERSION=8.1 $(PHP_CS_FIXER) --dry-run
 
 phpcbf:
+	PHP_VERSION=8.1 $(EXEC_PHP) composer -d tools/php-cs-fixer update
 	PHP_VERSION=8.1 $(PHP_CS_FIXER)
 
 phpstan: vendor

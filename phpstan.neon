@@ -19,6 +19,11 @@ parameters:
             path: src/Text/functions.php
 
         -
+            message: "#^Method PhpSpellcheck\\\\MisspellingHandler\\\\MisspellingHandlerInterface\\:\\:handle\\(\\) has no return type specified\\.$#"
+            count: 1
+            path: src/MisspellingHandler/MisspellingHandlerInterface.php
+
+        -
             message: "#^Function pspell_config_create is unsafe to use\\. It can return FALSE instead of throwing an exception\\. Please add 'use function Safe\\\\pspell_config_create;' at the beginning of the file to use the variant provided by the 'thecodingmachine/safe' library\\.$#"
             count: 1
             path: src/Spellchecker/PHPPspell.php

@@ -11,5 +11,5 @@ interface MisspellingHandlerInterface
     /**
      * @param MisspellingInterface[] $misspellings
      */
-    public function handle(iterable $misspellings): mixed;
+    public function handle(iterable $misspellings);
 }
