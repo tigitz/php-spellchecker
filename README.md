@@ -211,10 +211,6 @@ $ PHP_VERSION=8.2 DEPS=LOWEST WITH_COVERAGE="true" make tests-dox
 
 Run `make help` to list all available tasks.
 
-## Locally
-
-Todo
-
 ## Environment variables
 
 If spellcheckers execution paths are different than their default values (e.g., `docker exec -ti myispell` instead of `ispell`) you can override the path used in tests by redefining environment variables in the [PHPUnit config file](https://github.com/tigitz/php-spellchecker/blob/master/phpunit.xml.dist).
