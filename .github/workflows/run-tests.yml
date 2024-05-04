@@ -54,8 +54,9 @@ jobs:
       - name: Run examples
         run: make examples-test
         
-      - uses: codecov/codecov-action@v2
+      - uses: codecov/codecov-action@v4
         if: env.WITH_COVERAGE == 'true'
         with:
           fail_ci_if_error: true
           verbose: true
+          token: ${{ secrets.CODECOV_TOKEN }}
