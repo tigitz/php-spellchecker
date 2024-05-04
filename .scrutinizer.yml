@@ -3,7 +3,7 @@ build:
         analysis:
             environment:
                 php:
-                    version: 7.4
+                    version: 8.1
             cache:
                 disabled: false
                 directories:

@@ -55,25 +55,22 @@ ti: vendor
 
 vendor:
 	$(COMPOSER) update $(DEPS_STRATEGY)
+	$(EXEC_PHP) composer -d tools/php-cs-fixer update
 
 PHP_CS_FIXER = docker-compose run --rm -T php tools/php-cs-fixer/vendor/bin/php-cs-fixer fix -vv --allow-risky=yes
 
 phpcs:
-	PHP_VERSION=7.4 docker-compose run --rm -T php composer require --working-dir=tools/php-cs-fixer friendsofphp/php-cs-fixer
-	PHP_VERSION=7.4 $(PHP_CS_FIXER) --dry-run
+	PHP_VERSION=8.1 docker-compose run --rm -T php composer require --working-dir=tools/php-cs-fixer friendsofphp/php-cs-fixer
+	PHP_VERSION=8.1 $(PHP_CS_FIXER) --dry-run
 
 phpcbf:
-	PHP_VERSION=7.4 $(PHP_CS_FIXER)
+	PHP_VERSION=8.1 $(PHP_CS_FIXER)
 
 phpstan: vendor
-	$(EXEC_PHP) vendor/bin/phpstan analyse src -c phpstan.$(PHP_VERSION).neon -a vendor/autoload.php
-
-phpstan-all-php-versions:
-	PHP_VERSION=7.4 make phpstan
-	PHP_VERSION=8.2 make phpstan
+	$(EXEC_PHP) vendor/bin/phpstan analyse src -c phpstan.neon -a vendor/autoload.php
 
 phpstan-baseline: vendor
-	$(EXEC_PHP) vendor/bin/phpstan analyse src -c phpstan.$(PHP_VERSION).neon -a vendor/autoload.php --generate-baseline
+	$(EXEC_PHP) vendor/bin/phpstan analyse src -c phpstan.neon -a vendor/autoload.php --generate-baseline
 
 infection: vendor
 	$(EXEC_PHP) vendor/bin/phpunit --coverage-xml=build/coverage/coverage-xml --log-junit=build/coverage/phpunit.junit.xml

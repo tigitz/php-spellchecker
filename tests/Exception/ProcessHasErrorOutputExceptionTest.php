@@ -11,15 +11,15 @@ class ProcessHasErrorOutputExceptionTest extends TestCase
     {
         $exception = new ProcessHasErrorOutputException('error output', 'testt', 'ispell --encoding=utf-8 -a');
         $this->assertSame(<<<MESSAGE
-Process has generated the following output errors:
+            Process has generated the following output errors:
 
-error output
+            error output
 
-With command: "ispell --encoding=utf-8 -a"
+            With command: "ispell --encoding=utf-8 -a"
 
-For text:
-"testt"
-MESSAGE
+            For text:
+            "testt"
+            MESSAGE
             , $exception->getMessage());
     }
 }

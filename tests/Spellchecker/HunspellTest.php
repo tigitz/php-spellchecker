@@ -107,11 +107,11 @@ class HunspellTest extends TestCase
         $this->assertSame(21, $misspellings[1]->getOffset());
         $this->assertSame(1, $misspellings[1]->getLineNumber());
 
-        $this->assertSame(['ctx'], $misspellings[6]->getContext());
-        $this->assertSame('mispell', $misspellings[6]->getWord());
-        $this->assertSame(1, $misspellings[6]->getOffset());
-        $this->assertSame(6, $misspellings[6]->getLineNumber());
-        $this->assertNotEmpty($misspellings[6]->getSuggestions());
+        $this->assertSame(['ctx'], $misspellings[7]->getContext());
+        $this->assertSame('mispell', $misspellings[7]->getWord());
+        $this->assertSame(1, $misspellings[7]->getOffset());
+        $this->assertSame(6, $misspellings[7]->getLineNumber());
+        $this->assertNotEmpty($misspellings[7]->getSuggestions());
     }
 
     /**

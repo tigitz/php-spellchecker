@@ -6,7 +6,7 @@ require __DIR__.'/../vendor/autoload.php';
 
 $dependencies = [
     'LANGUAGETOOLS_ENDPOINT',
-    'JAMSPELL_ENDPOINT'
+    'JAMSPELL_ENDPOINT',
 ];
 
 foreach ($dependencies as $dependency) {

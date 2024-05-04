@@ -13,9 +13,9 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 7.4
+          php-version: 8.3
           coverage: none
-          tools: php-cs-fixer, cs2pr
+          tools: php-cs-fixer:3.54.x, cs2pr
 
       - name: Restore PHP-CS-Fixer cache
         uses: actions/cache@v4

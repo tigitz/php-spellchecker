@@ -17,7 +17,7 @@ $misspellings = $misspellingFinder->find(
     new \PhpSpellcheck\Source\MultiSource(
         [
             new \PhpSpellcheck\Source\File(__DIR__ . '/../tests/Fixtures/Text/mispelling1.txt'),
-            new \PhpSpellcheck\Source\Directory(__DIR__ . '/../tests/Fixtures/Text/Directory')
+            new \PhpSpellcheck\Source\Directory(__DIR__ . '/../tests/Fixtures/Text/Directory'),
         ]
     ),
     ['en_US'],

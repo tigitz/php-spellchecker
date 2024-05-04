@@ -11,6 +11,7 @@ $finder = (new PhpCsFixer\Finder())
 return (new PhpCsFixer\Config())
     ->setRules([
         '@PSR12' => true,
+        '@PHP81Migration' => true,
         'no_unused_imports' => true,
         'blank_line_before_statement' => true,
         'cast_spaces' => true,

@@ -10,14 +10,14 @@ use PHPUnit\Framework\TestCase;
 class IspellParserTest extends TestCase
 {
     private const ISPELL_OUTPUT_STUB = <<<OUTPUT
-@(#) International Ispell Version 3.1.20 (but really Aspell 0.60.7-20110707)
-*
-& PHP 12 19: PP, PH
-*
+        @(#) International Ispell Version 3.1.20 (but really Aspell 0.60.7-20110707)
+        *
+        & PHP 12 19: PP, PH
+        *
 
-# customTextProcessor 5
+        # customTextProcessor 5
 
-OUTPUT;
+        OUTPUT;
 
     public function testParseMisspellingsFromOutput()
     {
@@ -46,21 +46,21 @@ OUTPUT;
         $adaptedInput = IspellParser::adaptInputForTerseModeProcessing(
             <<<INPUT
 
-foo
+                foo
 
-*bar
+                *bar
 
-INPUT
+                INPUT
         );
 
         $this->assertSame(
             <<<EXPECTED
-^
-^foo
-^
-^*bar
+                ^
+                ^foo
+                ^
+                ^*bar
 
-EXPECTED,
+                EXPECTED,
             $adaptedInput
         );
     }

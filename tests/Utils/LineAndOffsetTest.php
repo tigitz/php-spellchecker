@@ -11,10 +11,10 @@ class LineAndOffsetTest extends TestCase
     public function testFindFromFirstCharacterOffsetWithMultiByteString(): void
     {
         $text = <<<TEXT
-❤❤ hello
-❤
-Misspel️
-TEXT;
+            ❤❤ hello
+            ❤
+            Misspel️
+            TEXT;
 
         $this->assertSame(
             [3, 4],
@@ -25,11 +25,11 @@ TEXT;
     public function testFindFromFirstCharacterOffset(): void
     {
         $text = <<<TEXT
-First line
-Second line
-Third line
-Last line
-TEXT;
+            First line
+            Second line
+            Third line
+            Last line
+            TEXT;
 
         // offset 0  = before first character of 1st line
         $this->assertSame(

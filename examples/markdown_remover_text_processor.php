@@ -16,12 +16,12 @@ $misspellingFinder = new MisspellingFinder(
 );
 
 $mdFormattedString = <<<MD
-# Mispelling Heading
+    # Mispelling Heading
 
-**mispelling bold**
+    **mispelling bold**
 
-* mispelling list item
-MD;
+    * mispelling list item
+    MD;
 
 // using a string
 $misspellingFinder->find($mdFormattedString, ['en_US']);

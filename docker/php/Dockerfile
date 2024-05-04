@@ -1,6 +1,6 @@
 ARG PHP_VERSION
 
-FROM php:${PHP_VERSION}-cli-buster
+FROM php:${PHP_VERSION}-cli-bookworm
 
 ENV XDEBUG_MODE=coverage
 RUN echo "memory_limit=-1" > "$PHP_INI_DIR/conf.d/memory-limit.ini" \
@@ -28,8 +28,8 @@ RUN apt-get update \
      libpspell-dev
 RUN set -eux; \
       case "$PHP_VERSION" in \
-          8.2*) pecl install xdebug-3.2.2;; \
-          *) pecl install xdebug-3.1.1;; \
+          8.1*) pecl install xdebug-3.1.1;; \
+          *) pecl install xdebug-3.3.2;; \
       esac
 RUN docker-php-ext-configure pspell \
 	&& docker-php-ext-enable xdebug \

@@ -11,26 +11,26 @@ use function PhpSpellcheck\t;
 class TextTest extends TestCase
 {
     public const CONTENT_STUB = <<<TEXT
-Tigr, tiger, burning страх.
-In theforests of the night,
-What imortal hand or eey
-CCould frame thy fearful symmetry?
-TEXT;
+        Tigr, tiger, burning страх.
+        In theforests of the night,
+        What imortal hand or eey
+        CCould frame thy fearful symmetry?
+        TEXT;
 
     public const CONTENT_STUB_JP = <<<TEXT
-さよなら解決なる
+        さよなら解決なる
 
-さよなら
+        さよなら
 
-解決なる
-TEXT;
+        解決なる
+        TEXT;
 
     public const CONTENT_STUB_RU = <<<TEXT
-Используйте этот инструмент для обнаружения опечаток, граматических и стилистических ошибок в англиских текстах.
-Пример (с ошибками:
-наведите мышь на подсвечиваемые слова, чтобы просмотреть опсание и, при наличии, варианта исправления ошибки.
-Для проверки собственного текста, щёлкните на текстовое поле , вставьте свой текст и нажмите на кнопку "Отправить".
-TEXT;
+        Используйте этот инструмент для обнаружения опечаток, граматических и стилистических ошибок в англиских текстах.
+        Пример (с ошибками:
+        наведите мышь на подсвечиваемые слова, чтобы просмотреть опсание и, при наличии, варианта исправления ошибки.
+        Для проверки собственного текста, щёлкните на текстовое поле , вставьте свой текст и нажмите на кнопку "Отправить".
+        TEXT;
 
     public function testContextOverridingMerge(): void
     {

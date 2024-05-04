@@ -9,15 +9,15 @@ class ProcessHasErrorOutputException extends \RuntimeException implements Except
     public function __construct(string $errorOutput, string $parsedText, string $command)
     {
         $exceptionTemplateMessage = <<<'MSG'
-Process has generated the following output errors:
+            Process has generated the following output errors:
 
-%s
+            %s
 
-With command: "%s"
+            With command: "%s"
 
-For text:
-"%s"
-MSG;
+            For text:
+            "%s"
+            MSG;
 
         parent::__construct(
             \Safe\sprintf(

@@ -211,16 +211,16 @@ class MarkdownRemoverTest extends TestCase
     public function testShouldStripCodeBlocks(): void
     {
         $string = <<<CODE
-```js
-test
-```
-CODE;
+            ```js
+            test
+            ```
+            CODE;
 
         $expected = <<<CODE
 
-test
+            test
 
-CODE;
+            CODE;
 
         $this->assertSame($expected, (new MarkdownRemover())->process(t($string))->getContent());
     }
