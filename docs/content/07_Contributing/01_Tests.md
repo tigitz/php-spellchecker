@@ -9,15 +9,15 @@ The most convenient way to do it is by using Docker and avoid polluting your loc
 Requires `docker` and `docker-compose` to be installed (tested on Linux).
 
 ```sh
-$ make build # build container images
-$ make setup # start spellcheckers container
-$ make tests-dox
+make build # build container images
+make setup # start spellcheckers container
+make tests-dox
 ```
 
 You can also specify PHP version, dependency version target and if you want coverage. Coverage is only supported by PHP 7.2 for now.
 
 ```sh
-$ PHP_VERSION=7.2 DEPS=LOWEST WITH_COVERAGE="true" make tests-dox
+PHP_VERSION=7.2 DEPS=LOWEST WITH_COVERAGE="true" make tests-dox
 ```
 
 Run `make help` to list all available tasks.
