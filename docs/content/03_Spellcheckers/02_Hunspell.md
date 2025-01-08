@@ -26,7 +26,7 @@ On **RHEL**, **CentOS**:
 ```sh
 sudo yum install epel-release
 
-$ sudo yum install hunspell
+sudo yum install hunspell
 ```
 On **Debian**, **Ubuntu**:
 ```sh
