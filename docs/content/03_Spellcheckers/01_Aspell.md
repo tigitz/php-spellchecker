@@ -9,21 +9,21 @@ GNU Aspell is available in the default repositories of most Linux distributions,
 On **Arch Linux** and derivatives like **Antergos**, **Manjaro Linux**, run:
 
 ```sh
-$ sudo pacman -S aspell
+sudo pacman -S aspell
 ```
 On **Fedora**:
 ```sh
-$ sudo dnf install aspell
+sudo dnf install aspell
 ```
 On **RHEL**, **CentOS**:
 ```sh
-$ sudo yum install epel-release
+sudo yum install epel-release
 
-$ sudo yum install aspell
+sudo yum install aspell
 ```
 On **Debian**, **Ubuntu**:
 ```sh
-$ sudo apt-get install aspell
+sudo apt-get install aspell
 ```
 
 on **Mac OSX** with **Homebrew**:
@@ -34,24 +34,24 @@ By default, Aspell won’t have any dictionaries. To add a dictionary, for examp
 
 This can also be found in the default repositories. For instance, to add English dictionary on Arch linux, run:
 ```sh
-$ sudo pacman -S aspell-en
+sudo pacman -S aspell-en
 ```
 On **Debian**, **Ubuntu**:
 ```sh
-$ sudo apt-get install aspell-en
+sudo apt-get install aspell-en
 ```
 On **Fedora**:
 ```sh
-$ sudo dnf install aspell-en
+sudo dnf install aspell-en
 ```
 On **RHEL**/**CentOS**:
 ```sh
-$ sudo yum install aspell-en
+sudo yum install aspell-en
 ```
 
 Once installed all dictionaries, you can ensure whether the required dictionaries are available or not using command:
 ```sh
-$ aspell dicts
+aspell dicts
 en
 en-variant_0
 en-variant_1

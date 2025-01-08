@@ -4,7 +4,7 @@
 Via Composer
 
 ```sh
-$ composer require tigitz/php-spellchecker
+composer require tigitz/php-spellchecker
 ```
 
 # Usage

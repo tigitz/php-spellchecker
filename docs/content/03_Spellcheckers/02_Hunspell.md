@@ -16,21 +16,21 @@ Hunspell is available in the default repositories of most Linux distributions, s
 On **Arch Linux** and derivatives like **Antergos**, **Manjaro Linux**, run:
 
 ```sh
-$ sudo pacman -S hunspell
+sudo pacman -S hunspell
 ```
 On **Fedora**:
 ```sh
-$ sudo dnf install hunspell
+sudo dnf install hunspell
 ```
 On **RHEL**, **CentOS**:
 ```sh
-$ sudo yum install epel-release
+sudo yum install epel-release
 
 $ sudo yum install hunspell
 ```
 On **Debian**, **Ubuntu**:
 ```sh
-$ sudo apt-get install hunspell
+sudo apt-get install hunspell
 ```
 
 on **Mac OSX** with **Homebrew**:
@@ -41,20 +41,20 @@ By default, Hunspell won’t have any dictionaries. To add a dictionary, for exa
 
 This can also be found in the default repositories. For instance, to add English dictionary on Arch linux, run:
 ```sh
-$ sudo pacman -S hunspell-en-us
+sudo pacman -S hunspell-en-us
 ```
 
 On **Debian**, **Ubuntu**:
 ```sh
-$ sudo apt-get install hunspell-en-us
+sudo apt-get install hunspell-en-us
 ```
 On **Fedora**:
 ```sh
-$ sudo dnf install hunspell-en-us
+sudo dnf install hunspell-en-us
 ```
 On **RHEL**/**CentOS**:
 ```sh
-$ sudo yum install hunspell-en-us
+sudo yum install hunspell-en-us
 ```
 
 on **Mac OSX**:
@@ -63,7 +63,7 @@ Download dictionaries from http://wordlist.aspell.net/dicts/ and put them to `/L
 
 Once installed all dictionaries, you can ensure whether the required dictionaries are available or not using command:
 ```sh
-$ hunspell -D
+hunspell -D
 /usr/share/hunspell/en_US
 ...
 ```
