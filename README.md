@@ -41,7 +41,7 @@ Want to make **your first open source contribution**? Check the [roadmap](#roadm
 Via Composer
 
 ```sh
-$ composer require tigitz/php-spellchecker
+composer require tigitz/php-spellchecker
 ```
 
 # Usage
