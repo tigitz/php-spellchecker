@@ -6,4 +6,4 @@ vendor
 .php-cs-fixer.cache
 .phpunit.result.cache
 .phpspellcheck.cache
-composer/cache
+composer/
