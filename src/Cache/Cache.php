@@ -12,13 +12,13 @@ class Cache implements CacheFactoryInterface
     /**
      * Get a cache store instance by name.
      */
-    public static function create(?string $name = null, string $namespace = '', int $defaultLifetime = 3600, ?string $cacheDirectory = null): StoreInterface
+    public static function create(?string $name = null, array $storeArgs = []): StoreInterface
     {
         $name = $name ?: self::getDefaultDriver();
 
         $class = self::resolveStoreClassName($name);
 
-        return $class::create($namespace, $defaultLifetime, $cacheDirectory);
+        return $class::create(...$storeArgs);
     }
 
     /**

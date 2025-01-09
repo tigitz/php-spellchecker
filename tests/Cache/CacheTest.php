@@ -29,7 +29,7 @@ class CacheTest extends TestCase
 
     protected function getStoreInstance(): StoreInterface
     {
-        return Cache::create(namespace: 'CacheManagerTest');
+        return Cache::create(storeArgs: ['namespace' => 'CacheTest']);
     }
 
     public function testInstanceOfCacheInterface()
