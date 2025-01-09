@@ -113,6 +113,22 @@ class MarkdownRemoverTest extends TestCase
         $this->assertSame($expected, (new MarkdownRemover())->process(t($string))->getContent());
     }
 
+    public function testShouldRemoveTripleEmphasis(): void
+    {
+        $string = 'This text is ***really important***.';
+        $expected = 'This text is really important.';
+
+        $this->assertSame($expected, (new MarkdownRemover())->process(t($string))->getContent());
+    }
+
+    public function testShouldRemoveLongerEmphasis(): void
+    {
+        $string = 'This text is ******really important******.';
+        $expected = 'This text is really important.';
+
+        $this->assertSame($expected, (new MarkdownRemover())->process(t($string))->getContent());
+    }
+
     public function testShouldRemoveHorizontalRules(): void
     {
         $string = "Some text on a line\n\n---\n\nA line below";
