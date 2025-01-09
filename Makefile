@@ -1,4 +1,4 @@
-DOCKER_COMPOSE 	?= docker-compose
+DOCKER_COMPOSE 	?= docker compose
 EXEC_PHP      	= $(DOCKER_COMPOSE) run --rm -T php
 PHP_VERSION     ?= 8.2
 DEPS_STRATEGY   ?= --prefer-stable
