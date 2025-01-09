@@ -36,8 +36,10 @@ class FileStore implements StoreInterface
 
     /**
      * Fetches an item from the cache.
+     *
+     * @param array<mixed> $metadata
      */
-    public function get(string $key, callable $callback, float $beta = null, array &$metadata = null): mixed
+    public function get(string $key, callable $callback, float $beta = null, ?array &$metadata = null): mixed
     {
         return $this->filesystemAdapter->get($key, $callback, $beta, $metadata);
     }
