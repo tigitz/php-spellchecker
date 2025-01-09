@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PhpSpellcheck\Cache\Stores;
 
+use Composer\Autoload\ClassLoader;
 use Symfony\Contracts\Cache\ItemInterface;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 
@@ -22,7 +23,15 @@ class FileStore implements StoreInterface
      */
     public static function create(string $namespace = '', int $defaultLifetime = 3600, ?string $cacheDirectory = null): self
     {
-        return new self(new FilesystemAdapter($namespace, $defaultLifetime, $cacheDirectory ?? dirname(__DIR__, 5).'/..cache'));
+        return new self(new FilesystemAdapter($namespace, $defaultLifetime, $cacheDirectory ?? self::getDefaultCachePath()));
+    }
+
+    /**
+     * Get the default cache directory for the file store.
+     */
+    public static function getDefaultCachePath(): string
+    {
+        return dirname(array_keys(ClassLoader::getRegisteredLoaders())[0]).'/.phpspellcheck.cache';
     }
 
     /**

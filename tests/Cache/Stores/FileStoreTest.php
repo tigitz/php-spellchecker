@@ -28,10 +28,7 @@ class FileStoreTest extends TestCase
 
     protected function getFileStoreInstance(): CacheInterface
     {
-        return FileStore::create(
-            namespace: 'FileStoreTest',
-            cacheDirectory: __DIR__.'/../../../.phpspellcheck.cache'
-        );
+        return FileStore::create(namespace: 'FileStoreTest');
     }
 
     public function testInstanceOfCacheInterface()
