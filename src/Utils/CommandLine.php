@@ -24,7 +24,7 @@ class CommandLine
             $this->commandArgs = [$command];
         } else {
             throw new InvalidArgumentException(
-                \Safe\sprintf(
+                \sprintf(
                     'Command should be an "array<string>" or a "string", "%s" given',
                     \is_object($command) ? \get_class($command) : \gettype($command)
                 )
@@ -81,10 +81,10 @@ class CommandLine
         if (false !== strpos($argument, "\0")) {
             $argument = str_replace("\0", '?', $argument);
         }
-        if (\Safe\preg_match('/[\/()%!^"<>&|\s]/', $argument) !== 0) {
+        if (\PhpSpellcheck\preg_match('/[\/()%!^"<>&|\s]/', $argument) !== 0) {
             return $argument;
         }
-        $argument = \Safe\preg_replace('/(\\\\+)$/', '$1$1', $argument);
+        $argument = \PhpSpellcheck\preg_replace('/(\\\\+)$/', '$1$1', $argument);
 
         return '"' . str_replace(['"', '^', '%', '!', "\n"], ['""', '"^^"', '"^%"', '"^!"', '!LF!'], $argument) . '"';
     }

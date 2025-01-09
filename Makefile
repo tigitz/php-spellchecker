@@ -1,13 +1,13 @@
 DOCKER_COMPOSE 	?= docker compose
-EXEC_PHP      	= $(DOCKER_COMPOSE) run --rm -T php
-PHP_VERSION     ?= 8.2
+EXEC_PHP      	= $(DOCKER_COMPOSE) run --rm php
+PHP_VERSION     ?= 8.4
 DEPS_STRATEGY   ?= --prefer-stable
 COMPOSER      	= $(EXEC_PHP) composer
 WITH_COVERAGE   ?= "FALSE"
 EXAMPLES_DIR   ?= "examples"
 
 pull:
-	@$(DOCKER_COMPOSE) pull languagetools jamspell php
+	@$(DOCKER_COMPOSE) pull languagetools jamspell
 
 build:
 	$(DOCKER_COMPOSE) build --no-cache php
@@ -25,13 +25,16 @@ setup: build
 
 .PHONY: build kill setup
 
+PHPUNIT_FLAGS = $(if $(filter 8.4,$(PHP_VERSION)),--display-deprecations,) \
+                $(if $(filter true,$(WITH_COVERAGE)),--coverage-clover clover.xml,)
+
 tests: ## Run all tests
 tests:
-	if [ $(WITH_COVERAGE) = true ]; then $(EXEC_PHP) vendor/bin/phpunit --coverage-clover clover.xml; else $(EXEC_PHP) vendor/bin/phpunit; fi
+	$(EXEC_PHP) vendor/bin/phpunit $(PHPUNIT_FLAGS)
 
 tests-dox: ## Run all tests in dox format
 tests-dox:
-	if [ $(WITH_COVERAGE) = true ]; then $(EXEC_PHP) vendor/bin/phpunit --coverage-clover clover.xml --testdox; else $(EXEC_PHP) vendor/bin/phpunit --testdox; fi
+	$(EXEC_PHP) vendor/bin/phpunit $(PHPUNIT_FLAGS) --testdox
 
 # @TODO not optimized, it recreates a container for each example
 examples-test:
@@ -45,11 +48,11 @@ examples-test:
 
 tu: ## Run unit tests
 tu: vendor
-	$(EXEC_PHP) vendor/bin/phpunit --exclude-group integration
+	$(EXEC_PHP) vendor/bin/phpunit --display-deprecations --exclude-group integration
 
 ti: ## Run functional tests
 ti: vendor
-	$(EXEC_PHP) vendor/bin/phpunit --group integration
+	$(EXEC_PHP) vendor/bin/phpunit --display-deprecations --group integration
 
 .PHONY: tests tests-dox examples-test tu ti
 
@@ -59,12 +62,12 @@ vendor:
 PHP_CS_FIXER = docker-compose run --rm -T php tools/php-cs-fixer/vendor/bin/php-cs-fixer fix -vv --allow-risky=yes
 
 phpcs:
-	PHP_VERSION=8.1 $(EXEC_PHP) composer -d tools/php-cs-fixer update
-	PHP_VERSION=8.1 $(PHP_CS_FIXER) --dry-run
+	PHP_VERSION=8.2 $(EXEC_PHP) composer -d tools/php-cs-fixer update
+	PHP_VERSION=8.2 $(PHP_CS_FIXER) --dry-run
 
 phpcbf:
-	PHP_VERSION=8.1 $(EXEC_PHP) composer -d tools/php-cs-fixer update
-	PHP_VERSION=8.1 $(PHP_CS_FIXER)
+	PHP_VERSION=8.2 $(EXEC_PHP) composer -d tools/php-cs-fixer update
+	PHP_VERSION=8.2 $(PHP_CS_FIXER)
 
 phpstan: vendor
 	$(EXEC_PHP) vendor/bin/phpstan analyse src -c phpstan.neon -a vendor/autoload.php

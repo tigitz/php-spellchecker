@@ -14,13 +14,13 @@ class EchoHandler implements MisspellingHandlerInterface
     public function handle(iterable $misspellings): void
     {
         foreach ($misspellings as $misspelling) {
-            $output = sprintf(
+            $output = \sprintf(
                 'word: %s | line: %d | offset: %d | suggestions: %s | context: %s' . PHP_EOL,
                 $misspelling->getWord(),
                 $misspelling->getLineNumber(),
                 $misspelling->getOffset(),
                 $misspelling->hasSuggestions() ? implode(',', $misspelling->getSuggestions()) : '',
-                \Safe\json_encode($misspelling->getContext())
+                \PhpSpellcheck\json_encode($misspelling->getContext())
             );
 
             echo $output;

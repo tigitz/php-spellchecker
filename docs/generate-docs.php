@@ -107,11 +107,11 @@ foreach ($filesTree as $item) {
 }
 
 // Generate index.html doc file from the readme while stripping some sections
-$readme = \Safe\file_get_contents(__DIR__.'/../README.md');
+$readme = \PhpSpellcheck\file_get_contents(__DIR__.'/../README.md');
 
-$readme = \Safe\preg_replace('/(# Install[\s\S]+?)^# /m', '# ', $readme);
-$readme = \Safe\preg_replace('/(# Usage[\s\S]+?)^# /m', '# ', $readme);
-$readme = \Safe\preg_replace('/(# Testing[\s\S]+?)^# /m', '# ', $readme);
+$readme = \PhpSpellcheck\preg_replace('/(# Install[\s\S]+?)^# /m', '# ', $readme);
+$readme = \PhpSpellcheck\preg_replace('/(# Usage[\s\S]+?)^# /m', '# ', $readme);
+$readme = \PhpSpellcheck\preg_replace('/(# Testing[\s\S]+?)^# /m', '# ', $readme);
 
 $fs->dumpFile(
     __DIR__.'/index.html',
