@@ -1,5 +1,3 @@
-version: '3.4'
-
 services:
   php:
     image: tigitz/phpspellchecker:${PHP_VERSION:-8.1}
