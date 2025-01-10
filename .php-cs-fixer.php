@@ -25,7 +25,7 @@ return (new PhpCsFixer\Config())
         'method_chaining_indentation' => true,
         'native_function_casing' => true,
         'native_function_invocation' => ['include' => ['@compiler_optimized']],
-        'new_with_braces' => true,
+        'new_with_parentheses' => true,
         'modernize_types_casting' => true,
         'method_argument_space' => ['on_multiline' => 'ensure_fully_multiline'],
         'no_empty_statement' => true,
