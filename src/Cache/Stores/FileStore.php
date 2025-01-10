@@ -45,6 +45,21 @@ class FileStore implements StoreInterface
     }
 
     /**
+     * Set the value of the given key in the cache.
+     */
+    public function set(string $key, mixed $value, ?int $lifetime = null): void
+    {
+        $item = $this->filesystemAdapter->getItem($key);
+        $item->set($value);
+
+        if ($lifetime !== null) {
+            $item->expiresAfter($lifetime);
+        }
+
+        $this->filesystemAdapter->save($item);
+    }
+
+    /**
      * Removed an item from the pool.
      */
     public function delete(string $key): bool

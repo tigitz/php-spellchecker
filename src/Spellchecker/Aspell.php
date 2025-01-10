@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace PhpSpellcheck\Spellchecker;
 
+use PhpSpellcheck\Cache\Cache;
+use PhpSpellcheck\Cache\Stores\StoreInterface;
 use PhpSpellcheck\Exception\ProcessHasErrorOutputException;
 use PhpSpellcheck\Utils\CommandLine;
 use PhpSpellcheck\Utils\IspellParser;
@@ -13,39 +15,62 @@ use Webmozart\Assert\Assert;
 
 class Aspell implements SpellcheckerInterface
 {
-    /**
-     * @var CommandLine
-     */
-    private $binaryPath;
+    private StoreInterface $cache;
 
-    public function __construct(CommandLine $binaryPath)
+    public function __construct(private CommandLine $binaryPath)
     {
-        $this->binaryPath = $binaryPath;
+        $this->cache = Cache::create(storeArgs: ['namespace' => 'Aspell']);
     }
 
     public function check(string $text, array $languages = [], array $context = []): iterable
+    {
+        $output = $this->processText($text, $languages);
+
+        return IspellParser::parseMisspellingsFromOutput($output, $context);
+    }
+
+    /**
+     * Process the text with Aspell spellchecker.
+     *
+     * @param  array<int, string>  $languages
+     */
+    protected function processText(string $text, array $languages): string
     {
         Assert::maxCount($languages, 1, 'Aspell spellchecker doesn\'t support multiple languages check');
 
         $cmd = $this->binaryPath->addArgs(['--encoding', 'utf-8']);
         $cmd = $cmd->addArg('-a');
 
-        if (!empty($languages)) {
-            $cmd = $cmd->addArg('--lang=' . implode(',', $languages));
+        if (! empty($languages)) {
+            $cmd = $cmd->addArg('--lang='.implode(',', $languages));
         }
 
         $process = new Process($cmd->getArgs());
         // Add prefix characters putting Ispell's type of spellcheckers in terse-mode,
         // ignoring correct words and thus speeding up the execution
-        $process->setInput('!' . PHP_EOL . IspellParser::adaptInputForTerseModeProcessing($text) . PHP_EOL . '%');
+        $process->setInput('!'.PHP_EOL.IspellParser::adaptInputForTerseModeProcessing($text).PHP_EOL.'%');
 
-        $output = ProcessRunner::run($process)->getOutput();
+        $cacheKey = $this->getCacheKey($text, $languages);
 
-        if ($process->getErrorOutput() !== '') {
-            throw new ProcessHasErrorOutputException($process->getErrorOutput(), $text, $process->getCommandLine());
-        }
+        return $this->cache->get($cacheKey, function () use ($process, $text) {
+            $process = ProcessRunner::run($process);
 
-        return IspellParser::parseMisspellingsFromOutput($output, $context);
+            if ($process->getErrorOutput() !== '') {
+                throw new ProcessHasErrorOutputException($process->getErrorOutput(), $text, $process->getCommandLine());
+            }
+
+            return $process->getOutput();
+        });
+    }
+
+    /**
+     * Get the cache key for the given text and languages.
+     *
+     * @param  array<int, string>  $languages
+     */
+    protected function getCacheKey(string $text, array $languages): string
+    {
+        return md5(sprintf('%s_%s', $text, implode('_', $languages)));
     }
 
     public function getBinaryPath(): CommandLine
@@ -69,7 +94,7 @@ class Aspell implements SpellcheckerInterface
             $languages[$name] = true;
         }
         $languages = array_keys($languages);
-        \Safe\sort($languages);
+        sort($languages);
 
         return $languages;
     }
