@@ -16,7 +16,7 @@ class Cache implements CacheFactoryInterface
      */
     public static function create(?string $driver = null, array $config = []): StoreInterface
     {
-        $driver = $driver ?? self::getDefaultDriver();
+        $driver ??= self::getDefaultDriver();
 
         $class = self::resolveStoreClass($driver);
 
@@ -28,9 +28,9 @@ class Cache implements CacheFactoryInterface
      */
     public static function resolveStoreClass(string $driver): string
     {
-        $class = sprintf('%s\%s\%s%s', __NAMESPACE__, 'Stores', ucfirst($driver), 'Store');
+        $class = \sprintf('%s\%s\%s%s', __NAMESPACE__, 'Stores', ucfirst($driver), 'Store');
 
-        if (! class_exists($class)) {
+        if (!class_exists($class)) {
             throw new InvalidArgumentException("Cache store [{$driver}] is not defined.");
         }
 

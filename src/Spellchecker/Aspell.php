@@ -31,50 +31,6 @@ class Aspell implements SpellcheckerInterface
         return IspellParser::parseMisspellingsFromOutput($output, $context);
     }
 
-    /**
-     * Process the text with Aspell spellchecker.
-     *
-     * @param  array<int, string>  $languages
-     */
-    protected function processText(string $text, array $languages): string
-    {
-        Assert::maxCount($languages, 1, 'Aspell spellchecker doesn\'t support multiple languages check');
-
-        $cmd = $this->binaryPath->addArgs(['--encoding', 'utf-8']);
-        $cmd = $cmd->addArg('-a');
-
-        if (! empty($languages)) {
-            $cmd = $cmd->addArg('--lang='.implode(',', $languages));
-        }
-
-        $process = new Process($cmd->getArgs());
-        // Add prefix characters putting Ispell's type of spellcheckers in terse-mode,
-        // ignoring correct words and thus speeding up the execution
-        $process->setInput('!'.PHP_EOL.IspellParser::adaptInputForTerseModeProcessing($text).PHP_EOL.'%');
-
-        $cacheKey = $this->getCacheKey($text, $languages);
-
-        return $this->cache->get($cacheKey, function () use (&$process, $text) {
-            $process = ProcessRunner::run($process);
-
-            if ($process->getErrorOutput() !== '') {
-                throw new ProcessHasErrorOutputException($process->getErrorOutput(), $text, $process->getCommandLine());
-            }
-
-            return $process->getOutput();
-        });
-    }
-
-    /**
-     * Get the cache key for the given text and languages.
-     *
-     * @param  array<int, string>  $languages
-     */
-    protected function getCacheKey(string $text, array $languages): string
-    {
-        return md5(sprintf('%s_%s', $text, implode('_', $languages)));
-    }
-
     public function getBinaryPath(): CommandLine
     {
         return $this->binaryPath;
@@ -104,5 +60,39 @@ class Aspell implements SpellcheckerInterface
     public static function create(?string $binaryPathAsString = null): self
     {
         return new self(new CommandLine($binaryPathAsString ?? 'aspell'));
+    }
+
+    /**
+     * Process the text with Aspell spellchecker.
+     *
+     * @param array<int, string> $languages
+     */
+    protected function processText(string $text, array $languages): string
+    {
+        Assert::maxCount($languages, 1, 'Aspell spellchecker doesn\'t support multiple languages check');
+
+        $cmd = $this->binaryPath->addArgs(['--encoding', 'utf-8']);
+        $cmd = $cmd->addArg('-a');
+
+        if (!empty($languages)) {
+            $cmd = $cmd->addArg('--lang='.implode(',', $languages));
+        }
+
+        $process = new Process($cmd->getArgs());
+        // Add prefix characters putting Ispell's type of spellcheckers in terse-mode,
+        // ignoring correct words and thus speeding up the execution
+        $process->setInput('!'.PHP_EOL.IspellParser::adaptInputForTerseModeProcessing($text).PHP_EOL.'%');
+
+        $cacheKey = $this->getCacheKey($text, $languages);
+
+        return $this->cache->get($cacheKey, function () use (&$process, $text) {
+            $process = ProcessRunner::run($process);
+
+            if ($process->getErrorOutput() !== '') {
+                throw new ProcessHasErrorOutputException($process->getErrorOutput(), $text, $process->getCommandLine());
+            }
+
+            return $process->getOutput();
+        });
     }
 }

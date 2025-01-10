@@ -27,11 +27,6 @@ class CacheTest extends TestCase
         $this->store->clear();
     }
 
-    protected function getStoreInstance(): StoreInterface
-    {
-        return Cache::create(config: ['namespace' => 'CacheTest']);
-    }
-
     public function testInstanceOfCacheInterface()
     {
         $this->assertInstanceOf(StoreInterface::class, $this->store);
@@ -65,5 +60,10 @@ class CacheTest extends TestCase
         $this->expectExceptionMessage('Cache store [invalid] is not defined.');
 
         Cache::resolveStoreClass('invalid');
+    }
+
+    protected function getStoreInstance(): StoreInterface
+    {
+        return Cache::create(config: ['namespace' => 'CacheTest']);
     }
 }

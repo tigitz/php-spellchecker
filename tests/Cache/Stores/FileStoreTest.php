@@ -26,11 +26,6 @@ class FileStoreTest extends TestCase
         $this->store->clear();
     }
 
-    protected function getFileStoreInstance(): CacheInterface
-    {
-        return FileStore::create(namespace: 'FileStoreTest');
-    }
-
     public function testInstanceOfCacheInterface()
     {
         $this->assertInstanceOf(CacheInterface::class, $this->store);
@@ -76,5 +71,10 @@ class FileStoreTest extends TestCase
     {
         $this->store->set('key', 'value');
         $this->assertTrue($this->store->clear());
+    }
+
+    protected function getFileStoreInstance(): CacheInterface
+    {
+        return FileStore::create(namespace: 'FileStoreTest');
     }
 }

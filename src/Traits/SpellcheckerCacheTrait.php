@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PhpSpellcheck\Traits;
 
 use PhpSpellcheck\Cache\Cache;
@@ -27,11 +29,11 @@ trait SpellcheckerCacheTrait
     /**
      * Get the cache key for the given text and languages.
      *
-     * @param  array<int, string>  $languages
+     * @param array<int, string> $languages
      */
     private function getCacheKey(string $text, array $languages): string
     {
-        return md5(sprintf('%s_%s', $text, implode('_', $languages)));
+        return md5(\sprintf('%s_%s', $text, implode('_', $languages)));
     }
 
     /**
@@ -39,7 +41,7 @@ trait SpellcheckerCacheTrait
      */
     private function getCacheNamespace(): string
     {
-        $parts = explode('\\', get_class($this));
+        $parts = explode('\\', \get_class($this));
 
         return end($parts);
     }
