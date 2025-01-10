@@ -10,28 +10,28 @@ use PhpSpellcheck\Exception\InvalidArgumentException;
 class Cache implements CacheFactoryInterface
 {
     /**
-     * Get a cache store instance by name.
+     * Get a cache store instance by driver.
      *
-     * @param array<string, mixed> $storeArgs
+     * @param array<string, mixed> $config
      */
-    public static function create(?string $name = null, array $storeArgs = []): StoreInterface
+    public static function create(?string $driver = null, array $config = []): StoreInterface
     {
-        $name = $name ?? self::getDefaultDriver();
+        $driver = $driver ?? self::getDefaultDriver();
 
-        $class = self::resolveStoreClassName($name);
+        $class = self::resolveStoreClass($driver);
 
-        return $class::create(...$storeArgs);
+        return $class::create(...$config);
     }
 
     /**
      * Resolve the cache store class.
      */
-    public static function resolveStoreClassName(string $name): string
+    public static function resolveStoreClass(string $driver): string
     {
-        $class = sprintf('%s\%s\%s%s', __NAMESPACE__, 'Stores', ucfirst($name), 'Store');
+        $class = sprintf('%s\%s\%s%s', __NAMESPACE__, 'Stores', ucfirst($driver), 'Store');
 
         if (! class_exists($class)) {
-            throw new InvalidArgumentException("Cache store [{$name}] is not defined.");
+            throw new InvalidArgumentException("Cache store [{$driver}] is not defined.");
         }
 
         return $class;
@@ -40,7 +40,7 @@ class Cache implements CacheFactoryInterface
     /**
      * Get the default cache driver name.
      */
-    public static function getDefaultDriver(): string
+    private static function getDefaultDriver(): string
     {
         return 'file';
     }

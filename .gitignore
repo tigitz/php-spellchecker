@@ -7,3 +7,4 @@ vendor
 .phpunit.result.cache
 .phpspellcheck.cache
 composer/
+.DS_Store

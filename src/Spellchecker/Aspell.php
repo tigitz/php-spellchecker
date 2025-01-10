@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace PhpSpellcheck\Spellchecker;
 
-use PhpSpellcheck\Cache\Cache;
-use PhpSpellcheck\Cache\Stores\StoreInterface;
 use PhpSpellcheck\Exception\ProcessHasErrorOutputException;
+use PhpSpellcheck\Traits\SpellcheckerCacheTrait;
 use PhpSpellcheck\Utils\CommandLine;
 use PhpSpellcheck\Utils\IspellParser;
 use PhpSpellcheck\Utils\ProcessRunner;
@@ -15,13 +14,16 @@ use Webmozart\Assert\Assert;
 
 class Aspell implements SpellcheckerInterface
 {
-    private StoreInterface $cache;
+    use SpellcheckerCacheTrait;
 
     public function __construct(private CommandLine $binaryPath)
     {
-        $this->cache = Cache::create(storeArgs: ['namespace' => 'Aspell']);
+        $this->initCache();
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function check(string $text, array $languages = [], array $context = []): iterable
     {
         $output = $this->processText($text, $languages);
@@ -52,7 +54,7 @@ class Aspell implements SpellcheckerInterface
 
         $cacheKey = $this->getCacheKey($text, $languages);
 
-        return $this->cache->get($cacheKey, function () use ($process, $text) {
+        return $this->cache->get($cacheKey, function () use (&$process, $text) {
             $process = ProcessRunner::run($process);
 
             if ($process->getErrorOutput() !== '') {
