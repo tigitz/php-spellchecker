@@ -31,7 +31,7 @@ class FileStore implements StoreInterface
      */
     public static function getDefaultCachePath(): string
     {
-        return \dirname(array_keys(ClassLoader::getRegisteredLoaders())[0]).'/.phpspellcheck.cache';
+        return dirname(array_keys(ClassLoader::getRegisteredLoaders())[0]).'/.phpspellcheck.cache';
     }
 
     /**
