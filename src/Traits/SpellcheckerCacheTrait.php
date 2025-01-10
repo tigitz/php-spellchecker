@@ -33,7 +33,7 @@ trait SpellcheckerCacheTrait
      */
     private function getCacheKey(string $text, array $languages): string
     {
-        return md5(sprintf('%s_%s', $text, implode('_', $languages)));
+        return md5(\sprintf('%s_%s', $text, implode('_', $languages)));
     }
 
     /**
@@ -41,7 +41,7 @@ trait SpellcheckerCacheTrait
      */
     private function getCacheNamespace(): string
     {
-        $parts = explode('\\', get_class($this));
+        $parts = explode('\\', \get_class($this));
 
         return end($parts);
     }
