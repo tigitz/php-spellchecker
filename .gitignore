@@ -8,3 +8,4 @@ vendor
 .phpspellcheck.cache
 composer/
 .DS_Store
+.aider*
