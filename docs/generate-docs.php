@@ -16,17 +16,17 @@ require_once __DIR__.'/../vendor/autoload.php';
 $loader = new \Twig\Loader\FilesystemLoader(__DIR__);
 $twig = new \Twig\Environment($loader);
 
-$icons = new Feather\Icons();
+$icons = new Feather\IconManager();
 $function = new \Twig\TwigFunction('feather', function (string $featherIconName, array $options = []) use ($icons) {
-    return $icons->get($featherIconName, $options);
-});
+    return $icons->getIcon($featherIconName, $options);
+}, ['is_safe' => ['html']]);
 
 $engine = new MarkdownEngine\ParsedownEngine();
 $twig->addFunction($function);
 $twig->addExtension(new MarkdownExtension($engine));
 
 $finder = new Finder();
-$finder->in('content');
+$finder->in(__DIR__.'/content');
 $finder->sortByName();
 
 $slugify = new Slugify();
@@ -34,7 +34,8 @@ $filesTree = [];
 $menu = [];
 
 foreach ($finder as $idx => $item) {
-    $depth = substr_count($item->getPathname(), DIRECTORY_SEPARATOR);
+    $baseDepth = substr_count(__DIR__.'/content', DIRECTORY_SEPARATOR);
+    $depth = substr_count($item->getPathname(), DIRECTORY_SEPARATOR) - $baseDepth;
     $normalizedFilename = preg_replace('/\d\d_/' , '', $item->getFilename());
 
     if ($item->isDir()) {
@@ -91,11 +92,11 @@ foreach ($finder as $idx => $item) {
 $fs = new Filesystem();
 foreach ($filesTree as $item) {
     $fs->dumpFile(
-        $item['html_path'],
+        __DIR__.'/'.$item['html_path'],
         $twig->render(
             'layout.html.twig',
             [
-                'markdown_path' => $item['md_path'],
+                'markdown_path' => str_replace(__DIR__, '', $item['md_path']),
                 'theme_dir' => $item['theme_dir'],
                 'base_dir' => $item['base_dir'],
                 'menu' => $menu,
