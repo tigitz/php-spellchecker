@@ -45,19 +45,15 @@ class MarkdownRemover implements TextProcessorInterface
         // Remove blockquotes
         $output = \PhpSpellcheck\preg_replace('/^\s{0,3}>\s?/', '', $output);
         // Remove reference-style links?
+
         $output = \PhpSpellcheck\preg_replace('/^\s{1,2}\[(.*?)\]: (\S+)( ".*?")?\s*$/', '', $output);
-        /**
-         * Remove atx-style headers.
-         *
-         *@TODO find a way to merge the two regex below
-         * remove ## Heading ##
-         */
-        $output = \PhpSpellcheck\preg_replace('/^#{1,6}\s+(.*)(\s+#{1,6})$/m', '$1', $output);
-        // remove ## Heading
-        $output = \PhpSpellcheck\preg_replace('/^#{1,6}\s+(.*)$/m', '$1', $output);
-        // Remove emphasis (repeat the line to remove double emphasis)
-        $output = \PhpSpellcheck\preg_replace('/([\*_]{1,3})(\S.*?\S{0,1})\1/', '$2', $output);
-        $output = \PhpSpellcheck\preg_replace('/([\*_]{1,3})(\S.*?\S{0,1})\1/', '$2', $output);
+        // Remove ## Heading
+        $output = \PhpSpellcheck\preg_replace('/^#{1,6}\s+(.*?)(?:\s+#{1,6})?$/m', '$1', $output);
+        // Remove all layers of emphasis
+        while (\PhpSpellcheck\preg_match('/([\*_]{1,3})(\S.*?\S{0,1})\1/', $output)) {
+            $output = \PhpSpellcheck\preg_replace('/([\*_]{1,3})(\S.*?\S{0,1})\1/', '$2', $output);
+        }
+
         // Remove list items
         $output = \PhpSpellcheck\preg_replace('/^([^\S\r\n]*)\*\s/m', '$1', $output);
         // Remove code blocks
