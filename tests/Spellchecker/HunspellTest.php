@@ -8,6 +8,7 @@ use PhpSpellcheck\Spellchecker\Hunspell;
 use PhpSpellcheck\Tests\TextTest;
 use PhpSpellcheck\Utils\CommandLine;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\Group;
 
 class HunspellTest extends TestCase
 {
@@ -29,9 +30,7 @@ class HunspellTest extends TestCase
         (new Hunspell(new CommandLine(IspellTest::FAKE_BAD_BINARIES_PATH)))->check('foo');
     }
 
-    /**
-     * @group integration
-     */
+    #[Group('integration')]
     public function testSpellcheckFromRealBinariesLanguage(): void
     {
         $hunspell = new Hunspell(new CommandLine(self::realBinaryPath()));
@@ -39,25 +38,19 @@ class HunspellTest extends TestCase
         $this->assertInstanceOf(Misspelling::class, $misspellings[0]);
     }
 
-    /**
-     * @group integration
-     */
+    #[Group('integration')]
     public function testSpellcheckFromRealBinaries(): void
     {
         $this->assertWorkingSpellcheckENText(self::realBinaryPath(), IspellTest::CONTENT_STUB, ['en_US']);
     }
 
-    /**
-     * @group integration
-     */
+    #[Group('integration')]
     public function testSpellcheckFromRealBinariesUTF8(): void
     {
         $this->assertWorkingSpellcheckRUText(self::realBinaryPath(), TextTest::CONTENT_STUB_RU, ['ru_RU']);
     }
 
-    /**
-     * @group integration
-     */
+    #[Group('integration')]
     public function testGetSupportedLanguagesFromRealBinaries(): void
     {
         $this->assertWorkingSupportedLanguages(self::realBinaryPath());
@@ -65,7 +58,7 @@ class HunspellTest extends TestCase
 
     public function getFakeDicts(): array
     {
-        return explode(PHP_EOL, \Safe\file_get_contents(__DIR__ . '/../Fixtures/Hunspell/dicts.txt'));
+        return explode(PHP_EOL, \PhpSpellcheck\file_get_contents(__DIR__ . '/../Fixtures/Hunspell/dicts.txt'));
     }
 
     /**

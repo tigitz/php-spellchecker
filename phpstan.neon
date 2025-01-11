@@ -1,7 +1,6 @@
 includes:
     - vendor/phpstan/phpstan-webmozart-assert/extension.neon
     - vendor/phpstan/phpstan-strict-rules/rules.neon
-    - vendor/thecodingmachine/phpstan-safe-rule/phpstan-safe-rule.neon
     - vendor/phpstan/phpstan-phpunit/extension.neon
 
 parameters:
@@ -24,41 +23,19 @@ parameters:
             path: src/MisspellingHandler/MisspellingHandlerInterface.php
 
         -
-            message: "#^Function pspell_config_create is unsafe to use\\. It can return FALSE instead of throwing an exception\\. Please add 'use function Safe\\\\pspell_config_create;' at the beginning of the file to use the variant provided by the 'thecodingmachine/safe' library\\.$#"
+            message: '#^Default value of the parameter \#2 \$flags \(0\) of function PhpSpellcheck\\json_encode\(\) is incompatible with type int\<1, max\>\.$#'
+            identifier: parameter.defaultValue
             count: 1
-            path: src/Spellchecker/PHPPspell.php
+            path: src/Utils/php-functions.php
 
         -
-            message: "#^Function pspell_config_ignore is unsafe to use\\. It can return FALSE instead of throwing an exception\\. Please add 'use function Safe\\\\pspell_config_ignore;' at the beginning of the file to use the variant provided by the 'thecodingmachine/safe' library\\.$#"
+            message: '#^Parameter \#3 \$depth of function json_decode expects int\<1, max\>, int given\.$#'
+            identifier: argument.type
             count: 1
-            path: src/Spellchecker/PHPPspell.php
+            path: src/Utils/php-functions.php
 
         -
-            message: "#^Function pspell_config_mode is unsafe to use\\. It can return FALSE instead of throwing an exception\\. Please add 'use function Safe\\\\pspell_config_mode;' at the beginning of the file to use the variant provided by the 'thecodingmachine/safe' library\\.$#"
+            message: '#^Parameter \#3 \$depth of function json_encode expects int\<1, max\>, int given\.$#'
+            identifier: argument.type
             count: 1
-            path: src/Spellchecker/PHPPspell.php
-
-        -
-            message: "#^Function pspell_new_config is unsafe to use\\. It can return FALSE instead of throwing an exception\\. Please add 'use function Safe\\\\pspell_new_config;' at the beginning of the file to use the variant provided by the 'thecodingmachine/safe' library\\.$#"
-            count: 1
-            path: src/Spellchecker/PHPPspell.php
-
-        -
-            message: "#^Parameter \\#1 \\$dictionary of function pspell_check expects PSpell\\\\Dictionary, PSpell\\\\Dictionary\\|false given\\.$#"
-            count: 1
-            path: src/Spellchecker/PHPPspell.php
-
-        -
-            message: "#^Parameter \\#1 \\$dictionary of function pspell_check expects PSpell\\\\Dictionary, int given\\.$#"
-            count: 1
-            path: src/Spellchecker/PHPPspell.php
-
-        -
-            message: "#^Parameter \\#1 \\$dictionary of function pspell_suggest expects PSpell\\\\Dictionary, PSpell\\\\Dictionary\\|false given\\.$#"
-            count: 1
-            path: src/Spellchecker/PHPPspell.php
-
-        -
-            message: "#^Parameter \\#1 \\$dictionary of function pspell_suggest expects PSpell\\\\Dictionary, int given\\.$#"
-            count: 1
-            path: src/Spellchecker/PHPPspell.php
+            path: src/Utils/php-functions.php

@@ -20,7 +20,7 @@ class EchoHandler implements MisspellingHandlerInterface
                 $misspelling->getLineNumber(),
                 $misspelling->getOffset(),
                 $misspelling->hasSuggestions() ? implode(',', $misspelling->getSuggestions()) : '',
-                \Safe\json_encode($misspelling->getContext())
+                \PhpSpellcheck\json_encode($misspelling->getContext())
             );
 
             echo $output;

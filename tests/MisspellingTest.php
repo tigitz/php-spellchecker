@@ -5,6 +5,7 @@ declare(strict_types=1);
 use PhpSpellcheck\Exception\InvalidArgumentException;
 use PhpSpellcheck\Misspelling;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class MisspellingTest extends TestCase
 {
@@ -16,15 +17,13 @@ class MisspellingTest extends TestCase
         $this->assertSame(['misspelled', 'misspelling'], $misspelling->getSuggestions());
     }
 
-    /**
-     * @dataProvider nonDeterminableUniqueIdentityMisspellings
-     */
+    #[DataProvider('nonDeterminableUniqueIdentityMisspellings')]
     public function testCanDeterminateUniqueIdentity(Misspelling $misspelling): void
     {
         $this->assertFalse($misspelling->canDeterminateUniqueIdentity());
     }
 
-    public function nonDeterminableUniqueIdentityMisspellings(): array
+    public static function nonDeterminableUniqueIdentityMisspellings(): array
     {
         return [
             [new Misspelling('mispelled')],

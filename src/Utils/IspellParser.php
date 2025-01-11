@@ -73,6 +73,6 @@ class IspellParser
      */
     public static function adaptInputForTerseModeProcessing(string $input): string
     {
-        return \Safe\preg_replace('/^/m', '^', $input);
+        return \PhpSpellcheck\preg_replace('/^/m', '^', $input);
     }
 }

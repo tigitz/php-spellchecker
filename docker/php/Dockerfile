@@ -26,16 +26,19 @@ RUN apt-get update \
      aspell-en \
      aspell-ru \
      libpspell-dev
-RUN set -eux; \
-      case "$PHP_VERSION" in \
-          8.1*) pecl install xdebug-3.1.1;; \
-          *) pecl install xdebug-3.3.2;; \
-      esac
-RUN docker-php-ext-configure pspell \
-	&& docker-php-ext-enable xdebug \
-    && docker-php-ext-install pspell \
-    && docker-php-ext-install zip \
-    && rm -r /var/lib/apt/lists/*
+
+RUN pecl channel-update pecl.php.net && \
+    pecl install xdebug-3.4.0 && \
+    docker-php-ext-enable xdebug
+
+RUN if [ "${PHP_VERSION}" = "8.4" ]; then \
+        pecl install pspell; \
+    else \
+        docker-php-ext-configure pspell && \
+        docker-php-ext-install pspell; \
+    fi && \
+    docker-php-ext-enable pspell && \
+    rm -r /var/lib/apt/lists/*
 
 RUN cp /usr/share/hunspell/en_US.aff  /usr/share/hunspell/en_US.aff.orig \
     && cp /usr/share/hunspell/en_US.dic  /usr/share/hunspell/en_US.dic.orig \

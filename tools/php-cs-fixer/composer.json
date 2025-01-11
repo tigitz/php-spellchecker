@@ -1,6 +1,6 @@
 {
     "require": {
-        "php": "^8.1",
-        "friendsofphp/php-cs-fixer": "^v3.54.0"
+        "php": "^8.2",
+        "friendsofphp/php-cs-fixer": "^v3.67.0"
     }
 }

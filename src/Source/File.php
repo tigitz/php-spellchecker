@@ -25,13 +25,13 @@ class File implements SourceInterface
      */
     public function toTexts(array $context = []): iterable
     {
-        $context['filePath'] = \Safe\realpath($this->filePath);
+        $context['filePath'] = \PhpSpellcheck\realpath($this->filePath);
 
         yield new Text($this->getFileContent(), $context);
     }
 
     private function getFileContent(): string
     {
-        return \Safe\file_get_contents($this->filePath);
+        return \PhpSpellcheck\file_get_contents($this->filePath);
     }
 }
