@@ -57,7 +57,7 @@ class Misspelling implements MisspellingInterface
     public function mergeSuggestions(array $suggestionsToAdd): MisspellingInterface
     {
         $mergedSuggestions = [];
-        $existingSuggestionsAsKeys = \Safe\array_flip($this->suggestions);
+        $existingSuggestionsAsKeys = array_flip($this->suggestions);
         foreach ($suggestionsToAdd as $suggestionToAdd) {
             if (!isset($existingSuggestionsAsKeys[$suggestionToAdd])) {
                 $this->suggestions[] = $suggestionToAdd;

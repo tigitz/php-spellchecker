@@ -62,7 +62,7 @@ class Directory implements SourceInterface
                 // When regex pattern is used, an array containing the file path in its first element is returned
                 $file = new \SplFileInfo(current($file));
             } else {
-                throw new RuntimeException(\Safe\sprintf('Couldn\'t create "%s" object from the given file', \SplFileInfo::class));
+                throw new RuntimeException(\sprintf('Couldn\'t create "%s" object from the given file', \SplFileInfo::class));
             }
 
             if (!$file->isDir() && $file->getRealPath() !== false) {

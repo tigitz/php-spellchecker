@@ -68,7 +68,7 @@ class Hunspell implements SpellcheckerInterface
         foreach ($output as $line) {
             $line = trim($line);
             if ('' === $line // Skip empty lines
-                || \Safe\substr($line, -1) === ':' // Skip headers
+                || substr($line, -1) === ':' // Skip headers
                 || strpos($line, ':') !== false // Skip search path
             ) {
                 continue;
@@ -78,11 +78,13 @@ class Hunspell implements SpellcheckerInterface
                 // Skip MySpell hyphen files
                 continue;
             }
-            $name = \Safe\preg_replace('/\.(aff|dic)$/', '', $name);
-            $languages[$name] = true;
+            $name = \PhpSpellcheck\preg_replace('/\.(aff|dic)$/', '', $name);
+            if (\is_string($name)) {
+                $languages[$name] = true;
+            }
         }
         $languages = array_keys($languages);
-        \Safe\sort($languages);
+        sort($languages);
 
         return $languages;
     }

@@ -1,6 +1,6 @@
 name: Check & fix styling
 
-on: [push]
+on: [push, pull_request]
 
 jobs:
   php-cs-fixer:
@@ -13,9 +13,9 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 8.1
+          php-version: 8.2
           coverage: none
-          tools: php-cs-fixer:3.54.x, cs2pr
+          tools: php-cs-fixer:3.67.x, cs2pr
 
       - name: Restore PHP-CS-Fixer cache
         uses: actions/cache@v4

@@ -8,6 +8,7 @@ use PhpSpellcheck\Spellchecker\Ispell;
 use PhpSpellcheck\Tests\TextTest;
 use PhpSpellcheck\Utils\CommandLine;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\Group;
 
 class IspellTest extends TestCase
 {
@@ -32,17 +33,13 @@ class IspellTest extends TestCase
         Ispell::create(self::FAKE_BAD_BINARIES_PATH)->check('bla');
     }
 
-    /**
-     * @group integration
-     */
+    #[Group('integration')]
     public function testSpellcheckFromRealBinaries(): void
     {
         $this->assertWorkingSpellcheck(self::realBinaryPath());
     }
 
-    /**
-     * @group integration
-     */
+    #[Group('integration')]
     public function testGetSupportedLanguagesFromRealBinaries(): void
     {
         $this->assertWorkingSupportedLanguages(self::realBinaryPath(), self::realShellPath());
@@ -55,10 +52,10 @@ class IspellTest extends TestCase
 
     public function getFakeDicts(): array
     {
-        return explode(PHP_EOL, \Safe\file_get_contents(__DIR__ . '/../Fixtures/Ispell/dicts.txt'));
+        return explode(PHP_EOL, \PhpSpellcheck\file_get_contents(__DIR__ . '/../Fixtures/Ispell/dicts.txt'));
     }
 
-    public function assertWorkingSupportedLanguages(string $binaries, string $shellEntryPoint = null): void
+    public function assertWorkingSupportedLanguages(string $binaries, ?string $shellEntryPoint = null): void
     {
         $ispell = new Ispell(
             new CommandLine($binaries),

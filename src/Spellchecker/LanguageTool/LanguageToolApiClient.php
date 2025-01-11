@@ -23,7 +23,14 @@ class LanguageToolApiClient
      * @param array<string> $languages
      * @param array<mixed> $options
      *
-     * @return array<string, mixed>
+     * @return array{matches: array<array{
+     *   offset: int,
+     *   context: array{text: string, offset: int, length: int},
+     *   replacements: array<array{value: string}>,
+     *   sentence: string,
+     *   message: string,
+     *   rule: string
+     * }>}
      */
     public function spellCheck(string $text, array $languages, array $options): array
     {
@@ -34,6 +41,7 @@ class LanguageToolApiClient
             $options['altLanguages'] = implode(',', $languages);
         }
 
+        /** @var array{matches: array<array{offset: int, context: array{text: string, offset: int, length: int}, replacements: array<array{value: string}>, sentence: string, message: string, rule: string}>} */
         return $this->requestAPI(
             '/v2/check',
             'POST',
@@ -47,14 +55,15 @@ class LanguageToolApiClient
      */
     public function getSupportedLanguages(): array
     {
-        return array_column(
+        /** @var array<string> */
+        return array_values(array_unique(array_column(
             $this->requestAPI(
                 '/v2/languages',
                 'GET',
                 'Accept: application/json'
             ),
             'longCode'
-        );
+        )));
     }
 
     /**
@@ -75,9 +84,9 @@ class LanguageToolApiClient
             $httpData['content'] = http_build_query($queryParams);
         }
 
-        $content = \Safe\file_get_contents($this->baseUrl . $endpoint, false, stream_context_create(['http' => $httpData]));
+        $content = \PhpSpellcheck\file_get_contents($this->baseUrl . $endpoint, false, stream_context_create(['http' => $httpData]));
         /** @var array<mixed> $contentAsArray */
-        $contentAsArray = \Safe\json_decode($content, true);
+        $contentAsArray = \PhpSpellcheck\json_decode($content, true);
 
         return $contentAsArray;
     }

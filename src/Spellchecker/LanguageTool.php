@@ -42,6 +42,15 @@ class LanguageTool implements SpellcheckerInterface
         }
         $check = $this->apiClient->spellCheck($text, $languages, $options ?? []);
 
+        /** @var array{matches: list<array{
+         *   offset: int,
+         *   context: array{text: string, offset: int, length: int},
+         *   replacements: list<array{value: string}>,
+         *   sentence: string,
+         *   message: string,
+         *   rule: string
+         * }>} $check */
+
         if (!\is_array($check['matches'])) {
             throw new RuntimeException('LanguageTool spellcheck response must contain a "matches" array');
         }
