@@ -9,6 +9,7 @@ use PhpSpellcheck\Spellchecker\LanguageTool\LanguageToolApiClient;
 use PhpSpellcheck\Spellchecker\MultiSpellchecker;
 use PhpSpellcheck\Spellchecker\SpellcheckerInterface;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\Group;
 
 class MultiSpellcheckerTest extends TestCase
 {
@@ -91,9 +92,7 @@ class MultiSpellcheckerTest extends TestCase
         $this->assertSame(['en', 'fr', 'ru'], $multipleSpellchecker->getSupportedLanguages());
     }
 
-    /**
-     * @group integration
-     */
+    #[Group('integration')]
     public function testGetSupportedLanguage(): void
     {
         $lt = new LanguageTool(new LanguageToolApiClient(LanguageToolTest::realAPIEndpoint()));

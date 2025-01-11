@@ -8,14 +8,13 @@ use PhpSpellcheck\Exception\RuntimeException;
 use PhpSpellcheck\Spellchecker\JamSpell;
 use PhpSpellcheck\Tests\TextTest;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\HttpClient\NativeHttpClient;
 use Symfony\Component\HttpClient\Psr18Client;
 
 class JamSpellTest extends TestCase
 {
-    /**
-     * @group integration
-     */
+    #[Group('integration')]
     public function testSpellcheckFromRealAPI(): void
     {
         $misspellings = iterator_to_array(

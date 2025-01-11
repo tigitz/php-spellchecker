@@ -8,6 +8,7 @@ use PhpSpellcheck\Spellchecker\LanguageTool\LanguageToolApiClient;
 use PhpSpellcheck\Tests\TextTest;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\Group;
 
 class LanguageToolTest extends TestCase
 {
@@ -78,17 +79,13 @@ class LanguageToolTest extends TestCase
         $this->assertWorkingSupportedLanguages($client);
     }
 
-    /**
-     * @group integration
-     */
+    #[Group('integration')]
     public function testSpellcheckFromRealAPI(): void
     {
         $this->assertWorkingSpellcheck(new LanguageToolApiClient(self::realAPIEndpoint()));
     }
 
-    /**
-     * @group integration
-     */
+    #[Group('integration')]
     public function testSpellcheckMultiBytesStringFromRealAPI(): void
     {
         $misspellings = iterator_to_array(
@@ -113,9 +110,7 @@ class LanguageToolTest extends TestCase
         $this->assertWorkingSpellcheck(new LanguageToolApiClient(self::realAPIEndpoint()));
     }
 
-    /**
-     * @group integration
-     */
+    #[Group('integration')]
     public function testGetSupportedLanguagesFromRealBinaries(): void
     {
         $this->assertWorkingSupportedLanguages(new LanguageToolApiClient(self::realAPIEndpoint()));

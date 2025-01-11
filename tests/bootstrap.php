@@ -10,12 +10,12 @@ $dependencies = [
 ];
 
 foreach ($dependencies as $dependency) {
-    echo sprintf('Waiting "%s" dependency'.PHP_EOL, $dependency);
+    echo \sprintf('Waiting "%s" dependency'.PHP_EOL, $dependency);
 
     for (; ;) {
         $url = parse_url(getenv($dependency));
         if ($socket = @fsockopen($url['host'], $url['port'])) {
-            echo sprintf('"%s" dependency is up'.PHP_EOL, $dependency).PHP_EOL;
+            echo \sprintf('"%s" dependency is up'.PHP_EOL, $dependency).PHP_EOL;
             fclose($socket);
 
             break;

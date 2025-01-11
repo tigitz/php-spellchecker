@@ -15,13 +15,13 @@ class ProcessFailedException extends \RuntimeException implements ExceptionInter
 
     public function __construct(
         Process $process,
-        \Throwable $previous = null,
+        ?\Throwable $previous = null,
         string $failureReason = '',
         int $code = 0
     ) {
         $this->process = $process;
 
-        $message = \Safe\sprintf(
+        $message = \sprintf(
             'Process with command "%s" has failed%s with exit code %d(%s)%s',
             $process->getCommandLine(),
             $process->isStarted() ? ' running' : '',

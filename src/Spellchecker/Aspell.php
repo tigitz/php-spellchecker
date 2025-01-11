@@ -69,7 +69,7 @@ class Aspell implements SpellcheckerInterface
             $languages[$name] = true;
         }
         $languages = array_keys($languages);
-        \Safe\sort($languages);
+        sort($languages);
 
         return $languages;
     }

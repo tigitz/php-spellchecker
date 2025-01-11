@@ -101,7 +101,7 @@ class Ispell implements SpellcheckerInterface
                     continue;
                 }
 
-                yield \Safe\substr($file, 0, -4);
+                yield substr($file, 0, -4);
             }
         }
 

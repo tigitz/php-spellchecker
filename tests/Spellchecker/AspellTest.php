@@ -8,6 +8,7 @@ use PhpSpellcheck\Spellchecker\Aspell;
 use PhpSpellcheck\Tests\TextTest;
 use PhpSpellcheck\Utils\CommandLine;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\Group;
 
 class AspellTest extends TestCase
 {
@@ -29,25 +30,19 @@ class AspellTest extends TestCase
         $this->assertWorkingSupportedLanguages(self::FAKE_BINARIES_PATH);
     }
 
-    /**
-     * @group integration
-     */
+    #[Group('integration')]
     public function testSpellcheckFromRealBinaries(): void
     {
         $this->assertWorkingSpellcheck(self::realBinaryPath());
     }
 
-    /**
-     * @group integration
-     */
+    #[Group('integration')]
     public function testSpellcheckFromRealBinariesUTF8(): void
     {
         $this->assertWorkingSpellcheckRUText(self::realBinaryPath());
     }
 
-    /**
-     * @group integration
-     */
+    #[Group('integration')]
     public function testGetSupportedLanguagesFromRealBinaries(): void
     {
         $this->assertWorkingSupportedLanguages(self::realBinaryPath());
@@ -55,7 +50,7 @@ class AspellTest extends TestCase
 
     public function getFakeDicts(): array
     {
-        return explode(PHP_EOL, \Safe\file_get_contents(__DIR__ . '/../Fixtures/Aspell/dicts.txt'));
+        return explode(PHP_EOL, \PhpSpellcheck\file_get_contents(__DIR__ . '/../Fixtures/Aspell/dicts.txt'));
     }
 
     public function assertWorkingSupportedLanguages(string $binaries): void

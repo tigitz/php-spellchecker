@@ -20,7 +20,7 @@ class ProcessHasErrorOutputException extends \RuntimeException implements Except
             MSG;
 
         parent::__construct(
-            \Safe\sprintf(
+            \sprintf(
                 $exceptionTemplateMessage,
                 $errorOutput,
                 $command,
