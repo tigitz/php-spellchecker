@@ -26,7 +26,7 @@ final class FileCache implements CacheInterface
         }
 
         if (!is_dir($directory)) {
-            \Safe\mkdir($directory, 0755, true);
+            mkdir($directory, 0755, true);
         }
 
         $this->directory = $directory .= DIRECTORY_SEPARATOR;
@@ -49,7 +49,7 @@ final class FileCache implements CacheInterface
     private function getValueObject(string $key): ?CacheValue
     {
         try {
-            $value = unserialize(\Safe\file_get_contents($this->getFilePath($key)));
+            $value = unserialize(\PhpSpellcheck\file_get_contents($this->getFilePath($key)));
 
             return $value instanceof CacheValue ? $value : null;
         } catch (\Throwable) {
@@ -75,14 +75,14 @@ final class FileCache implements CacheInterface
         $ttl ??= $this->defaultLifetime;
 
         if ($ttl instanceof \DateInterval) {
-            $expiresAt = (new \Safe\DateTime())->add($ttl)->getTimestamp();
+            $expiresAt = (new \DateTime())->add($ttl)->getTimestamp();
         } else {
             $expiresAt = $ttl > 0 ? time() + $ttl : null;
         }
 
         $data = new CacheValue($value, $expiresAt);
 
-        return (bool) \Safe\file_put_contents($this->getFilePath($key), $data->serialize(), LOCK_EX);
+        return (bool) \PhpSpellcheck\file_put_contents($this->getFilePath($key), $data->serialize(), LOCK_EX);
     }
 
     public function delete(string $key): bool
@@ -91,21 +91,21 @@ final class FileCache implements CacheInterface
             return false;
         }
 
-        \Safe\unlink($this->getFilePath($key));
+        unlink($this->getFilePath($key));
 
         return true;
     }
 
     public function clear(): bool
     {
-        $files = \Safe\glob($this->directory.'*');
+        $files = glob($this->directory.'*');
 
         if (empty($files)) {
             return false;
         }
 
         foreach ($files as $file) {
-            \Safe\unlink($file);
+            unlink($file);
         }
 
         return true;
@@ -150,14 +150,14 @@ final class FileCache implements CacheInterface
 
     private function validateNamespace(string $namespace): void
     {
-        if (\Safe\preg_match('#[^-+_.A-Za-z0-9]#', $namespace, $match) === 1) {
+        if (\PhpSpellcheck\preg_match('#[^-+_.A-Za-z0-9]#', $namespace, $match) === 1) {
             throw new InvalidArgumentException(sprintf('Namespace contains "%s" but only characters in [-+_.A-Za-z0-9] are allowed.', $match[0]));
         }
     }
 
     private function validateKey(string $key): void
     {
-        if (\Safe\preg_match('/^[a-zA-Z0-9_\.]+$/', $key) === 0) {
+        if (\PhpSpellcheck\preg_match('/^[a-zA-Z0-9_\.]+$/', $key) === 0) {
             throw new InvalidArgumentException(
                 sprintf(
                     'Invalid cache key "%s". A cache key can only contain letters (a-z, A-Z), numbers (0-9), underscores (_), and periods (.).',
