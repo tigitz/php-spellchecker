@@ -13,12 +13,12 @@ class FileCacheTest extends TestCase
     public function setUp(): void
     {
         $this->cache = new FileCache('FileCacheTest');
-        // $this->cache->clear();
+        $this->cache->clear();
     }
 
     public function tearDown(): void
     {
-        // $this->cache->clear();
+        $this->cache->clear();
     }
 
     public function testGetReturnsNullWhenNotSet(): void
@@ -155,5 +155,14 @@ class FileCacheTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
 
         $this->cache->setMultiple(['InvalidKey/WithSlash' => 'bar']);
+    }
+
+    public function testCachesInvalidCharactersPassesWithMd5(): void
+    {
+        $key = md5('InvalidKey/WithSlash');
+
+        $this->cache->set($key, 'bar');
+
+        $this->assertSame('bar', $this->cache->get($key));
     }
 }

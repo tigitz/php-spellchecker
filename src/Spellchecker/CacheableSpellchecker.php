@@ -4,19 +4,15 @@ declare(strict_types=1);
 
 namespace PhpSpellcheck\Spellchecker;
 
-use ArrayObject;
 use PhpSpellcheck\Cache\CacheInterface;
 
-final class CacheableSpellchecker implements SpellcheckerInterface
+final readonly class CacheableSpellchecker implements SpellcheckerInterface
 {
     public function __construct(
-        private readonly SpellcheckerInterface $spellChecker,
-        private readonly CacheInterface $cache
+        private SpellcheckerInterface $spellChecker,
+        private CacheInterface $cache
     ) {}
 
-    /**
-     * @return iterable<\PhpSpellcheck\MisspellingInterface>
-     */
     public function check(string $text, array $languages = [], array $context = []): iterable
     {
         $key = $this->generateCacheKey($text, $languages);
@@ -25,12 +21,16 @@ final class CacheableSpellchecker implements SpellcheckerInterface
 
         if ($result === null) {
             $result = $this->spellChecker->check($text, $languages, $context);
-            $this->cache->set($key, $result);
 
-            return $result;
+            $resultArray = iterator_to_array($result);
+
+            $this->cache->set($key, $resultArray);
+
+            return $resultArray;
         }
 
-        return (new ArrayObject((array) $result))->getIterator();
+        // @todo Convert array to iterable
+        return $result;
     }
 
     /**

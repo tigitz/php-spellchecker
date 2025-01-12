@@ -32,6 +32,11 @@ final class FileCache implements CacheInterface
         $this->directory = $directory .= DIRECTORY_SEPARATOR;
     }
 
+    public static function create(string $namespace = '', int $defaultLifetime = 0, ?string $directory = null): CacheInterface
+    {
+        return new self($namespace, $defaultLifetime, $directory);
+    }
+
     public function getDefaultDirectory(): string
     {
         return dirname(array_keys(ClassLoader::getRegisteredLoaders())[0]).'/.phpspellcheck.cache';
@@ -91,24 +96,23 @@ final class FileCache implements CacheInterface
             return false;
         }
 
-        unlink($this->getFilePath($key));
-
-        return true;
+        return unlink($this->getFilePath($key));
     }
 
     public function clear(): bool
     {
         $files = glob($this->directory.'*');
 
-        if (empty($files)) {
+        if ($files === false || empty($files)) {
             return false;
         }
 
+        $result = true;
         foreach ($files as $file) {
-            unlink($file);
+            $result = unlink($file);
         }
 
-        return true;
+        return $result;
     }
 
     public function getMultiple(iterable $keys, mixed $default = null): iterable
