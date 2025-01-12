@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PhpSpellcheck\Spellchecker;
 
+use ArrayIterator;
 use PhpSpellcheck\Cache\CacheInterface;
 
 final readonly class CacheableSpellchecker implements SpellcheckerInterface
@@ -23,14 +24,13 @@ final readonly class CacheableSpellchecker implements SpellcheckerInterface
             $result = $this->spellChecker->check($text, $languages, $context);
 
             $resultArray = iterator_to_array($result);
-
             $this->cache->set($key, $resultArray);
 
-            return $resultArray;
+            return $result;
         }
 
         // @todo Convert array to iterable
-        return $result;
+       return $result;
     }
 
     /**
