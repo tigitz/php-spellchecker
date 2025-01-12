@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Nyholm\Psr7\Factory\Psr17Factory;
 use PhpSpellcheck\Misspelling;
 use PhpSpellcheck\Spellchecker\Hunspell;
 use PhpSpellcheck\Spellchecker\LanguageTool;
@@ -10,6 +11,7 @@ use PhpSpellcheck\Spellchecker\MultiSpellchecker;
 use PhpSpellcheck\Spellchecker\SpellcheckerInterface;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\Group;
+use Symfony\Component\HttpClient\Psr18Client;
 
 class MultiSpellcheckerTest extends TestCase
 {
@@ -95,7 +97,13 @@ class MultiSpellcheckerTest extends TestCase
     #[Group('integration')]
     public function testGetSupportedLanguage(): void
     {
-        $lt = new LanguageTool(new LanguageToolApiClient(LanguageToolTest::realAPIEndpoint()));
+        $psr17Factory = new Psr17Factory();
+        $lt = new LanguageTool(new LanguageToolApiClient(
+            new Psr18Client(),
+            LanguageToolTest::realAPIEndpoint(),
+            $psr17Factory,
+            $psr17Factory
+        ));
         $multipleSpellchecker = new MultiSpellchecker([Hunspell::create(), $lt]);
 
         /** @see LanguageToolTest::assertWorkingSupportedLanguages() */

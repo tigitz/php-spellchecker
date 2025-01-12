@@ -2,34 +2,56 @@
 
 declare(strict_types=1);
 
+use Nyholm\Psr7\Factory\Psr17Factory;
 use PhpSpellcheck\Misspelling;
 use PhpSpellcheck\Spellchecker\LanguageTool;
 use PhpSpellcheck\Spellchecker\LanguageTool\LanguageToolApiClient;
 use PhpSpellcheck\Tests\TextTest;
-use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\Group;
+use Psr\Http\Client\ClientInterface;
+use Psr\Http\Message\RequestFactoryInterface;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\StreamFactoryInterface;
+use Psr\Http\Message\StreamInterface;
+use Symfony\Component\HttpClient\Psr18Client;
 
 class LanguageToolTest extends TestCase
 {
-    /**
-     * @return LanguageToolApiClient|MockObject
-     */
-    public function getClientMock(): MockObject
-    {
-        $mock = $this->getMockBuilder(LanguageToolApiClient::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        return $mock;
-    }
-
     public function testSpellcheck(): void
     {
-        $client = $this->getClientMock();
-        $client->expects($this->once())
-            ->method('spellCheck')
-            ->willReturn([
+        [$httpClient, $requestFactory, $streamFactory, $request, $response, $stream] = $this->setupMocks();
+
+        $request->expects($this->exactly(2))
+            ->method('withHeader')
+            ->willReturnSelf();
+
+        $requestFactory->expects($this->once())
+            ->method('createRequest')
+            ->willReturn($request);
+
+        $streamFactory->expects($this->once())
+            ->method('createStream')
+            ->willReturn($stream);
+
+        $request->expects($this->once())
+            ->method('withBody')
+            ->with($stream)
+            ->willReturnSelf();
+
+        $response->expects($this->once())
+            ->method('getBody')
+            ->willReturn($stream);
+
+        $httpClient->expects($this->once())
+            ->method('sendRequest')
+            ->with($request)
+            ->willReturn($response);
+
+        $stream->expects($this->once())
+            ->method('__toString')
+            ->willReturn(json_encode([
                 'matches' => [
                     [
                         'message' => 'Possible spelling mistake found',
@@ -64,32 +86,64 @@ class LanguageToolTest extends TestCase
                         ],
                     ],
                 ],
-            ]);
+            ]));
 
+        $client = new LanguageToolApiClient($httpClient, 'http://example.com', $requestFactory, $streamFactory);
         $this->assertWorkingSpellcheck($client);
     }
 
     public function testGetSupportedLanguages(): void
     {
-        $client = $this->getClientMock();
-        $client->expects($this->once())
-            ->method('getSupportedLanguages')
-            ->willReturn(['en']);
+        [$httpClient, $requestFactory, $streamFactory , $request, $response, $stream] = $this->setupMocks();
 
+        $request->expects($this->once())
+            ->method('withHeader')
+            ->willReturnSelf();
+
+        $requestFactory->expects($this->once())
+            ->method('createRequest')
+            ->willReturn($request);
+
+        $httpClient->expects($this->once())
+            ->method('sendRequest')
+            ->with($request)
+            ->willReturn($response);
+
+        $response->expects($this->once())
+            ->method('getBody')
+            ->willReturn($stream);
+
+        $stream->expects($this->once())
+            ->method('__toString')
+            ->willReturn(json_encode([['longCode' => 'en']]));
+
+        $client = new LanguageToolApiClient($httpClient, 'http://example.com', $requestFactory, $streamFactory);
         $this->assertWorkingSupportedLanguages($client);
     }
 
     #[Group('integration')]
     public function testSpellcheckFromRealAPI(): void
     {
-        $this->assertWorkingSpellcheck(new LanguageToolApiClient(self::realAPIEndpoint()));
+        $psr17Factory = new Psr17Factory();
+        $this->assertWorkingSpellcheck(new LanguageToolApiClient(
+            new Psr18Client(),
+            self::realAPIEndpoint(),
+            $psr17Factory,
+            $psr17Factory
+        ));
     }
 
     #[Group('integration')]
     public function testSpellcheckMultiBytesStringFromRealAPI(): void
     {
+        $psr17Factory = new Psr17Factory();
         $misspellings = iterator_to_array(
-            (new LanguageTool(new LanguageToolApiClient(self::realAPIEndpoint())))->check(
+            (new LanguageTool(new LanguageToolApiClient(
+                new Psr18Client(),
+                self::realAPIEndpoint(),
+                $psr17Factory,
+                $psr17Factory
+            )))->check(
                 TextTest::CONTENT_STUB_JP,
                 ['ja-JP'],
                 ['ctx' => 'ctx']
@@ -107,13 +161,18 @@ class LanguageToolTest extends TestCase
         $this->assertSame($misspellings[1]->getOffset(), 0);
         $this->assertSame($misspellings[1]->getLineNumber(), 5);
         $this->assertNotEmpty($misspellings[1]->getSuggestions());
-        $this->assertWorkingSpellcheck(new LanguageToolApiClient(self::realAPIEndpoint()));
     }
 
     #[Group('integration')]
     public function testGetSupportedLanguagesFromRealBinaries(): void
     {
-        $this->assertWorkingSupportedLanguages(new LanguageToolApiClient(self::realAPIEndpoint()));
+        $psr17Factory = new Psr17Factory();
+        $this->assertWorkingSupportedLanguages(new LanguageToolApiClient(
+            new Psr18Client(),
+            self::realAPIEndpoint(),
+            $psr17Factory,
+            $psr17Factory
+        ));
     }
 
     public function getTextInput(): string
@@ -134,6 +193,28 @@ class LanguageToolTest extends TestCase
         }
 
         return getenv('LANGUAGETOOLS_ENDPOINT');
+    }
+
+    /**
+     * @return array{
+     *   ClientInterface,
+     *   RequestFactoryInterface,
+     *   StreamFactoryInterface,
+     *   RequestInterface,
+     *   ResponseInterface,
+     *   StreamInterface
+     * }
+     */
+    private function setupMocks(): array
+    {
+        return [
+            $this->createMock(ClientInterface::class),
+            $this->createMock(RequestFactoryInterface::class),
+            $this->createMock(StreamFactoryInterface::class),
+            $this->createMock(RequestInterface::class),
+            $this->createMock(ResponseInterface::class),
+            $this->createMock(StreamInterface::class),
+        ];
     }
 
     private function assertWorkingSpellcheck(LanguageToolApiClient $apiClient): void

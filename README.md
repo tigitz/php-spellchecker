@@ -152,7 +152,7 @@ The project is still in its initial phase, requiring more real-life usage to sta
 
 - [ ] Cache suggestions of already spellchecked words (PSR-6/PSR-16?).
 - [ ] Pspell - Find way to compute word offset.
-- [ ] LanguageTools - Evaluate [HTTPlug library][httplug] to make API requests.
+- [x] LanguageTools - Evaluate [HTTPlug library][httplug] to make API requests.
 - [x] Pspell - find way to list available dictionaries.
 - [x] Add [JamSpell](https://github.com/bakwc/JamSpell#http-api) spellchecker.
 - [ ] Add [NuSpell](https://github.com/nuspell/nuspell) spellchecker.
@@ -222,7 +222,6 @@ Please see [CONTRIBUTING](https://github.com/tigitz/php-spellchecker/tree/master
 # Credits
 
 - Inspired by [php-speller](https://github.com/mekras/php-speller), [monolog](https://github.com/Seldaek/monolog) and [flysystem](https://github.com/thephpleague/flysystem)
-- [Philippe Segatori][link-author]
 - [All Contributors][link-contributors]
 
 # License
@@ -232,7 +231,6 @@ The MIT License (MIT). Please see [license file](https://github.com/tigitz/php-s
 **Logo**:
 Elements taken for the final rendering are [Designed by rawpixel.com / Freepik](http://www.freepik.com).
 
-[link-author]: https://github.com/tigitz
 [link-contributors]: ../../contributors
 
 [aspell]: https://tigitz.github.io/php-spellchecker/docs/spellcheckers/aspell.html

@@ -4,19 +4,26 @@ declare(strict_types=1);
 
 namespace PhpSpellcheck\Spellchecker\LanguageTool;
 
-/**
- * @TODO refactor by using PSR HTTP Client
- */
+use Psr\Http\Client\ClientInterface;
+use Nyholm\Psr7\Factory\Psr17Factory;
+use Psr\Http\Message\RequestFactoryInterface;
+use Psr\Http\Message\StreamFactoryInterface;
+
 class LanguageToolApiClient
 {
-    /**
-     * @var string
-     */
-    private $baseUrl;
+    private RequestFactoryInterface $requestFactory;
 
-    public function __construct(string $baseUrl)
-    {
-        $this->baseUrl = $baseUrl;
+    private StreamFactoryInterface $streamFactory;
+
+    public function __construct(
+        private readonly ClientInterface $client,
+        private readonly string $baseUrl,
+        ?RequestFactoryInterface $requestFactory = null,
+        ?StreamFactoryInterface $streamFactory = null
+    ) {
+        $psr17Factory = new Psr17Factory();
+        $this->requestFactory = $requestFactory ?? $psr17Factory;
+        $this->streamFactory = $streamFactory ?? $psr17Factory;
     }
 
     /**
@@ -45,7 +52,10 @@ class LanguageToolApiClient
         return $this->requestAPI(
             '/v2/check',
             'POST',
-            'Content-type: application/x-www-form-urlencoded; Accept: application/json',
+            [
+                'Content-Type' => 'application/x-www-form-urlencoded',
+                'Accept' => 'application/json',
+            ],
             $options
         );
     }
@@ -60,33 +70,37 @@ class LanguageToolApiClient
             $this->requestAPI(
                 '/v2/languages',
                 'GET',
-                'Accept: application/json'
+                ['Accept' => 'application/json']
             ),
             'longCode'
         )));
     }
 
     /**
+     * @param array<string, string> $headers
      * @param array<mixed> $queryParams
      *
      * @throws \RuntimeException
      *
      * @return array<mixed>
      */
-    public function requestAPI(string $endpoint, string $method, string $header, array $queryParams = []): array
+    public function requestAPI(string $endpoint, string $method, array $headers, array $queryParams = []): array
     {
-        $httpData = [
-            'method' => $method,
-            'header' => $header,
-        ];
+        $request = $this->requestFactory->createRequest($method, $this->baseUrl . $endpoint);
 
-        if (!empty($queryParams)) {
-            $httpData['content'] = http_build_query($queryParams);
+        foreach ($headers as $name => $value) {
+            $request = $request->withHeader($name, $value);
         }
 
-        $content = \PhpSpellcheck\file_get_contents($this->baseUrl . $endpoint, false, stream_context_create(['http' => $httpData]));
+        if (!empty($queryParams)) {
+            $stream = $this->streamFactory->createStream(http_build_query($queryParams));
+            $request = $request->withBody($stream);
+        }
+
+        $response = $this->client->sendRequest($request);
+
         /** @var array<mixed> $contentAsArray */
-        $contentAsArray = \PhpSpellcheck\json_decode($content, true);
+        $contentAsArray = \PhpSpellcheck\json_decode((string) $response->getBody(), true);
 
         return $contentAsArray;
     }
