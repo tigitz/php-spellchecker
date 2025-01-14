@@ -4,13 +4,22 @@ declare(strict_types=1);
 
 namespace PhpSpellcheck\Cache;
 
+use Psr\Cache\CacheItemInterface;
 use Composer\Autoload\ClassLoader;
+use PhpSpellcheck\Exception\RuntimeException;
 use PhpSpellcheck\Exception\InvalidArgumentException;
 
-final class FileCache implements CacheInterface
+final class FileCache implements FileCacheInterface
 {
+    private array $deferred = [];
+
+    /**
+     * $namespace - The namespace of the cache (e.g., 'Aspell' creates .phpspellcache.cache/Aspell/*)
+     * $defaultLifetime - The default lifetime in seconds for cached items (0 = never expires)
+     * $directory - Optional custom directory path for cache storage
+     */
     public function __construct(
-        private readonly string $namespace = '',
+        private readonly string $namespace = '@',
         private readonly int $defaultLifetime = 0,
         private ?string $directory = null,
     ) {
@@ -18,89 +27,71 @@ final class FileCache implements CacheInterface
             $directory = $this->getDefaultDirectory();
         }
 
-        if (strlen($namespace) > 0) {
-            $this->validateNamespace($namespace);
-            $directory .= DIRECTORY_SEPARATOR . $namespace;
-        } else {
-            $directory .= DIRECTORY_SEPARATOR . '@';
-        }
+        $this->validateNamespace($namespace);
 
-        if (!is_dir($directory)) {
-            mkdir($directory, 0755, true);
+        $directory .= DIRECTORY_SEPARATOR . $namespace;
+
+        if (!is_dir($directory) && !@mkdir($directory, 0777, true) && !is_dir($directory)) {
+            throw new RuntimeException(sprintf('Directory "%s" could not be created', $directory));
         }
 
         $this->directory = $directory .= DIRECTORY_SEPARATOR;
     }
 
-    public static function create(string $namespace = '', int $defaultLifetime = 0, ?string $directory = null): CacheInterface
-    {
+    public static function create(
+        string $namespace = '@',
+        int $defaultLifetime = 0,
+        ?string $directory = null
+    ): self {
         return new self($namespace, $defaultLifetime, $directory);
     }
 
-    public function getDefaultDirectory(): string
-    {
-        return dirname(array_keys(ClassLoader::getRegisteredLoaders())[0]).'/.phpspellcheck.cache';
-    }
-
-    public function get(string $key, mixed $default = null): mixed
-    {
-        if (!$this->has($key)) {
-            return $default;
-        }
-
-        return $this->getValueObject($key)?->value;
-    }
-
-    private function getValueObject(string $key): ?CacheValue
-    {
-        try {
-            $value = unserialize(\PhpSpellcheck\file_get_contents($this->getFilePath($key)));
-
-            return $value instanceof CacheValue ? $value : null;
-        } catch (\Throwable) {
-            return null;
-        }
-    }
-
-    public function has(string $key): bool
-    {
-        if (!file_exists($this->getFilePath($key))) {
-            return false;
-        }
-
-        $object = $this->getValueObject($key);
-
-        return $object !== null && $object->isValid();
-    }
-
-    public function set(string $key, mixed $value, null|int|\DateInterval $ttl = null): bool
+    public function getItem(string $key): CacheItemInterface
     {
         $this->validateKey($key);
+        $filepath = $this->getFilePath($key);
 
-        $ttl ??= $this->defaultLifetime;
+        $item = new CacheItem($key);
 
-        if ($ttl instanceof \DateInterval) {
-            $expiresAt = (new \DateTime())->add($ttl)->getTimestamp();
-        } else {
-            $expiresAt = $ttl > 0 ? time() + $ttl : null;
+        if (!file_exists($filepath)) {
+            return $item;
         }
 
-        $data = new CacheValue($value, $expiresAt);
+        $handle = fopen($filepath, 'r');
+        if (flock($handle, LOCK_SH)) { // Shared lock for reading
+            try {
+                $data = fread($handle, filesize($filepath));
+                $value = unserialize($data);
 
-        return (bool) \PhpSpellcheck\file_put_contents($this->getFilePath($key), $data->serialize(), LOCK_EX);
+                if ($value && (!$value->expiresAt || $value->expiresAt > time())) {
+                    $item->set($value->data);
+                    $item->setIsHit(true);
+                    if ($value->expiresAt) {
+                        $item->expiresAt(new \DateTime('@' . $value->expiresAt));
+                    }
+                }
+            } finally {
+                flock($handle, LOCK_UN);
+                fclose($handle);
+            }
+        }
+
+        return $item;
     }
 
-    public function delete(string $key): bool
+    public function getItems(array $keys = []): iterable
     {
-        if (!$this->has($key)) {
-            return false;
-        }
+        return array_map(fn ($key) => $this->getItem($key), $keys);
+    }
 
-        return unlink($this->getFilePath($key));
+    public function hasItem(string $key): bool
+    {
+        return $this->getItem($key)->isHit();
     }
 
     public function clear(): bool
     {
+        $this->deferred = [];
         $files = glob($this->directory.'*');
 
         if ($files === false || empty($files)) {
@@ -109,42 +100,93 @@ final class FileCache implements CacheInterface
 
         $result = true;
         foreach ($files as $file) {
-            $result = unlink($file);
+            $result = unlink($file) && $result;
         }
 
         return $result;
     }
 
-    public function getMultiple(iterable $keys, mixed $default = null): iterable
+    public function deleteItem(string $key): bool
     {
-        foreach ($keys as $key) {
-            yield $key => $this->get($key, $default);
+        $this->validateKey($key);
+        unset($this->deferred[$key]);
+
+        if (!file_exists($this->getFilePath($key))) {
+            return true;
         }
+
+        return unlink($this->getFilePath($key));
     }
 
-    /**
-     * @param iterable<mixed> $values
-     */
-    public function setMultiple(iterable $values, null|int|\DateInterval $ttl = null): bool
+    public function deleteItems(array $keys): bool
     {
         $result = true;
-        foreach ($values as $key => $value) {
-            if (is_string($key)) {
-                $result = $this->set($key, $value, $ttl) && $result;
+        foreach ($keys as $key) {
+            $result = $this->deleteItem($key) && $result;
+        }
+
+        return $result;
+    }
+
+    public function save(CacheItemInterface $item): bool
+    {
+        $this->validateKey($item->getKey());
+
+        $expiresAt = null;
+        if ($item->expiry) {
+            $expiresAt = $item->expiry->getTimestamp();
+        } elseif ($this->defaultLifetime > 0) {
+            $expiresAt = time() + $this->defaultLifetime;
+        }
+
+        $value = (object) [
+            'data' => $item->get(),
+            'expiresAt' => $expiresAt,
+        ];
+
+        $serialized = serialize($value);
+        $filepath = $this->getFilePath($item->getKey());
+
+        $handle = fopen($filepath, 'w');
+        if (!$handle) {
+            return false;
+        }
+
+        $success = false;
+        if (flock($handle, LOCK_EX)) { // Exclusive lock for writing
+            try {
+                $success = fwrite($handle, $serialized) !== false;
+            } finally {
+                flock($handle, LOCK_UN);
+                fclose($handle);
             }
         }
 
-        return $result;
+        return $success;
     }
 
-    public function deleteMultiple(iterable $keys): bool
+    public function saveDeferred(CacheItemInterface $item): bool
     {
-        $result = true;
-        foreach ($keys as $key) {
-            $result = $this->delete($key) && $result;
-        }
+        $this->validateKey($item->getKey());
+        $this->deferred[$item->getKey()] = $item;
 
-        return $result;
+        return true;
+    }
+
+    public function commit(): bool
+    {
+        $success = true;
+        foreach ($this->deferred as $item) {
+            $success = $this->save($item) && $success;
+        }
+        $this->deferred = [];
+
+        return $success;
+    }
+
+    private function getDefaultDirectory(): string
+    {
+        return dirname(array_keys(ClassLoader::getRegisteredLoaders())[0]).'/.phpspellcheck.cache';
     }
 
     public function getFilePath(string $key): string

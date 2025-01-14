@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 use PHPUnit\Framework\TestCase;
 use PhpSpellcheck\Cache\FileCache;
-use PhpSpellcheck\Cache\CacheInterface;
+use PhpSpellcheck\Cache\FileCacheInterface;
 
 class FileCacheTest extends TestCase
 {
-    protected CacheInterface $cache;
+    protected FileCacheInterface $cache;
 
     public function setUp(): void
     {
@@ -21,148 +21,143 @@ class FileCacheTest extends TestCase
         $this->cache->clear();
     }
 
-    public function testGetReturnsNullWhenNotSet(): void
+    public function testCreateReturnsFileCacheInstance(): void
     {
-        $this->assertNull($this->cache->get('foo'));
+        $cache = FileCache::create('FileCacheTest');
+        $this->assertInstanceOf(FileCache::class, $cache);
     }
 
-    public function testGetReturnsValueWhenSet(): void
+    public function testGetItemReturnsNonExistentItem(): void
     {
-        $this->cache->set('foo', 'bar');
-
-        $this->assertSame('bar', $this->cache->get('foo'));
+        $item = $this->cache->getItem('key1');
+        $this->assertFalse($item->isHit());
+        $this->assertNull($item->get());
     }
 
-    public function testGetReturnsDefaultWhenNotSet(): void
+    public function testSaveAndGetItem(): void
     {
-        $this->assertSame('bar', $this->cache->get('foo', 'bar'));
+        $item = $this->cache->getItem('key2');
+        $item->set('value2');
+
+        $this->cache->save($item);
+
+        $newItem = $this->cache->getItem('key2');
+        $this->assertTrue($newItem->isHit());
+        $this->assertEquals('value2', $newItem->get());
     }
 
-    public function testCacheWithLifetime(): void
+    public function testDeleteItem(): void
     {
-        $this->cache->set('foo', 'bar', 1);
+        $item = $this->cache->getItem('key3');
+        $item->set('value3');
+        $this->cache->save($item);
 
-        $this->assertSame('bar', $this->cache->get('foo', 'baz'));
+        $this->assertTrue($this->cache->deleteItem('key3'));
+        $this->assertFalse($this->cache->hasItem('key3'));
+    }
 
+    public function testSaveDeferred(): void
+    {
+        $item = $this->cache->getItem('key4');
+        $item->set('value4');
+
+        $this->cache->saveDeferred($item);
+        $this->assertFalse($this->cache->hasItem('key4'));
+
+        $this->cache->commit();
+        $this->assertTrue($this->cache->hasItem('key4'));
+    }
+
+    public function testClearCache(): void
+    {
+        $item1 = $this->cache->getItem('key5');
+        $item1->set('value5');
+        $this->cache->save($item1);
+
+        $item2 = $this->cache->getItem('key6');
+        $item2->set('value6');
+        $this->cache->save($item2);
+
+        $this->assertTrue($this->cache->clear());
+        $this->assertFalse($this->cache->hasItem('key5'));
+        $this->assertFalse($this->cache->hasItem('key6'));
+    }
+
+    public function testGetItems(): void
+    {
+        $keys = ['key7', 'key8'];
+        $items = $this->cache->getItems($keys);
+
+        foreach ($items as $item) {
+            $this->assertFalse($item->isHit());
+        }
+    }
+
+    public function testDeleteItems(): void
+    {
+        $item1 = $this->cache->getItem('key9');
+        $item1->set('value9');
+        $this->cache->save($item1);
+
+        $item2 = $this->cache->getItem('key10');
+        $item2->set('value10');
+        $this->cache->save($item2);
+
+        $this->assertTrue($this->cache->deleteItems(['key9', 'key10']));
+        $this->assertFalse($this->cache->hasItem('key9'));
+        $this->assertFalse($this->cache->hasItem('key10'));
+    }
+
+    public function testItemExpiration(): void
+    {
+        $item = $this->cache->getItem('expiring_key');
+        $item->set('expiring_value');
+        $item->expiresAt(new DateTime('+1 second'));
+        $this->cache->save($item);
+
+        $this->assertTrue($this->cache->hasItem('expiring_key'));
         sleep(2);
-
-        $this->assertSame('baz', $this->cache->get('foo', 'baz'));
+        $this->assertFalse($this->cache->getItem('expiring_key')->isHit());
     }
 
-    public function testHas(): void
+    public function testInvalidNamespaceThrowsException(): void
     {
-        $this->assertFalse($this->cache->has('foo'));
-
-        $this->cache->set('foo', 'bar');
-
-        $this->assertTrue($this->cache->has('foo'));
+        $this->expectException(\PhpSpellcheck\Exception\InvalidArgumentException::class);
+        new FileCache('Invalid/Namespace');
     }
 
-    public function testDelete(): void
+    public function testInvalidKeyThrowsException(): void
     {
-        $this->cache->set('foo', 'bar');
-
-        $this->assertTrue($this->cache->has('foo'));
-
-        $this->cache->delete('foo');
-
-        $this->assertFalse($this->cache->has('foo'));
+        $this->expectException(\PhpSpellcheck\Exception\InvalidArgumentException::class);
+        $this->cache->getItem('invalid/key');
     }
 
-    public function testClear(): void
+    public function testDefaultLifetime(): void
     {
-        $this->cache->set('foo', 'bar');
-        $this->cache->set('baz', 'qux');
+        $cache = new FileCache('FileCacheTest', 1);
+        $item = $cache->getItem('key');
+        $item->set('value');
+        $cache->save($item);
 
-        $this->assertTrue($this->cache->has('foo'));
-        $this->assertTrue($this->cache->has('baz'));
-
-        $this->cache->clear();
-
-        $this->assertFalse($this->cache->has('foo'));
-        $this->assertFalse($this->cache->has('baz'));
-    }
-
-    public function testGetMultiple(): void
-    {
-        $this->cache->set('foo', 'bar');
-        $this->cache->set('baz', 'qux');
-
-        $this->assertSame(['foo' => 'bar', 'baz' => 'qux'], iterator_to_array($this->cache->getMultiple(['foo', 'baz'])));
-    }
-
-    public function testSetMultiple(): void
-    {
-        $this->assertTrue($this->cache->setMultiple(['foo' => 'bar', 'baz' => 'qux']));
-
-        $this->assertSame('bar', $this->cache->get('foo'));
-        $this->assertSame('qux', $this->cache->get('baz'));
-    }
-
-    public function testDeleteMultiple(): void
-    {
-        $this->cache->set('foo', 'bar');
-        $this->cache->set('baz', 'qux');
-
-        $this->assertTrue($this->cache->deleteMultiple(['foo', 'baz']));
-
-        $this->assertFalse($this->cache->has('foo'));
-        $this->assertFalse($this->cache->has('baz'));
-    }
-
-    public function testSetMultipleWithTtl(): void
-    {
-        $this->assertTrue($this->cache->setMultiple(['foo' => 'bar', 'baz' => 'qux'], 1));
-
-        $this->assertSame('bar', $this->cache->get('foo'));
-        $this->assertSame('qux', $this->cache->get('baz'));
-
+        $this->assertTrue($cache->hasItem('key'));
         sleep(2);
-
-        $this->assertNull($this->cache->get('foo'));
-        $this->assertNull($this->cache->get('baz'));
+        $this->assertFalse($cache->getItem('key')->isHit());
     }
 
-    public function testSetMultipleWithDateInterval(): void
+    public function testCustomDirectory(): void
     {
-        $this->assertTrue($this->cache->setMultiple(['foo' => 'bar', 'baz' => 'qux'], new DateInterval('PT1S')));
+        $cache = new FileCache('FileCacheTest', 0, '/tmp');
+        $item = $cache->getItem('key');
+        $item->set('value');
+        $cache->save($item);
 
-        $this->assertSame('bar', $this->cache->get('foo'));
-        $this->assertSame('qux', $this->cache->get('baz'));
-
-        sleep(2);
-
-        $this->assertNull($this->cache->get('foo'));
-        $this->assertNull($this->cache->get('baz'));
+        $this->assertTrue(file_exists('/tmp/FileCacheTest/key'));
+        $cache->clear();
     }
 
-    public function testThrowsExceptionOnInvalidNamespace(): void
+    public function testUnwriteableDirectoryThrowsException(): void
     {
-        $this->expectException(InvalidArgumentException::class);
-
-        new FileCache('InvalidNamespace/WithSlash');
-    }
-
-    public function testThrowsExceptionOnInvalidKey(): void
-    {
-        $this->expectException(InvalidArgumentException::class);
-
-        $this->cache->set('InvalidKey/WithSlash', 'bar');
-    }
-
-    public function testThrowsExceptionOnInvalidKeyInSetMultiple(): void
-    {
-        $this->expectException(InvalidArgumentException::class);
-
-        $this->cache->setMultiple(['InvalidKey/WithSlash' => 'bar']);
-    }
-
-    public function testCachesInvalidCharactersPassesWithMd5(): void
-    {
-        $key = md5('InvalidKey/WithSlash');
-
-        $this->cache->set($key, 'bar');
-
-        $this->assertSame('bar', $this->cache->get($key));
+        $this->expectException(\PhpSpellcheck\Exception\RuntimeException::class);
+        new FileCache('FileCacheTest', 0, '/root/.cache');
     }
 }

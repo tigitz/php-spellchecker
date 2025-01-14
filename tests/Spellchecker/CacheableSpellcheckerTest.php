@@ -2,24 +2,58 @@
 
 declare(strict_types=1);
 
-use PhpSpellcheck\Cache\FileCache;
 use PHPUnit\Framework\TestCase;
+use PhpSpellcheck\Cache\FileCache;
 use PhpSpellcheck\Spellchecker\Aspell;
+use PhpSpellcheck\Cache\FileCacheInterface;
 use PhpSpellcheck\Spellchecker\CacheableSpellchecker;
 
 class CacheableSpellcheckerTest extends TestCase
 {
     private const FAKE_BINARIES_PATH = __DIR__ . '/../Fixtures/Aspell/bin/aspell.sh';
 
-    public function testAspellSpellcheck(): void
+    protected FileCacheInterface $cache;
+    protected CacheableSpellchecker $cacheableSpellchecker;
+
+    public function setUp(): void
     {
-        $checker = new CacheableSpellchecker(
-            Aspell::create(self::FAKE_BINARIES_PATH),
-            FileCache::create('CacheableSpellcheckerTest')
-        );
+        $this->cache = new FileCache('CacheableSpellcheckerTest');
+        $this->cache->clear();
 
-        $result = $checker->check('hello');
+        $spellchecker = Aspell::create(self::FAKE_BINARIES_PATH);
+        $this->cacheableSpellchecker = new CacheableSpellchecker($this->cache, $spellchecker);
+    }
 
-        $this->assertCount(6, iterator_to_array($result));
+    public function tearDown(): void
+    {
+        $this->cache->clear();
+    }
+
+    public function testCheckReturnsFromCache(): void
+    {
+        $text = 'testt speling';
+        $result1 = iterator_to_array($this->cacheableSpellchecker->check($text));
+        $result2 = iterator_to_array($this->cacheableSpellchecker->check($text));
+
+        $this->assertEquals($result1, $result2);
+    }
+
+    public function testGetSupportedLanguagesReturnsFromCache(): void
+    {
+        $langs1 = iterator_to_array($this->cacheableSpellchecker->getSupportedLanguages());
+        $langs2 = iterator_to_array($this->cacheableSpellchecker->getSupportedLanguages());
+
+        $this->assertSame($langs1, $langs2);
+    }
+
+    public function testCheckWithDifferentParameters(): void
+    {
+        $text = 'testt speling';
+        $result1 = iterator_to_array($this->cacheableSpellchecker->check($text, ['en_US']));
+        $result2 = iterator_to_array($this->cacheableSpellchecker->check($text, ['en_GB']));
+
+        foreach ($result1 as $misspelling) {
+            $this->assertNotSame($misspelling, $result2);
+        }
     }
 }

@@ -4,45 +4,50 @@ declare(strict_types=1);
 
 namespace PhpSpellcheck\Spellchecker;
 
-use ArrayIterator;
-use PhpSpellcheck\Cache\CacheInterface;
+use Psr\Cache\CacheItemPoolInterface;
 
 final readonly class CacheableSpellchecker implements SpellcheckerInterface
 {
     public function __construct(
-        private SpellcheckerInterface $spellChecker,
-        private CacheInterface $cache
-    ) {}
-
-    public function check(string $text, array $languages = [], array $context = []): iterable
-    {
-        $key = $this->generateCacheKey($text, $languages);
-
-        $result = $this->cache->get($key);
-
-        if ($result === null) {
-            $result = $this->spellChecker->check($text, $languages, $context);
-
-            $resultArray = iterator_to_array($result);
-            $this->cache->set($key, $resultArray);
-
-            return $result;
-        }
-
-        // @todo Convert array to iterable
-       return $result;
+        private readonly CacheItemPoolInterface $cache,
+        private readonly SpellcheckerInterface $spellchecker
+    ) {
     }
 
-    /**
-     * @param array<string> $languages
-     */
-    private function generateCacheKey(string $text, array $languages = []): string
-    {
-        return md5(sprintf('%s_%s', $text, implode('_', $languages)));
+    public function check(
+        string $text,
+        array $languages = [],
+        array $context = []
+    ): iterable {
+        $cacheKey = md5(serialize([$this->spellchecker, $text, $languages, $context]));
+
+        $cacheItem = $this->cache->getItem($cacheKey);
+
+        if ($cacheItem->isHit()) {
+            yield from $cacheItem->get();
+            return;
+        }
+
+        $misspellings = iterator_to_array($this->spellchecker->check($text, $languages, $context));
+        $this->cache->save($cacheItem->set($misspellings));
+
+        yield from $misspellings;
     }
 
     public function getSupportedLanguages(): iterable
     {
-        return $this->spellChecker->getSupportedLanguages();
+        $cacheKey = md5(serialize([$this->spellchecker]));
+
+        $cacheItem = $this->cache->getItem($cacheKey);
+
+        if ($cacheItem->isHit()) {
+            yield from $cacheItem->get();
+            return;
+        }
+
+        $languages = iterator_to_array($this->spellchecker->getSupportedLanguages());
+        $this->cache->save($cacheItem->set($languages));
+
+        yield from $languages;
     }
 }
