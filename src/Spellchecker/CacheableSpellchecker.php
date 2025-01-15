@@ -30,6 +30,7 @@ final readonly class CacheableSpellchecker implements SpellcheckerInterface
                     yield $misspelling;
                 }
             }
+
             return;
         }
 
@@ -47,10 +48,11 @@ final readonly class CacheableSpellchecker implements SpellcheckerInterface
 
         if ($cacheItem->isHit()) {
             foreach ((array) $cacheItem->get() as $language) {
-                if (is_string($language)) {
+                if (\is_string($language)) {
                     yield $language;
                 }
             }
+
             return;
         }
 

@@ -55,7 +55,7 @@ final class CacheItem implements CacheItemInterface
             return $this;
         }
 
-        if (is_int($time)) {
+        if (\is_int($time)) {
             $this->expiry = new \DateTime('@' . (time() + $time));
 
             return $this;

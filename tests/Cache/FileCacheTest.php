@@ -152,7 +152,7 @@ class FileCacheTest extends TestCase
         $item->set('value');
         $cache->save($item);
 
-        $this->assertTrue(file_exists('/tmp/FileCacheTest/key'));
+        $this->assertFileExists('/tmp/FileCacheTest/key');
         $cache->clear();
     }
 
@@ -168,6 +168,6 @@ class FileCacheTest extends TestCase
 
         $cache->getItem('unlinked_key');
 
-        $this->assertFalse(file_exists('/tmp/FileCacheTest/unlinked_key'));
+        $this->assertFileDoesNotExist('/tmp/FileCacheTest/unlinked_key');
     }
 }

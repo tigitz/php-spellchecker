@@ -13,6 +13,7 @@ class CacheableSpellcheckerTest extends TestCase
     private const FAKE_BINARIES_PATH = __DIR__ . '/../Fixtures/Aspell/bin/aspell.sh';
 
     protected FileCacheInterface $cache;
+
     protected CacheableSpellchecker $cacheableSpellchecker;
 
     public function setUp(): void

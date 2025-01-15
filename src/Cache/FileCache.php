@@ -19,7 +19,7 @@ final class FileCache implements FileCacheInterface
     /**
      * $namespace - The namespace of the cache (e.g., 'Aspell' creates .phpspellcache.cache/Aspell/*)
      * $defaultLifetime - The default lifetime in seconds for cached items (0 = never expires)
-     * $directory - Optional custom directory path for cache storage
+     * $directory - Optional custom directory path for cache storage.
      */
     public function __construct(
         private readonly string $namespace = '@',
@@ -34,8 +34,8 @@ final class FileCache implements FileCacheInterface
 
         $directory .= DIRECTORY_SEPARATOR . $namespace;
 
-        if (!is_dir($directory) && !@mkdir($directory, 0777, true) && !is_dir($directory)) {
-            throw new RuntimeException(sprintf('Directory "%s" could not be created', $directory));
+        if (!is_dir($directory) && !@mkdir($directory, 0o777, true) && !is_dir($directory)) {
+            throw new RuntimeException(\sprintf('Directory "%s" could not be created', $directory));
         }
 
         $this->directory = $directory .= DIRECTORY_SEPARATOR;
@@ -68,9 +68,9 @@ final class FileCache implements FileCacheInterface
 
         $value = unserialize($data);
 
-        if (! is_object($value)
-            || ! property_exists($value, 'data')
-            || ! property_exists($value, 'expiresAt')
+        if (!\is_object($value)
+            || !property_exists($value, 'data')
+            || !property_exists($value, 'expiresAt')
         ) {
             return $item;
         }
@@ -86,7 +86,7 @@ final class FileCache implements FileCacheInterface
 
         $item->set($value->data)->setIsHit(true);
 
-        if (is_int($value->expiresAt) && $value->expiresAt > 0) {
+        if (\is_int($value->expiresAt) && $value->expiresAt > 0) {
             $item->expiresAt(new \DateTime('@' . $value->expiresAt));
         }
 
@@ -95,6 +95,7 @@ final class FileCache implements FileCacheInterface
 
     /**
      * @param array<string> $keys
+     *
      * @return iterable<CacheItemInterface>
      */
     public function getItems(array $keys = []): iterable
@@ -150,7 +151,7 @@ final class FileCache implements FileCacheInterface
     {
         $this->validateKey($item->getKey());
 
-        if (! property_exists($item, 'expiry')) {
+        if (!property_exists($item, 'expiry')) {
             throw new InvalidArgumentException('CacheItem expiry property is required');
         }
 
@@ -194,20 +195,20 @@ final class FileCache implements FileCacheInterface
         return $success;
     }
 
-    private function getDefaultDirectory(): string
-    {
-        return dirname(array_keys(ClassLoader::getRegisteredLoaders())[0]).'/.phpspellcheck.cache';
-    }
-
     public function getFilePath(string $key): string
     {
         return $this->directory . $key;
     }
 
+    private function getDefaultDirectory(): string
+    {
+        return \dirname(array_keys(ClassLoader::getRegisteredLoaders())[0]).'/.phpspellcheck.cache';
+    }
+
     private function validateNamespace(): void
     {
         if (\PhpSpellcheck\preg_match('#[^-+_.A-Za-z0-9]#', $this->namespace, $match) === 1) {
-            throw new InvalidArgumentException(sprintf('Namespace contains "%s" but only characters in [-+_.A-Za-z0-9] are allowed.', $match[0]));
+            throw new InvalidArgumentException(\sprintf('Namespace contains "%s" but only characters in [-+_.A-Za-z0-9] are allowed.', $match[0]));
         }
     }
 
@@ -215,7 +216,7 @@ final class FileCache implements FileCacheInterface
     {
         if (\PhpSpellcheck\preg_match('/^[a-zA-Z0-9_\.]+$/', $key) === 0) {
             throw new InvalidArgumentException(
-                sprintf(
+                \sprintf(
                     'Invalid cache key "%s". A cache key can only contain letters (a-z, A-Z), numbers (0-9), underscores (_), and periods (.).',
                     $key
                 )
