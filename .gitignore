@@ -2,7 +2,10 @@ build
 composer.lock
 vendor
 .idea
+.vscode
 .php-cs-fixer.cache
 .phpunit.result.cache
-cache
+.phpspellcheck.cache
+composer/
+.DS_Store
 .aider*

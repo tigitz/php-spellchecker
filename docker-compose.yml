@@ -7,7 +7,7 @@ services:
         PHP_VERSION: ${PHP_VERSION:-8.4}
     volumes:
       - .:/usr/src/myapp
-      - ./cache:/root/composer/cache
+      - ./composer/cache:/root/composer/cache
     environment:
       - LANG=en_US.UTF-8
       - COMPOSER_CACHE_DIR=/root/composer/cache
