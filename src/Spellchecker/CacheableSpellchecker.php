@@ -7,7 +7,7 @@ namespace PhpSpellcheck\Spellchecker;
 use PhpSpellcheck\MisspellingInterface;
 use Psr\Cache\CacheItemPoolInterface;
 
-final readonly class CacheableSpellchecker implements SpellcheckerInterface
+final class CacheableSpellchecker implements SpellcheckerInterface
 {
     public function __construct(
         private readonly CacheItemPoolInterface $cache,
