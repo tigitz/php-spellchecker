@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PhpSpellcheck\Spellchecker;
 
+use PhpSpellcheck\MisspellingInterface;
 use Psr\Cache\CacheItemPoolInterface;
 
 final readonly class CacheableSpellchecker implements SpellcheckerInterface
@@ -24,7 +25,11 @@ final readonly class CacheableSpellchecker implements SpellcheckerInterface
         $cacheItem = $this->cache->getItem($cacheKey);
 
         if ($cacheItem->isHit()) {
-            yield from $cacheItem->get();
+            foreach ((array) $cacheItem->get() as $misspelling) {
+                if ($misspelling instanceof MisspellingInterface) {
+                    yield $misspelling;
+                }
+            }
             return;
         }
 
@@ -41,7 +46,11 @@ final readonly class CacheableSpellchecker implements SpellcheckerInterface
         $cacheItem = $this->cache->getItem($cacheKey);
 
         if ($cacheItem->isHit()) {
-            yield from $cacheItem->get();
+            foreach ((array) $cacheItem->get() as $language) {
+                if (is_string($language)) {
+                    yield $language;
+                }
+            }
             return;
         }
 

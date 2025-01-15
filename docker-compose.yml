@@ -1,7 +1,6 @@
 services:
   php:
     image: tigitz/phpspellchecker:${PHP_VERSION:-8.4}
-    user: 1001:1001
     build:
       context: docker/php
       args:

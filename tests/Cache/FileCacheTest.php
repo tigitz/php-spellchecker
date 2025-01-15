@@ -42,6 +42,7 @@ class FileCacheTest extends TestCase
         $this->cache->save($item);
 
         $newItem = $this->cache->getItem('key2');
+
         $this->assertTrue($newItem->isHit());
         $this->assertEquals('value2', $newItem->get());
     }
@@ -155,9 +156,18 @@ class FileCacheTest extends TestCase
         $cache->clear();
     }
 
-    public function testUnwriteableDirectoryThrowsException(): void
+    public function testExpiredCachedFileIsDeletedWhenCallingGetItem(): void
     {
-        $this->expectException(\PhpSpellcheck\Exception\RuntimeException::class);
-        new FileCache('FileCacheTest', 0, '/root/.cache');
+        $cache = new FileCache('FileCacheTest', 1, '/tmp');
+        $item = $cache->getItem('unlinked_key');
+        $item->set('value');
+        $item->expiresAfter(1);
+        $cache->save($item);
+
+        sleep(2);
+
+        $cache->getItem('unlinked_key');
+
+        $this->assertFalse(file_exists('/tmp/FileCacheTest/unlinked_key'));
     }
 }

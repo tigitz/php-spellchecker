@@ -14,7 +14,7 @@ final class CacheItem implements CacheItemInterface
         private readonly string $key,
         private mixed $value = null,
         public ?DateTimeInterface $expiry = null,
-        private ?bool $isHit = false
+        private bool $isHit = false
     ) {
     }
 

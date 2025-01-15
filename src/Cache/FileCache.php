@@ -11,6 +11,9 @@ use PhpSpellcheck\Exception\InvalidArgumentException;
 
 final class FileCache implements FileCacheInterface
 {
+    /**
+     * @var array<string, CacheItemInterface>
+     */
     private array $deferred = [];
 
     /**
@@ -27,7 +30,7 @@ final class FileCache implements FileCacheInterface
             $directory = $this->getDefaultDirectory();
         }
 
-        $this->validateNamespace($namespace);
+        $this->validateNamespace();
 
         $directory .= DIRECTORY_SEPARATOR . $namespace;
 
@@ -57,31 +60,46 @@ final class FileCache implements FileCacheInterface
             return $item;
         }
 
-        $handle = fopen($filepath, 'r');
-        if (flock($handle, LOCK_SH)) { // Shared lock for reading
-            try {
-                $data = fread($handle, filesize($filepath));
-                $value = unserialize($data);
+        $data = \PhpSpellcheck\file_get_contents($filepath);
 
-                if ($value && (!$value->expiresAt || $value->expiresAt > time())) {
-                    $item->set($value->data);
-                    $item->setIsHit(true);
-                    if ($value->expiresAt) {
-                        $item->expiresAt(new \DateTime('@' . $value->expiresAt));
-                    }
-                }
-            } finally {
-                flock($handle, LOCK_UN);
-                fclose($handle);
-            }
+        if ($data === '') {
+            return $item;
+        }
+
+        $value = unserialize($data);
+
+        if (! is_object($value)
+            || ! property_exists($value, 'data')
+            || ! property_exists($value, 'expiresAt')
+        ) {
+            return $item;
+        }
+
+        if ($value->expiresAt !== 0
+            && $value->expiresAt !== null
+            && $value->expiresAt <= time()
+        ) {
+            unlink($filepath);
+
+            return $item;
+        }
+
+        $item->set($value->data)->setIsHit(true);
+
+        if (is_int($value->expiresAt) && $value->expiresAt > 0) {
+            $item->expiresAt(new \DateTime('@' . $value->expiresAt));
         }
 
         return $item;
     }
 
+    /**
+     * @param array<string> $keys
+     * @return iterable<CacheItemInterface>
+     */
     public function getItems(array $keys = []): iterable
     {
-        return array_map(fn ($key) => $this->getItem($key), $keys);
+        return array_map(fn ($key): CacheItemInterface => $this->getItem($key), $keys);
     }
 
     public function hasItem(string $key): bool
@@ -132,12 +150,15 @@ final class FileCache implements FileCacheInterface
     {
         $this->validateKey($item->getKey());
 
-        $expiresAt = null;
-        if ($item->expiry) {
-            $expiresAt = $item->expiry->getTimestamp();
-        } elseif ($this->defaultLifetime > 0) {
-            $expiresAt = time() + $this->defaultLifetime;
+        if (! property_exists($item, 'expiry')) {
+            throw new InvalidArgumentException('CacheItem expiry property is required');
         }
+
+        $expiresAt = match(true) {
+            $item->expiry instanceof \DateTimeInterface => $item->expiry->getTimestamp(),
+            $this->defaultLifetime > 0 => time() + $this->defaultLifetime,
+            default => null
+        };
 
         $value = (object) [
             'data' => $item->get(),
@@ -147,22 +168,11 @@ final class FileCache implements FileCacheInterface
         $serialized = serialize($value);
         $filepath = $this->getFilePath($item->getKey());
 
-        $handle = fopen($filepath, 'w');
-        if (!$handle) {
+        try {
+            return (bool) \PhpSpellcheck\file_put_contents($filepath, $serialized, LOCK_EX);
+        } catch (\Exception $e) {
             return false;
         }
-
-        $success = false;
-        if (flock($handle, LOCK_EX)) { // Exclusive lock for writing
-            try {
-                $success = fwrite($handle, $serialized) !== false;
-            } finally {
-                flock($handle, LOCK_UN);
-                fclose($handle);
-            }
-        }
-
-        return $success;
     }
 
     public function saveDeferred(CacheItemInterface $item): bool
@@ -194,9 +204,9 @@ final class FileCache implements FileCacheInterface
         return $this->directory . $key;
     }
 
-    private function validateNamespace(string $namespace): void
+    private function validateNamespace(): void
     {
-        if (\PhpSpellcheck\preg_match('#[^-+_.A-Za-z0-9]#', $namespace, $match) === 1) {
+        if (\PhpSpellcheck\preg_match('#[^-+_.A-Za-z0-9]#', $this->namespace, $match) === 1) {
             throw new InvalidArgumentException(sprintf('Namespace contains "%s" but only characters in [-+_.A-Za-z0-9] are allowed.', $match[0]));
         }
     }
