@@ -28,14 +28,14 @@ RUN apt-get update \
      libpspell-dev
 
 RUN pecl channel-update pecl.php.net && \
-    pecl install xdebug-3.4.0 && \
+    pecl install xdebug-3.5.1 && \
     docker-php-ext-enable xdebug
 
-RUN if [ "${PHP_VERSION}" = "8.4" ]; then \
-        pecl install pspell; \
-    else \
+RUN if [ "${PHP_VERSION}" = "8.2" ] || [ "${PHP_VERSION}" = "8.3" ]; then \
         docker-php-ext-configure pspell && \
         docker-php-ext-install pspell; \
+    else \
+        pecl install pspell; \
     fi && \
     docker-php-ext-enable pspell && \
     rm -r /var/lib/apt/lists/*

@@ -1,6 +1,6 @@
 DOCKER_COMPOSE 	?= docker compose
 EXEC_PHP      	= $(DOCKER_COMPOSE) run --rm php
-PHP_VERSION     ?= 8.4
+PHP_VERSION     ?= 8.5
 DEPS_STRATEGY   ?= --prefer-stable
 COMPOSER      	= $(EXEC_PHP) composer
 WITH_COVERAGE   ?= "FALSE"
@@ -25,7 +25,7 @@ setup: build
 
 .PHONY: build kill setup
 
-PHPUNIT_FLAGS = $(if $(filter 8.4,$(PHP_VERSION)),--display-deprecations,) \
+PHPUNIT_FLAGS = $(if $(filter 8.5,$(PHP_VERSION)),--display-deprecations,) \
                 $(if $(filter true,$(WITH_COVERAGE)),--coverage-clover clover.xml,)
 
 tests: ## Run all tests

@@ -59,7 +59,7 @@ function preg_match_all(string $pattern, string $subject, &$matches = [], int $f
  *
  * @param-out 0|positive-int $count
  *
- * @return ($subject is array ? list<string> : string)
+ * @return ($subject is array ? array<string> : string)
  */
 function preg_replace(array|string $pattern, array|string $replacement, array|string $subject, int $limit = -1, ?int &$count = null): array|string
 {

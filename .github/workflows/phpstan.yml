@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        php: [ "8.2", "8.4" ]
+        php: [ "8.2", "8.5" ]
     steps:
       - uses: actions/checkout@v4
 
