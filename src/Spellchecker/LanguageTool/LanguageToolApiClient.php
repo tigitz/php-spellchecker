@@ -55,15 +55,14 @@ class LanguageToolApiClient
      */
     public function getSupportedLanguages(): array
     {
-        /** @var array<string> */
-        return array_values(array_unique(array_column(
-            $this->requestAPI(
-                '/v2/languages',
-                'GET',
-                'Accept: application/json'
-            ),
-            'longCode'
-        )));
+        /** @var array<array{longCode: string}> $languages */
+        $languages = $this->requestAPI(
+            '/v2/languages',
+            'GET',
+            'Accept: application/json'
+        );
+
+        return array_values(array_unique(array_column($languages, 'longCode')));
     }
 
     /**

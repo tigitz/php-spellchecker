@@ -1,10 +1,10 @@
 services:
   php:
-    image: tigitz/phpspellchecker:${PHP_VERSION:-8.4}
+    image: tigitz/phpspellchecker:${PHP_VERSION:-8.5}
     build:
       context: docker/php
       args:
-        PHP_VERSION: ${PHP_VERSION:-8.4}
+        PHP_VERSION: ${PHP_VERSION:-8.5}
     volumes:
       - .:/usr/src/myapp
       - ./cache:/root/composer/cache
